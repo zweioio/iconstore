@@ -7,12 +7,11 @@ type SectionTitleProps = {
 export function SectionTitle({ eyebrow, title, description }: SectionTitleProps) {
   return (
     <div className="max-w-3xl space-y-4">
-      {/* 标题层级加大，增强首屏品牌感和浏览站点的视觉冲击力 */}
-      <p className="text-sm font-medium text-[var(--ds-accent)]">{eyebrow}</p>
-      <h2 className="font-display text-5xl font-bold leading-[1.02] text-[var(--ds-ink)] md:text-6xl">
+      <p className="text-[14px] font-medium leading-[22px] text-[#60656b]">{eyebrow}</p>
+      <h2 className="text-[36px] font-bold leading-10 text-[#202224] md:text-[48px] md:leading-[52px]">
         {title}
       </h2>
-      <p className="max-w-2xl text-base leading-7 text-[var(--ds-ink-soft)] md:text-lg">{description}</p>
+      <p className="max-w-2xl text-[16px] leading-6 text-[#60656b]">{description}</p>
     </div>
   )
 }

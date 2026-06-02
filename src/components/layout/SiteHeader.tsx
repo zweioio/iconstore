@@ -9,8 +9,8 @@ const navItems = [
   { to: '/about', label: '项目介绍' },
   { to: '/guide', label: '使用指南' },
   { to: '/license', label: '授权说明' },
-  { to: '/about', label: '图标申请' },
-  { to: '/about', label: '打赏' },
+  { to: '/request', label: '图标申请' },
+  { to: '/support', label: '打赏' },
 ]
 
 export function SiteHeader() {
@@ -24,7 +24,7 @@ export function SiteHeader() {
           <p className="text-[16px] font-bold leading-[19px] text-black">iconStore</p>
         </Link>
 
-        <nav className="hidden items-center gap-10 md:flex">
+        <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -32,7 +32,7 @@ export function SiteHeader() {
               className={({ isActive }) =>
                 cn(
                   'inline-flex h-8 items-center rounded-[8px] px-3 text-[14px] leading-[22px] text-[#202224] transition hover:bg-[#f8f8fc]',
-                  isActive && 'font-medium text-black',
+                  isActive && 'bg-[#f8f8fc] text-black',
                 )
               }
             >

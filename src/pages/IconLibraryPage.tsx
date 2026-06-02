@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react'
 
+import { WheatDecoration } from '@/components/icons/WheatDecoration'
+
 import { IconCard } from '@/components/icons/IconCard'
 import { IconControls } from '@/components/icons/IconControls'
 import { IconDetailModal } from '@/components/icons/IconDetailModal'
+import { IconSettingsPanel } from '@/components/icons/IconSettingsPanel'
 import { en } from '@/i18n/en'
 import { zh } from '@/i18n/zh'
 import { useLanguageStore } from '@/store/useLanguageStore'
@@ -48,8 +51,8 @@ export default function IconLibraryPage() {
 
   // 搜索模式下不受分类筛选影响
   const filteredIcons = useMemo(
-    () => filterIcons(icons, keyword, keyword.trim() ? 'all' : category),
-    [keyword, category],
+    () => filterIcons(icons, keyword, keyword.trim() ? 'all' : 'all'),
+    [keyword],
   )
 
   const favoriteIconIds = useMemo(() => new Set(favoriteIds), [favoriteIds])
@@ -71,7 +74,7 @@ export default function IconLibraryPage() {
       return null
     }
     // 使用 filterIcons 统一过滤逻辑（keyword 存在时 category 为 'all'）
-    const searchFiltered = filterIcons(icons, keyword, keyword.trim() ? 'all' : category)
+    const searchFiltered = filterIcons(icons, keyword, keyword.trim() ? 'all' : 'all')
     const groups: { category: string; label: string; icons: typeof searchFiltered }[] = []
     const temp: Record<string, typeof searchFiltered> = {}
     searchFiltered.forEach((icon) => {
@@ -94,9 +97,23 @@ export default function IconLibraryPage() {
   ]
 
   async function handleCopy(svg: string) {
-    await navigator.clipboard.writeText(svg)
-    setFeedback(t.modal.copied)
-    window.setTimeout(() => setFeedback(''), 1800)
+    try {
+      await navigator.clipboard.writeText(svg)
+      setFeedback(t.modal.copied)
+      window.setTimeout(() => setFeedback(''), 1800)
+    } catch {
+      // fallback for older browsers
+      const textarea = document.createElement('textarea')
+      textarea.value = svg
+      textarea.style.position = 'fixed'
+      textarea.style.opacity = '0'
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      setFeedback(t.modal.copied)
+      window.setTimeout(() => setFeedback(''), 1800)
+    }
   }
 
   function handleDownload(name: string, svg: string) {
@@ -149,14 +166,23 @@ export default function IconLibraryPage() {
 
   return (
     <div className="pb-24 pt-2">
+      {/* 图标设置面板 - 右侧固定，与版心保持 16px 间距 */}
+      <div
+        className="fixed top-1/2 z-[60] w-[240px] -translate-y-1/2"
+        style={{ right: 'calc(max(16px, (100vw - 1200px) / 2 - 256px))', overflow: 'visible' }}
+      >
+        <IconSettingsPanel />
+      </div>
+
       <section className="mx-auto flex max-w-[1200px] flex-col items-center pt-16 text-center">
-        <div className="flex max-w-[592px] flex-col items-center gap-4">
+        <div className="flex max-w-[1100px] flex-col items-center gap-4">
           <h1 className="text-[48px] leading-[52px] text-[#202224]">
             {t.site.tagline}
           </h1>
-          <p className="text-[16px] leading-6 text-[#60656b]">{t.site.description}</p>
+          <p className="text-[16px] leading-6 text-[#60656b] whitespace-pre-line">{t.site.description}</p>
         </div>
-        <div className="mt-6 flex items-center gap-4">
+        <div className="mt-6 flex items-center gap-1">
+          <WheatDecoration size={40} color="#D5B25F" />
           {metricItems.map((item) => (
             <div
               key={item.label}
@@ -166,6 +192,7 @@ export default function IconLibraryPage() {
               <p className="text-[14px] leading-[22px] text-[#60656b]">{item.label}</p>
             </div>
           ))}
+          <WheatDecoration size={40} color="#D5B25F" mirror />
         </div>
       </section>
 
@@ -201,7 +228,7 @@ export default function IconLibraryPage() {
             </div>
           )}
           {feedback && (
-            <span className="fixed right-4 bottom-4 rounded-[10px] border border-[#e9eaeb] bg-white px-3 py-1.5 text-[14px] text-[#202224] shadow-[0_6px_20px_rgba(0,0,0,0.05)]">
+            <span className="fixed right-4 bottom-4 z-[60] rounded-[10px] border border-[#e9eaeb] bg-white px-3 py-1.5 text-[14px] text-[#202224] shadow-[0_6px_20px_rgba(0,0,0,0.05)]">
               {feedback}
             </span>
           )}
@@ -211,14 +238,25 @@ export default function IconLibraryPage() {
       <IconDetailModal
         icon={selectedIcon}
         svg={selectedSvg}
-        styleMode={styleMode}
-        language={language}
+        isFavorite={selectedIcon ? favoriteIds.includes(selectedIcon.id) : false}
         onClose={() => setSelectedIconId(null)}
-        onStyleChange={setStyleMode}
         onCopy={() => selectedIcon && handleCopy(selectedSvg)}
+        onCopyName={() => {
+          if (selectedIcon) {
+            navigator.clipboard.writeText(selectedIcon.name).then(() => {
+              setFeedback(t.modal.copiedName)
+              window.setTimeout(() => setFeedback(''), 1800)
+            })
+          }
+        }}
         onDownload={() =>
           selectedIcon && handleDownload(createDownloadName(selectedIcon, styleMode), selectedSvg)
         }
+        onToggleFavorite={() => {
+          if (selectedIcon) {
+            toggleFavorite(selectedIcon.id)
+          }
+        }}
       />
     </div>
   )

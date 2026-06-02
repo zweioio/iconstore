@@ -2,7 +2,7 @@ export const en = {
   site: {
     title: 'IconStore',
     tagline: 'Simple & Elegant Open Source Icon Library',
-    description: 'Neutral-style system icons designed for designers and developers, suitable for websites, mobile apps, and product interfaces. All icons are free for personal and commercial use.',
+    description: 'Neutral-style system icons designed for designers and developers, suitable for websites, mobile apps, and product interfaces.\nAll icons are free for personal and commercial use.',
   },
   metrics: {
     iconCount: 'Icon Count',
@@ -31,12 +31,16 @@ export const en = {
   modal: {
     copySVG: 'Copy SVG',
     downloadSVG: 'Download SVG',
+    copyName: 'Copy name',
     keywords: 'Keywords',
-    svgCode: 'Current SVG Code',
+    svgCode: 'SVG code',
     linear: 'Linear',
     filled: 'Filled',
-    copied: 'SVG Copied',
-    downloaded: 'SVG Downloaded',
+    copied: 'SVG copied',
+    downloaded: 'SVG downloaded',
+    copiedName: 'Name copied',
+    favorited: 'Favorited',
+    unfavorited: 'Removed from favorites',
   },
   empty: {
     noResults: 'No results found',
@@ -45,5 +49,73 @@ export const en = {
   language: {
     chinese: '中文',
     english: 'English',
+  },
+  about: {
+    title: 'Icon Library',
+    description: 'An open source icon library loved by designers and developers, with instant preview, SVG copy and download',
+    features: {
+      scale: 'Icon Scale',
+      dual: 'Dual Style',
+      free: 'Free for Commercial',
+    },
+    principles: {
+      title: 'Core Values',
+      neutral: 'Neutral and restrained design style',
+      grid: 'Unified 24 x 24 grid system',
+      friendly: 'Designer and developer friendly',
+    },
+  },
+  guide: {
+    title: 'User Guide',
+    forDesigners: 'For Designers',
+    forDevelopers: 'For Developers',
+    steps: {
+      style: 'Choose linear or filled style based on the scenario',
+      size: 'Keep the 24 x 24 base size',
+      preview: 'Preview online before deciding the final style',
+      copy: 'Directly copy SVG into your project',
+      adjust: 'Adjust stroke weight as needed',
+      organize: 'Organize icons by module',
+    },
+  },
+  license: {
+    title: 'License',
+    commercial: 'Commercial Use Allowed',
+    modify: 'Modification Allowed',
+    noResell: 'No Reselling',
+    free: 'Free for personal and commercial use',
+  },
+  request: {
+    title: 'Icon Request',
+    description: 'If you need a specific icon or icon type, please submit a request. We will evaluate and add it to the library.',
+    form: {
+      name: 'Icon Name / Type',
+      style: 'Style Preference',
+      linear: 'Linear',
+      filled: 'Filled',
+      both: 'Both',
+      scenario: 'Usage Scenario',
+      reference: 'Reference Link',
+      email: 'Contact Email',
+      submit: 'Submit Request',
+    },
+    success: {
+      title: 'Submitted',
+      message: 'Thank you for your icon request. We will evaluate and add it to the library soon.',
+      continue: 'Continue',
+    },
+  },
+  support: {
+    title: 'Support Us',
+    description: 'IconStore is a free but refined product. We have invested a lot of time and effort in design, development and improvement. If you like these icons and want to see us continue to release more quality icons, please consider donating to support our team.',
+    starRepo: 'Star this repo',
+    methods: {
+      paypal: 'PayPal',
+      paypalDesc: 'International users',
+      alipay: 'Alipay',
+      alipayDesc: 'Recommended for domestic users',
+      wechat: 'WeChat Pay',
+      wechatDesc: 'Recommended for domestic users',
+    },
   },
 }

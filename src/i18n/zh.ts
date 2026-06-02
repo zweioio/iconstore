@@ -2,7 +2,7 @@ export const zh = {
   site: {
     title: 'IconStore',
     tagline: '简洁而精致的开源图标库',
-    description: '为设计师和开发者打造的中性风格系统图标，适合用于网页、移动应用与产品界面。所有图标均可免费用于个人和商业用途',
+    description: '为设计师和开发者打造的中性风格系统图标，适合用于网页、移动应用与产品界面。\n所有图标均可免费用于个人和商业用途',
   },
   metrics: {
     iconCount: '图标数量',
@@ -31,12 +31,16 @@ export const zh = {
   modal: {
     copySVG: '复制 SVG',
     downloadSVG: '下载 SVG',
+    copyName: '复制图标名称',
     keywords: '关键词',
     svgCode: '当前 SVG 代码',
     linear: '线性',
     filled: '面型',
     copied: 'SVG 已复制',
     downloaded: 'SVG 已下载',
+    copiedName: '图标名称已复制',
+    favorited: '已收藏',
+    unfavorited: '已取消收藏',
   },
   empty: {
     noResults: '没有找到匹配结果',
@@ -45,5 +49,73 @@ export const zh = {
   language: {
     chinese: '中文',
     english: 'English',
+  },
+  about: {
+    title: '图标库',
+    description: '一个设计师和前端都喜欢的开源图标库，支持即时预览、SVG 复制和下载',
+    features: {
+      scale: '图标规模',
+      dual: '双风格切换',
+      free: '免费可商用',
+    },
+    principles: {
+      title: '产品理念',
+      neutral: '中性克制的设计风格',
+      grid: '统一的 24 x 24 网格系统',
+      friendly: '设计师与开发者友好',
+    },
+  },
+  guide: {
+    title: '使用指南',
+    forDesigners: '给设计师',
+    forDevelopers: '给前端',
+    steps: {
+      style: '优先根据场景选择线性或面型',
+      size: '尽量保持 24 x 24 的基础尺寸',
+      preview: '在线预览后再决定最终样式',
+      copy: '直接复制 SVG 放入项目',
+      adjust: '按需调整描边粗细',
+      organize: '按模块分区使用图标',
+    },
+  },
+  license: {
+    title: '授权说明',
+    commercial: '允许商用',
+    modify: '允许修改',
+    noResell: '禁止单独转售',
+    free: '可免费用于个人和商业项目',
+  },
+  request: {
+    title: '图标申请',
+    description: '如果您需要某个特定的图标或图标类型，请提交申请。我们会评估后更新到图标库中。',
+    form: {
+      name: '图标名称 / 类型',
+      style: '风格偏好',
+      linear: '线性',
+      filled: '面型',
+      both: '都可以',
+      scenario: '使用场景描述',
+      reference: '参考链接或说明',
+      email: '联系方式（邮箱）',
+      submit: '提交申请',
+    },
+    success: {
+      title: '提交成功',
+      message: '感谢您的图标申请，我们会尽快评估并更新到图标库中。',
+      continue: '继续申请',
+    },
+  },
+  support: {
+    title: '支持我们',
+    description: 'IconStore 是一款免费但精致的产品，我们已投入大量时间和精力进行设计、开发和完善。如果您喜欢这些图标并希望看到我们继续努力推出更多优质图标的话，请考虑通过捐赠来支持我们的团队。',
+    starRepo: '星标此仓库',
+    methods: {
+      paypal: 'PayPal',
+      paypalDesc: '国际用户首选',
+      alipay: '支付宝',
+      alipayDesc: '国内用户推荐',
+      wechat: '微信支付',
+      wechatDesc: '国内用户推荐',
+    },
   },
 }

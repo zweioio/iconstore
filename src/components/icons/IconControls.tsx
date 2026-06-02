@@ -58,7 +58,7 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
     setCategory(value)
     setViewMode('all')
     setDropdownOpen(false)
-    if (onCategorySelect) {
+    if (onCategorySelect && value !== 'all') {
       onCategorySelect(value)
     }
   }

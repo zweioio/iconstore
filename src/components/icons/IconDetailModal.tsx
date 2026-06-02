@@ -1,11 +1,10 @@
-import { Copy, Download, X } from 'lucide-react'
+import { Clipboard, Copy, Download, Star, X } from 'lucide-react'
 
 import { en } from '@/i18n/en'
 import { zh } from '@/i18n/zh'
-import { categoryLabels } from '@/data/icons'
 import { cn } from '@/lib/utils'
 import { useLanguageStore } from '@/store/useLanguageStore'
-import type { IconItem, IconStyleMode } from '@/types/icon'
+import type { IconItem } from '@/types/icon'
 import type { Language } from '@/store/useLanguageStore'
 
 const i18n: Record<Language, typeof zh> = { zh, en }
@@ -13,21 +12,23 @@ const i18n: Record<Language, typeof zh> = { zh, en }
 type IconDetailModalProps = {
   icon: IconItem | null
   svg: string
-  styleMode: IconStyleMode
+  isFavorite: boolean
   onClose: () => void
-  onStyleChange: (value: IconStyleMode) => void
   onCopy: () => void
+  onCopyName: () => void
   onDownload: () => void
+  onToggleFavorite: () => void
 }
 
 export function IconDetailModal({
   icon,
   svg,
-  styleMode,
+  isFavorite,
   onClose,
-  onStyleChange,
   onCopy,
+  onCopyName,
   onDownload,
+  onToggleFavorite,
 }: IconDetailModalProps) {
   const { language } = useLanguageStore()
   const t = i18n[language]
@@ -49,13 +50,39 @@ export function IconDetailModal({
           <X size={16} />
         </button>
 
-        <div className="space-y-6">
-          {/* 图标名称 */}
-          <div className="space-y-2 pr-8">
-            <h2 className="text-[24px] font-bold leading-8 text-[#202224]">{icon.name}</h2>
-            <p className="text-[14px] leading-[22px] text-[#60656b]">
-              {t.categories[icon.category] || icon.category} · {styleMode === 'linear' ? t.modal.linear : t.modal.filled}
-            </p>
+        <div className="space-y-6 pr-8">
+          {/* 图标名称 + 分类 + 操作 */}
+          <div className="flex items-start justify-between pr-8">
+            <div className="space-y-1">
+              <h2 className="text-[24px] font-bold leading-8 text-[#202224]">{icon.name}</h2>
+              <p className="text-[14px] leading-[22px] text-[#60656b]">
+                {t.categories[icon.category] || icon.category}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={onCopyName}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
+                aria-label="复制图标名称"
+                title={t.modal.copyName}
+              >
+                <Clipboard size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={onToggleFavorite}
+                className={cn(
+                  'inline-flex h-8 w-8 items-center justify-center rounded-[8px] transition',
+                  isFavorite
+                    ? 'text-[#FADC19] hover:text-[#FADC19]'
+                    : 'text-[#919499] hover:bg-[#f8f8fc] hover:text-[#202224]',
+                )}
+                aria-label={isFavorite ? '取消收藏' : '收藏'}
+              >
+                <Star size={16} fill={isFavorite ? 'currentColor' : 'none'} />
+              </button>
+            </div>
           </div>
 
           {/* 图标预览 */}
@@ -63,34 +90,6 @@ export function IconDetailModal({
             <div className="inline-flex h-[96px] w-[96px] items-center justify-center text-[#202224]">
               <div dangerouslySetInnerHTML={{ __html: svg }} />
             </div>
-          </div>
-
-          {/* 风格切换 */}
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => onStyleChange('linear')}
-              className={cn(
-                'rounded-[8px] border px-4 py-2 text-[14px] leading-[22px] transition',
-                styleMode === 'linear'
-                  ? 'border-[#202224] bg-[#f8f8fc] text-[#202224]'
-                  : 'border-[#e9eaeb] bg-white text-[#60656b] hover:bg-[#f8f8fc]',
-              )}
-            >
-              {t.modal.linear}
-            </button>
-            <button
-              type="button"
-              onClick={() => onStyleChange('filled')}
-              className={cn(
-                'rounded-[8px] border px-4 py-2 text-[14px] leading-[22px] transition',
-                styleMode === 'filled'
-                  ? 'border-[#202224] bg-[#f8f8fc] text-[#202224]'
-                  : 'border-[#e9eaeb] bg-white text-[#60656b] hover:bg-[#f8f8fc]',
-              )}
-            >
-              {t.modal.filled}
-            </button>
           </div>
 
           {/* 操作按钮 */}
@@ -131,8 +130,8 @@ export function IconDetailModal({
           {/* SVG 代码 */}
           <div>
             <p className="text-[14px] font-medium leading-[22px] text-[#202224]">{t.modal.svgCode}</p>
-            <pre className="mt-2 rounded-[8px] bg-[#f4f6f7] p-3 text-[12px] leading-5 text-[#60656b]">
-              <code className="break-all">{svg}</code>
+            <pre className="mt-2 max-h-[160px] overflow-auto rounded-[8px] bg-[#f4f6f7] p-3 text-[12px] leading-5 text-[#60656b]">
+              <code>{svg}</code>
             </pre>
           </div>
         </div>

@@ -32,20 +32,23 @@ const features = [
 
 const principles = [
   {
+    icon: '✦',
     title: '中性克制的设计风格',
     description: '图标采用中性、克制的视觉语言，不喧宾夺主，完美融入任何产品界面',
   },
   {
+    icon: '◈',
     title: '统一的 24x24 网格系统',
     description: '所有图标基于 24x24 网格绘制，确保视觉一致性和像素级精准',
   },
   {
+    icon: '⬡',
     title: '设计师与开发者友好',
     description: '提供即时预览、SVG 复制和下载功能，让图标查找和使用变得轻盈顺手',
   },
 ]
 
-export default function HomePage() {
+export default function AboutPage() {
   const { styleMode, strokeWidth, favoriteIds } = useIconLibraryStore()
   const [selectedIconId, setSelectedIconId] = useState<string | null>(null)
   const favoriteIconIds = useMemo(() => new Set(favoriteIds), [favoriteIds])
@@ -54,9 +57,9 @@ export default function HomePage() {
   const selectedSvg = selectedIcon ? getIconSvg(selectedIcon, styleMode, strokeWidth) : ''
 
   return (
-    <div className="space-y-24 pb-24 pt-4">
+    <div className="pb-24 pt-4">
       {/* Hero 区域 */}
-      <section className="pt-10">
+      <section className="pt-10 pb-16">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 rounded-[8px] bg-[#f8f8fc] px-4 py-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[#60656b]">
@@ -109,22 +112,22 @@ export default function HomePage() {
           </div>
 
           {/* 图标预览展示 */}
-          <div className="is-panel p-4">
-            <div className="mb-4 flex items-center justify-between px-4 py-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[#60656b]">
+          <div className="rounded-[16px] bg-[#f8f8fc] p-6">
+            <div className="mb-4 flex items-center justify-between px-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[#60656b]">
               <span>Product Overview</span>
               <span>System Ready</span>
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-3">
               {featuredIcons.map((icon, index) => (
                 <div
                   key={icon.id}
-                  className="is-panel p-4"
-                  style={{ transform: `translateY(${index % 3 === 1 ? 10 : 0}px)` }}
+                  className="flex flex-col items-center rounded-[12px] bg-white p-4 transition hover:bg-[#f8f8fc]"
+                  style={{ transform: `translateY(${index % 3 === 1 ? 8 : 0}px)` }}
                 >
-                  <div className="flex h-[80px] w-[80px] items-center justify-center text-[#202224]">
+                  <div className="flex h-[56px] w-[56px] items-center justify-center text-[#202224]">
                     <div dangerouslySetInnerHTML={{ __html: getIconSvg(icon, 'linear', 1.5) }} />
                   </div>
-                  <p className="mt-4 text-[12px] leading-[22px] text-[#60656b]">{icon.name}</p>
+                  <p className="mt-2 text-[11px] leading-[18px] text-[#b5b9bf]">{icon.name}</p>
                 </div>
               ))}
             </div>
@@ -133,21 +136,24 @@ export default function HomePage() {
       </section>
 
       {/* 核心特性 */}
-      <section className="grid gap-5 md:grid-cols-3">
-        {features.map((item) => (
-          <div key={item.title} className="is-panel p-8">
-            <p className="text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[#60656b]">{item.title}</p>
-            <p className="mt-2 text-[24px] font-bold leading-8 text-[#202224]">{item.value}</p>
-            <p className="mt-4 text-[14px] leading-[22px] text-[#60656b]">{item.description}</p>
+      <section className="grid gap-6 md:grid-cols-3 pb-16">
+        {features.map((item, index) => (
+          <div key={item.title} className="space-y-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#f8f8fc] text-[18px] font-bold text-[#202224]">
+              {index + 1}
+            </div>
+            <p className="text-[20px] font-bold leading-7 text-[#202224]">{item.value}</p>
+            <p className="text-[14px] font-medium leading-[22px] text-[#202224]">{item.title}</p>
+            <p className="text-[14px] leading-[22px] text-[#60656b]">{item.description}</p>
           </div>
         ))}
       </section>
 
       {/* 产品理念 */}
-      <section className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-        <div className="space-y-4">
-          <p className="text-[14px] font-medium leading-[22px] text-[#60656b]">Core Value</p>
-          <h2 className="text-[36px] font-bold leading-10 text-[#202224]">
+      <section className="py-16">
+        <div className="mb-10 space-y-3">
+          <p className="text-[14px] font-medium leading-[22px] text-[#b5b9bf]">Core Value</p>
+          <h2 className="text-[32px] font-bold leading-9 text-[#202224]">
             让图标查找和使用都变得轻盈
           </h2>
           <p className="max-w-2xl text-[16px] leading-6 text-[#60656b]">
@@ -155,35 +161,43 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid gap-4">
+        <div className="grid gap-0 divide-y divide-[#e9eaeb]">
           {principles.map((item) => (
-            <article key={item.title} className="is-panel p-8">
-              <h3 className="text-[18px] font-bold leading-7 text-[#202224]">{item.title}</h3>
-              <p className="mt-2 text-[14px] leading-[22px] text-[#60656b]">{item.description}</p>
-            </article>
+            <div key={item.title} className="flex gap-6 py-8 first:pt-0 last:pb-0">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#f8f8fc] text-[16px] text-[#202224]">
+                {item.icon}
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-[18px] font-bold leading-7 text-[#202224]">{item.title}</h3>
+                <p className="text-[14px] leading-[22px] text-[#60656b]">{item.description}</p>
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
       {/* 精选图标展示 */}
-      <section className="is-panel grid gap-8 p-8 lg:grid-cols-[0.8fr_1.2fr]">
-        <div className="space-y-4">
-          <p className="text-[14px] font-medium leading-[22px] text-[#60656b]">Selected Icons</p>
-          <h2 className="text-[36px] font-bold leading-10 text-[#202224]">
+      <section className="rounded-[16px] bg-[#f8f8fc] p-8 lg:grid lg:grid-cols-[0.8fr_1.2fr] lg:gap-10">
+        <div className="mb-8 space-y-4 lg:mb-0">
+          <p className="text-[14px] font-medium leading-[22px] text-[#b5b9bf]">Selected Icons</p>
+          <h2 className="text-[32px] font-bold leading-9 text-[#202224]">
             产品说明页强调风格与系统感
           </h2>
-          <p className="max-w-2xl text-[16px] leading-6 text-[#60656b]">
+          <p className="text-[16px] leading-6 text-[#60656b]">
             这部分用精选图标解释产品气质，让用户知道这不是单个图标拼凑，而是一套完整风格体系
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-3">
           {featuredIcons.slice(0, 6).map((icon) => (
-            <div key={icon.id} className="is-panel p-4">
-              <div className="flex h-[80px] w-[80px] items-center justify-center text-[#202224]">
+            <div
+              key={icon.id}
+              className="flex flex-col items-center rounded-[12px] bg-white p-5 transition hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
+            >
+              <div className="flex h-[64px] w-[64px] items-center justify-center text-[#202224]">
                 <div dangerouslySetInnerHTML={{ __html: getIconSvg(icon, 'linear', 1.5) }} />
               </div>
-              <p className="mt-4 text-[14px] leading-[22px] text-[#60656b]">{icon.name}</p>
+              <p className="mt-3 text-[13px] leading-[22px] text-[#60656b]">{icon.name}</p>
             </div>
           ))}
         </div>
