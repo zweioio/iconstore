@@ -194,7 +194,7 @@ export default function HomePage() {
 
       {/* 图标详情弹窗 */}
       {selectedIcon && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.4)]">
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[rgba(0,0,0,0.4)]">
           <button
             type="button"
             className="absolute inset-0"

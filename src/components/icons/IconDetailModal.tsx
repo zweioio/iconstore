@@ -34,21 +34,12 @@ export function IconDetailModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.4)]">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[rgba(0,0,0,0.4)]">
       <button type="button" className="absolute inset-0" aria-label="关闭详情弹窗" onClick={onClose} />
       <div className="relative z-10 w-[480px] rounded-[16px] border border-[#e9eaeb] bg-white p-6 shadow-[0_6px_32px_rgba(0,0,0,0.08)]">
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
-          aria-label="关闭"
-        >
-          <X size={16} />
-        </button>
-
-        <div className="space-y-6 pr-8">
+        <div className="space-y-6">
           {/* 图标名称 + 分类 + 操作 */}
-          <div className="flex items-start justify-between pr-8">
+          <div className="flex items-start justify-between">
             <div className="space-y-1">
               <h2 className="text-[24px] font-bold leading-8 text-[#202224]">{icon.name}</h2>
               <p className="text-[14px] leading-[22px] text-[#60656b]">
@@ -78,14 +69,23 @@ export function IconDetailModal({
               >
                 <Star size={16} fill={isFavorite ? 'currentColor' : 'none'} />
               </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
+                aria-label="关闭"
+              >
+                <X size={16} />
+              </button>
             </div>
           </div>
 
           {/* 图标预览 */}
           <div className="flex items-center justify-center rounded-[12px] border border-[#e9eaeb] bg-[#f8f8fc] py-12">
-            <div className="inline-flex h-[96px] w-[96px] items-center justify-center text-[#202224]">
-              <div dangerouslySetInnerHTML={{ __html: svg }} />
-            </div>
+            <div
+              className="icon-preview inline-flex h-[120px] w-[120px] items-center justify-center text-[#202224]"
+              dangerouslySetInnerHTML={{ __html: svg }}
+            />
           </div>
 
           {/* 操作按钮 */}

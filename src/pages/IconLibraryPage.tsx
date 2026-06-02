@@ -224,7 +224,7 @@ export default function IconLibraryPage() {
             </div>
           )}
           {feedback && (
-            <span className="fixed right-4 bottom-4 z-[60] rounded-[10px] border border-[#e9eaeb] bg-white px-3 py-1.5 text-[14px] text-[#202224] shadow-[0_6px_20px_rgba(0,0,0,0.05)]">
+            <span className="fixed left-1/2 top-8 z-[80] -translate-x-1/2 rounded-[10px] border border-[#e9eaeb] bg-white px-3 py-1.5 text-[14px] text-[#202224] shadow-[0_6px_20px_rgba(0,0,0,0.05)]">
               {feedback}
             </span>
           )}

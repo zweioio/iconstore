@@ -30,8 +30,8 @@ export function SiteFooter() {
           </Link>
         </div>
 
-        {/* 中间：导航链接 */}
-        <div className="flex items-center gap-4">
+        {/* 右侧：导航链接 + 社交图标，间距 24px */}
+        <div className="flex items-center gap-6">
           <nav className="hidden items-center gap-4 md:flex">
             {navItems.map((item) => (
               <Link
@@ -43,10 +43,7 @@ export function SiteFooter() {
               </Link>
             ))}
           </nav>
-        </div>
-
-        {/* 右侧：社交图标 */}
-        <div className="ml-6 flex items-center gap-2">
+          <div className="flex items-center gap-2">
           <a
             href="https://github.com/zweioio/iconstore"
             target="_blank"
@@ -65,6 +62,7 @@ export function SiteFooter() {
           >
             <Twitter size={16} />
           </a>
+        </div>
         </div>
       </div>
     </footer>
