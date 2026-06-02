@@ -237,6 +237,7 @@ export default function IconLibraryPage() {
         isFavorite={selectedIcon ? favoriteIds.includes(selectedIcon.id) : false}
         onClose={() => setSelectedIconId(null)}
         onCopy={() => selectedIcon && handleCopy(selectedSvg)}
+        onCopyCode={() => selectedIcon && handleCopy(selectedSvg)}
         onCopyName={() => {
           if (selectedIcon) {
             navigator.clipboard.writeText(selectedIcon.name).then(() => {

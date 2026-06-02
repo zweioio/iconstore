@@ -64,7 +64,7 @@ export const en = {
   },
   modal: {
     close: 'Close',
-    copySVG: 'Copy SVG',
+    copySVG: 'Copy SVG Code',
     downloadSVG: 'Download SVG',
     copyName: 'Copy name',
     keywords: 'Keywords',

@@ -64,11 +64,11 @@ export const zh = {
   },
   modal: {
     close: '关闭',
-    copySVG: '复制 SVG',
+    copySVG: '复制 SVG 代码',
     downloadSVG: '下载 SVG',
     copyName: '复制图标名称',
     keywords: '关键词',
-    svgCode: '当前 SVG 代码',
+    svgCode: 'SVG 代码',
     linear: '线性',
     filled: '面型',
     copied: 'SVG 已复制',

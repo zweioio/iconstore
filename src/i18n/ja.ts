@@ -64,7 +64,7 @@ export const ja = {
   },
   modal: {
     close: '閉じる',
-    copySVG: 'SVGをコピー',
+    copySVG: 'SVGコードをコピー',
     downloadSVG: 'SVGをダウンロード',
     copyName: 'アイコン名をコピー',
     keywords: 'キーワード',

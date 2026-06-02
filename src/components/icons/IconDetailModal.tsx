@@ -11,6 +11,7 @@ type IconDetailModalProps = {
   isFavorite: boolean
   onClose: () => void
   onCopy: () => void
+  onCopyCode: () => void
   onCopyName: () => void
   onDownload: () => void
   onToggleFavorite: () => void
@@ -22,6 +23,7 @@ export function IconDetailModal({
   isFavorite,
   onClose,
   onCopy,
+  onCopyCode,
   onCopyName,
   onDownload,
   onToggleFavorite,
@@ -47,41 +49,52 @@ export function IconDetailModal({
               </p>
             </div>
             <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={onCopyName}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
-                aria-label="复制图标名称"
-                title={t.modal.copyName}
-              >
-                <Clipboard size={16} />
-              </button>
-              <button
-                type="button"
-                onClick={onToggleFavorite}
-                className={cn(
-                  'inline-flex h-8 w-8 items-center justify-center rounded-[8px] transition',
-                  isFavorite
-                    ? 'text-[#FADC19] hover:text-[#FADC19]'
-                    : 'text-[#919499] hover:bg-[#f8f8fc] hover:text-[#202224]',
-                )}
-                aria-label={isFavorite ? '取消收藏' : '收藏'}
-              >
-                <Star size={16} fill={isFavorite ? 'currentColor' : 'none'} />
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
-                aria-label="关闭"
-              >
-                <X size={16} />
-              </button>
+              <div className="group relative">
+                <button
+                  type="button"
+                  onClick={onCopyName}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
+                  aria-label="复制图标名称"
+                >
+                  <Clipboard size={16} />
+                </button>
+                <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-[#202224] px-3 py-1 text-[12px] leading-5 text-white opacity-0 transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[#202224]">
+                  {t.modal.copyName}
+                </span>
+              </div>
+              <div className="group relative">
+                <button
+                  type="button"
+                  onClick={onToggleFavorite}
+                  className={cn(
+                    'inline-flex h-8 w-8 items-center justify-center rounded-[8px] transition',
+                    isFavorite
+                      ? 'text-[#FADC19] hover:text-[#FADC19]'
+                      : 'text-[#919499] hover:bg-[#f8f8fc] hover:text-[#202224]',
+                  )}
+                  aria-label={isFavorite ? '取消收藏' : '收藏'}
+                >
+                  <Star size={16} fill={isFavorite ? 'currentColor' : 'none'} />
+                </button>
+                <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-[#202224] px-3 py-1 text-[12px] leading-5 text-white opacity-0 transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[#202224]">
+                  {isFavorite ? t.card.unfavorite : t.card.favorite}
+                </span>
+              </div>
+              <div className="group relative">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
+                  aria-label="关闭"
+                >
+                  <X size={16} />
+                </button>
+              </div>
             </div>
           </div>
 
           {/* 图标预览 */}
-          <div className="flex items-center justify-center rounded-[12px] border border-[#e9eaeb] bg-[#f8f8fc] py-12">
+          <div className="flex items-center justify-center rounded-[12px] border border-[#e9eaeb] bg-white py-12">
             <div
               className="icon-preview inline-flex h-[120px] w-[120px] items-center justify-center text-[#202224]"
               dangerouslySetInnerHTML={{ __html: svg }}
@@ -125,7 +138,22 @@ export function IconDetailModal({
 
           {/* SVG 代码 */}
           <div>
-            <p className="text-[14px] font-medium leading-[22px] text-[#202224]">{t.modal.svgCode}</p>
+            <div className="flex items-center justify-between">
+              <p className="text-[14px] font-medium leading-[22px] text-[#202224]">{t.modal.svgCode}</p>
+              <div className="group relative">
+                <button
+                  type="button"
+                  onClick={onCopyCode}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
+                  aria-label={t.modal.copySVG}
+                >
+                  <Copy size={16} />
+                </button>
+                <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-[#202224] px-3 py-1 text-[12px] leading-5 text-white opacity-0 transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[#202224]">
+                  {t.modal.copySVG}
+                </span>
+              </div>
+            </div>
             <pre className="mt-2 max-h-[160px] overflow-auto rounded-[8px] bg-[#f4f6f7] p-3 text-[12px] leading-5 text-[#60656b]">
               <code>{svg}</code>
             </pre>

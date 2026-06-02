@@ -1,4 +1,4 @@
-import { Github, Wallet, CreditCard, MessageCircle } from 'lucide-react'
+import { Github, CreditCard, Wallet, MessageCircle, ExternalLink } from 'lucide-react'
 
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
@@ -7,64 +7,76 @@ export default function SupportPage() {
   const { language } = useLanguageStore()
   const t = translations[language]
 
-  const supportOptions = [
+  const methods = [
     {
       name: t.support.methods.paypal,
       icon: CreditCard,
-      description: t.support.methods.paypalDesc,
+      desc: t.support.methods.paypalDesc,
+      iconColor: 'text-[#0070BA]',
+      bg: 'bg-[#F0F7FF]',
     },
     {
       name: t.support.methods.alipay,
       icon: Wallet,
-      description: t.support.methods.alipayDesc,
+      desc: t.support.methods.alipayDesc,
+      iconColor: 'text-[#1677FF]',
+      bg: 'bg-[#F0F7FF]',
     },
     {
       name: t.support.methods.wechat,
       icon: MessageCircle,
-      description: t.support.methods.wechatDesc,
+      desc: t.support.methods.wechatDesc,
+      iconColor: 'text-[#07C160]',
+      bg: 'bg-[#F0FFF4]',
     },
   ]
 
   return (
-    <div className="space-y-10 pb-24 pt-10">
+    <div className="pb-24 pt-4">
       {/* 页面标题 */}
-      <div className="flex items-start justify-between">
-        <div className="space-y-4">
-          <h1 className="text-[36px] font-bold leading-10 text-[#202224]">
-            {t.support.title}
-          </h1>
-          <p className="max-w-[640px] text-[16px] leading-6 text-[#60656b]">
-            {t.support.description}
+      <section className="border-b border-[var(--is-border)] pb-12 pt-10">
+        <div className="mx-auto max-w-[720px] text-center">
+          <h1 className="text-[40px] font-bold leading-[44px] text-[var(--is-ink)]">{t.support.title}</h1>
+          <p className="mx-auto max-w-[600px] text-[16px] leading-6 text-[var(--is-ink-soft)]">
+            IconStore 从一开始就是免费、开源的。每一个图标的设计、每一行代码的实现，背后都是真实的时间和热爱。
+            如果你喜欢这些图标，并希望这个项目能持续成长，你的每一份支持都是对我们最大的鼓励。
           </p>
         </div>
-        <a
-          href="https://github.com/zweioio/iconstore"
-          target="_blank"
-          rel="noreferrer"
-          className="hidden items-center gap-2 rounded-[8px] bg-[#f8f8fc] px-4 py-2 text-[14px] leading-[22px] text-[#202224] transition hover:bg-[#f1f2f6] lg:inline-flex"
-        >
-          <Github size={16} />
-          {t.support.starRepo}
-          <span className="rounded-[6px] bg-white px-2 py-0.5 text-[12px] text-[#60656b]">
-            8.2k
-          </span>
-        </a>
-      </div>
+      </section>
 
       {/* 支付方式 */}
-      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {supportOptions.map((option) => (
-          <div
-            key={option.name}
-            className="is-panel flex h-[200px] flex-col items-center justify-center gap-4 p-8 text-center"
-          >
-            <option.icon size={48} className="text-[#202224]" />
-            <div>
-              <p className="text-[18px] font-bold leading-7 text-[#202224]">{option.name}</p>
-              <p className="mt-1 text-[14px] leading-[22px] text-[#60656b]">{option.description}</p>
+      <section className="py-16">
+        <div className="grid gap-px overflow-hidden rounded-[12px] border border-[var(--is-border)] bg-[var(--is-border)] md:grid-cols-3">
+          {methods.map((method) => (
+            <div key={method.name} className="flex flex-col items-center bg-white px-8 py-12 text-center">
+              <div className={`flex h-16 w-16 items-center justify-center rounded-[16px] ${method.bg} ${method.iconColor}`}>
+                <method.icon size={32} />
+              </div>
+              <p className="mt-6 text-[18px] font-bold leading-7 text-[var(--is-ink)]">{method.name}</p>
+              <p className="mt-1 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{method.desc}</p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+      </section>
+
+      {/* GitHub */}
+      <section className="border-t border-[var(--is-border)] py-16">
+        <div className="text-center">
+          <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
+            如果 IconStore 对你的工作或学习有所帮助，欢迎在 GitHub 上点个 Star。
+            这不会花费你太多时间，但对开源作者来说是莫大的认可和动力。
+          </p>
+          <a
+            href="https://github.com/zweioio/iconstore"
+            target="_blank"
+            rel="noreferrer"
+            className="is-button-primary mt-6 inline-flex items-center gap-2"
+          >
+            <Github size={16} />
+            {t.support.starRepo}
+            <ExternalLink size={14} />
+          </a>
+        </div>
       </section>
     </div>
   )
