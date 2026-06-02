@@ -1,17 +1,13 @@
 import { ChevronDown, Search, Star, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
-import { en } from '@/i18n/en'
-import { zh } from '@/i18n/zh'
 import { categoryLabels } from '@/data/icons'
 import { icons } from '@/data/icons'
 import { cn } from '@/lib/utils'
 import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/i18n'
 import { useIconLibraryStore } from '@/store/useIconLibraryStore'
 import type { IconCategory } from '@/types/icon'
-import type { Language } from '@/store/useLanguageStore'
-
-const i18n: Record<Language, typeof zh> = { zh, en }
 
 // 统计每个分类的图标数量
 const categoryCounts = Object.keys(categoryLabels).reduce<Record<string, number>>((acc, cat) => {
@@ -27,7 +23,7 @@ type IconControlsProps = {
 
 export function IconControls({ favoriteCount, onCategorySelect }: IconControlsProps) {
   const { language } = useLanguageStore()
-  const t = i18n[language]
+  const t = translations[language]
 
   const {
     keyword,

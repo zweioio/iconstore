@@ -9,18 +9,14 @@ import { useIconLibraryStore } from '@/store/useIconLibraryStore'
 import { getIconSvg } from '@/utils/iconLibrary'
 import { icons } from '@/data/icons'
 import { useLanguageStore } from '@/store/useLanguageStore'
-import { en } from '@/i18n/en'
-import { zh } from '@/i18n/zh'
-import type { Language } from '@/store/useLanguageStore'
-
-const i18n: Record<Language, typeof zh> = { zh, en }
+import { translations } from '@/i18n'
 
 // 精选图标展示
 const featuredIcons = icons.slice(0, 9)
 
 export default function AboutPage() {
   const { language } = useLanguageStore()
-  const t = i18n[language]
+  const t = translations[language]
 
   const features = [
     {

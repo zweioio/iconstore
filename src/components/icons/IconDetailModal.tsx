@@ -1,13 +1,9 @@
 import { Clipboard, Copy, Download, Star, X } from 'lucide-react'
 
-import { en } from '@/i18n/en'
-import { zh } from '@/i18n/zh'
 import { cn } from '@/lib/utils'
 import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/i18n'
 import type { IconItem } from '@/types/icon'
-import type { Language } from '@/store/useLanguageStore'
-
-const i18n: Record<Language, typeof zh> = { zh, en }
 
 type IconDetailModalProps = {
   icon: IconItem | null
@@ -31,7 +27,7 @@ export function IconDetailModal({
   onToggleFavorite,
 }: IconDetailModalProps) {
   const { language } = useLanguageStore()
-  const t = i18n[language]
+  const t = translations[language]
 
   if (!icon) {
     return null

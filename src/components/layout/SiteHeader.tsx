@@ -4,15 +4,11 @@ import { Link, NavLink } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { useLanguageStore } from '@/store/useLanguageStore'
-import { en } from '@/i18n/en'
-import { zh } from '@/i18n/zh'
-import type { Language } from '@/store/useLanguageStore'
-
-const i18n: Record<Language, typeof zh> = { zh, en }
+import { translations } from '@/i18n'
 
 export function SiteHeader() {
   const { language } = useLanguageStore()
-  const t = i18n[language]
+  const t = translations[language]
 
   const navItems = [
     { to: '/', label: t.nav.icons },

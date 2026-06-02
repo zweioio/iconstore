@@ -1,33 +1,53 @@
 import { Link } from 'react-router-dom'
 
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/i18n'
+
 export function SiteFooter() {
+  const { language } = useLanguageStore()
+  const t = translations[language]
+
+  const navItems = [
+    { to: '/', label: t.nav.icons },
+    { to: '/about', label: t.nav.about },
+    { to: '/guide', label: t.nav.guide },
+    { to: '/license', label: t.nav.license },
+    { to: '/request', label: t.nav.request },
+    { to: '/support', label: t.nav.support },
+  ]
+
   return (
-    <footer className="border-t border-[var(--ds-border)] bg-transparent">
-      <div className="mx-auto grid max-w-7xl gap-8 px-2 py-8 lg:grid-cols-[1.2fr_0.8fr] lg:px-8">
-        <div className="space-y-2">
-          <p className="font-display text-2xl font-bold text-[var(--ds-ink)]">Anicon</p>
-          <p className="max-w-xl text-sm leading-8 text-[var(--ds-ink-soft)]">
-            为设计师和前端准备的浅色图标官网，第一版聚焦统一风格、快速查找和顺手的 SVG 使用体验
+    <footer className="border-t border-[var(--is-border)] bg-white">
+      <div className="mx-auto flex max-w-[1200px] items-center justify-between px-2 py-6 lg:px-0">
+        {/* 左侧：品牌 + 描述 */}
+        <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="flex h-6 w-6 items-center justify-center rounded-[6px] bg-[#0395ff]">
+              <span className="text-[12px] font-bold leading-none text-white">Ic</span>
+            </div>
+            <p className="text-[16px] font-bold leading-[19px] text-black">iconStore</p>
+          </Link>
+          <p className="hidden text-[14px] leading-[22px] text-[var(--is-ink-soft)] sm:block">
+            {t.site.tagline}
           </p>
         </div>
 
-        <div className="grid gap-2 text-sm text-[var(--ds-ink-soft)] sm:grid-cols-3">
-          <Link className="transition hover:text-[var(--ds-ink)]" to="/">
-            图标库
-          </Link>
-          <Link className="transition hover:text-[var(--ds-ink)]" to="/about">
-            产品说明
-          </Link>
-          <Link className="transition hover:text-[var(--ds-ink)]" to="/guide">
-            使用说明
-          </Link>
-          <Link className="transition hover:text-[var(--ds-ink)]" to="/license">
-            授权说明
-          </Link>
-          <a className="transition hover:text-[var(--ds-ink)]" href="mailto:hello@anicon.design">
-            商务联系
-          </a>
-          <span>免费可商用</span>
+        {/* 右侧：导航链接 + 联系 */}
+        <div className="flex items-center gap-4">
+          <nav className="hidden items-center gap-4 md:flex">
+            {navItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="text-[14px] leading-[22px] text-[var(--is-ink-soft)] transition hover:text-[var(--is-ink)]"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <span className="hidden text-[14px] leading-[22px] text-[var(--is-ink-faint)] md:inline">
+            {t.license.free}
+          </span>
         </div>
       </div>
     </footer>

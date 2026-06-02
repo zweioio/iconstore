@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type Language = 'zh' | 'en'
+export type Language = 'zh' | 'en' | 'ja' | 'ko'
 
 type LanguageStore = {
   language: Language

@@ -3,15 +3,11 @@ import { useState } from 'react'
 import { Send } from 'lucide-react'
 
 import { useLanguageStore } from '@/store/useLanguageStore'
-import { en } from '@/i18n/en'
-import { zh } from '@/i18n/zh'
-import type { Language } from '@/store/useLanguageStore'
-
-const i18n: Record<Language, typeof zh> = { zh, en }
+import { translations } from '@/i18n'
 
 export default function IconRequestPage() {
   const { language } = useLanguageStore()
-  const t = i18n[language]
+  const t = translations[language]
 
   const [form, setForm] = useState({
     name: '',

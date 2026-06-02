@@ -88,6 +88,8 @@ export const en = {
   language: {
     chinese: '中文',
     english: 'English',
+    japanese: '日本語',
+    korean: '한국어',
   },
   about: {
     title: 'Icon Library',

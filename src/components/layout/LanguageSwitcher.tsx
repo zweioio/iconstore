@@ -8,6 +8,8 @@ import type { Language } from '@/store/useLanguageStore'
 const languageOptions: { value: Language; label: string }[] = [
   { value: 'zh', label: '中文' },
   { value: 'en', label: 'English' },
+  { value: 'ja', label: '日本語' },
+  { value: 'ko', label: '한국어' },
 ]
 
 export function LanguageSwitcher() {

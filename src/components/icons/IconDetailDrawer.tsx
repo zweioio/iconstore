@@ -3,12 +3,8 @@ import { Copy, Download, X } from 'lucide-react'
 import { IconPreview } from '@/components/icons/IconPreview'
 import { cn } from '@/lib/utils'
 import { useLanguageStore } from '@/store/useLanguageStore'
-import { en } from '@/i18n/en'
-import { zh } from '@/i18n/zh'
+import { translations } from '@/i18n'
 import type { IconItem, IconStyleMode, PreviewBackground } from '@/types/icon'
-import type { Language } from '@/store/useLanguageStore'
-
-const i18n: Record<Language, typeof zh> = { zh, en }
 
 type IconDetailDrawerProps = {
   icon: IconItem | null
@@ -32,7 +28,7 @@ export function IconDetailDrawer({
   onDownload,
 }: IconDetailDrawerProps) {
   const { language } = useLanguageStore()
-  const t = i18n[language]
+  const t = translations[language]
 
   if (!icon) {
     return null

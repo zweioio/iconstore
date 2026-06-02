@@ -6,23 +6,19 @@ import { IconCard } from '@/components/icons/IconCard'
 import { IconControls } from '@/components/icons/IconControls'
 import { IconDetailModal } from '@/components/icons/IconDetailModal'
 import { IconSettingsPanel } from '@/components/icons/IconSettingsPanel'
-import { en } from '@/i18n/en'
-import { zh } from '@/i18n/zh'
 import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/i18n'
 import { categoryLabels } from '@/data/icons'
 import { icons } from '@/data/icons'
 import { useIconLibraryStore } from '@/store/useIconLibraryStore'
 import { createDownloadName, filterIcons, getIconSvg } from '@/utils/iconLibrary'
-import type { Language } from '@/store/useLanguageStore'
-
-const i18n: Record<Language, typeof zh> = { zh, en }
 
 // 分类排序顺序
 const categoryOrder: (keyof typeof categoryLabels)[] = ['basic', 'arrow', 'edit', 'media', 'system', 'brand']
 
 export default function IconLibraryPage() {
   const { language } = useLanguageStore()
-  const t = i18n[language]
+  const t = translations[language]
 
   const {
     keyword,
