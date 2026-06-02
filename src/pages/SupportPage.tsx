@@ -1,21 +1,31 @@
 import { Github, Wallet, CreditCard, MessageCircle } from 'lucide-react'
 
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { en } from '@/i18n/en'
+import { zh } from '@/i18n/zh'
+import type { Language } from '@/store/useLanguageStore'
+
+const i18n: Record<Language, typeof zh> = { zh, en }
+
 export default function SupportPage() {
+  const { language } = useLanguageStore()
+  const t = i18n[language]
+
   const supportOptions = [
     {
-      name: 'PayPal',
+      name: t.support.methods.paypal,
       icon: CreditCard,
-      description: '国际用户首选',
+      description: t.support.methods.paypalDesc,
     },
     {
-      name: '支付宝',
+      name: t.support.methods.alipay,
       icon: Wallet,
-      description: '国内用户推荐',
+      description: t.support.methods.alipayDesc,
     },
     {
-      name: '微信支付',
+      name: t.support.methods.wechat,
       icon: MessageCircle,
-      description: '国内用户推荐',
+      description: t.support.methods.wechatDesc,
     },
   ]
 
@@ -25,12 +35,10 @@ export default function SupportPage() {
       <div className="flex items-start justify-between">
         <div className="space-y-4">
           <h1 className="text-[36px] font-bold leading-10 text-[#202224]">
-            支持我们
+            {t.support.title}
           </h1>
           <p className="max-w-[640px] text-[16px] leading-6 text-[#60656b]">
-            IconStore 是一款免费但精致的产品，我们已投入大量时间和精力进行设计、开发和完善。
-            如果您喜欢这些图标并希望看到我们继续努力推出更多优质图标的话，请考虑通过捐赠来支持我们的团队，
-            以推动我们的工作进程。
+            {t.support.description}
           </p>
         </div>
         <a
@@ -40,7 +48,7 @@ export default function SupportPage() {
           className="hidden items-center gap-2 rounded-[8px] bg-[#f8f8fc] px-4 py-2 text-[14px] leading-[22px] text-[#202224] transition hover:bg-[#f1f2f6] lg:inline-flex"
         >
           <Github size={16} />
-          星标此仓库
+          {t.support.starRepo}
           <span className="rounded-[6px] bg-white px-2 py-0.5 text-[12px] text-[#60656b]">
             8.2k
           </span>

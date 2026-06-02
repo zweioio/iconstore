@@ -3,17 +3,26 @@ import { Link, NavLink } from 'react-router-dom'
 
 import { cn } from '@/lib/utils'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { en } from '@/i18n/en'
+import { zh } from '@/i18n/zh'
+import type { Language } from '@/store/useLanguageStore'
 
-const navItems = [
-  { to: '/', label: '图标' },
-  { to: '/about', label: '项目介绍' },
-  { to: '/guide', label: '使用指南' },
-  { to: '/license', label: '授权说明' },
-  { to: '/request', label: '图标申请' },
-  { to: '/support', label: '打赏' },
-]
+const i18n: Record<Language, typeof zh> = { zh, en }
 
 export function SiteHeader() {
+  const { language } = useLanguageStore()
+  const t = i18n[language]
+
+  const navItems = [
+    { to: '/', label: t.nav.icons },
+    { to: '/about', label: t.nav.about },
+    { to: '/guide', label: t.nav.guide },
+    { to: '/license', label: t.nav.license },
+    { to: '/request', label: t.nav.request },
+    { to: '/support', label: t.nav.support },
+  ]
+
   return (
     <header className="border-b border-transparent bg-white">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between py-6">
@@ -66,7 +75,7 @@ export function SiteHeader() {
             to="/about"
             className="inline-flex rounded-[8px] border border-[#e9eaeb] px-3 py-1.5 text-[13px] text-[#202224] transition hover:bg-[#f8f8fc] md:hidden"
           >
-            项目介绍
+            {t.nav.aboutMobile}
           </Link>
         </div>
       </div>

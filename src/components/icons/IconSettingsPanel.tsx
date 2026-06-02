@@ -4,6 +4,12 @@ import {
   DEFAULT_STROKE_WIDTH,
   useIconLibraryStore,
 } from '@/store/useIconLibraryStore'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { en } from '@/i18n/en'
+import { zh } from '@/i18n/zh'
+import type { Language } from '@/store/useLanguageStore'
+
+const i18n: Record<Language, typeof zh> = { zh, en }
 
 type SliderFieldProps = {
   label: string
@@ -59,6 +65,9 @@ function SliderField({
 }
 
 export function IconSettingsPanel() {
+  const { language } = useLanguageStore()
+  const t = i18n[language]
+
   const {
     iconSize,
     strokeWidth,
@@ -73,22 +82,22 @@ export function IconSettingsPanel() {
   return (
     <aside className="w-full rounded-[12px] border border-[#e9eaeb] bg-white p-3 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-[16px] leading-6 text-[#202224]">图标设置</p>
+        <p className="text-[16px] leading-6 text-[#202224]">{t.settings.title}</p>
         <button
           type="button"
           onClick={resetIconSettings}
           disabled={isDefault}
           className="inline-flex items-center gap-1 rounded-[8px] px-[6px] py-1 text-[14px] leading-[22px] text-[#919499] transition hover:bg-[#f8f8fc] disabled:cursor-not-allowed disabled:opacity-40"
-          aria-label="重置图标设置"
+          aria-label={t.settings.reset}
         >
           <RefreshCcw size={14} />
-          重置
+          {t.settings.reset}
         </button>
       </div>
 
       <div className="mt-6 space-y-6">
         <SliderField
-          label="图标大小"
+          label={t.settings.iconSize}
           value={iconSize}
           min={12}
           max={64}
@@ -97,7 +106,7 @@ export function IconSettingsPanel() {
           onChange={setIconSize}
         />
         <SliderField
-          label="线段粗细"
+          label={t.settings.strokeWidth}
           value={strokeWidth}
           min={0.5}
           max={4}
