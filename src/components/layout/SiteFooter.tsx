@@ -1,3 +1,4 @@
+import { Github, Twitter } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { useLanguageStore } from '@/store/useLanguageStore'
@@ -19,7 +20,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-[var(--is-border)] bg-white">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-2 py-6 lg:px-0">
-        {/* 左侧：品牌 + 描述 */}
+        {/* 左侧：品牌 */}
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-2">
             <div className="flex h-6 w-6 items-center justify-center rounded-[6px] bg-[#0395ff]">
@@ -27,12 +28,9 @@ export function SiteFooter() {
             </div>
             <p className="text-[16px] font-bold leading-[19px] text-black">iconStore</p>
           </Link>
-          <p className="hidden text-[14px] leading-[22px] text-[var(--is-ink-soft)] sm:block">
-            {t.site.tagline}
-          </p>
         </div>
 
-        {/* 右侧：导航链接 + 联系 */}
+        {/* 中间：导航链接 */}
         <div className="flex items-center gap-4">
           <nav className="hidden items-center gap-4 md:flex">
             {navItems.map((item) => (
@@ -45,9 +43,28 @@ export function SiteFooter() {
               </Link>
             ))}
           </nav>
-          <span className="hidden text-[14px] leading-[22px] text-[var(--is-ink-faint)] md:inline">
-            {t.license.free}
-          </span>
+        </div>
+
+        {/* 右侧：社交图标 */}
+        <div className="flex items-center gap-2">
+          <a
+            href="https://github.com/zweioio/iconstore"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-soft)] transition hover:bg-[#f8f8fc] hover:text-[var(--is-ink)]"
+            aria-label="GitHub"
+          >
+            <Github size={16} />
+          </a>
+          <a
+            href="https://x.com"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-soft)] transition hover:bg-[#f8f8fc] hover:text-[var(--is-ink)]"
+            aria-label="X"
+          >
+            <Twitter size={16} />
+          </a>
         </div>
       </div>
     </footer>
