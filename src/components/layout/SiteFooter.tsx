@@ -46,7 +46,7 @@ export function SiteFooter() {
         </div>
 
         {/* 右侧：社交图标 */}
-        <div className="flex items-center gap-2">
+        <div className="ml-6 flex items-center gap-2">
           <a
             href="https://github.com/zweioio/iconstore"
             target="_blank"
