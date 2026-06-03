@@ -36,9 +36,59 @@ function formatFilledSvg(content) {
   return `<svg viewBox="0 0 24 24" fill="currentColor">${content}</svg>`
 }
 
-function generateKeywords(name, categoryLabel) {
+const categoryLabels = {
+  arrow: '箭头', basic: '基础', brand: '品牌', building: '建筑',
+  business: '商业', communication: '通讯', contact: '联系人', crypto: '加密货币',
+  design: '设计', development: '开发', device: '设备', document: '文档',
+  edit: '编辑', editor: '编辑器', education: '教育', emoji: '表情',
+  file: '文件', finance: '金融', food: '食物', game: '游戏', health: '健康',
+  logo: '标志', map: '地图', media: '媒体', nature: '自然', other: '其他',
+  part: '部件', shape: '形状', sport: '运动', system: '系统',
+  transport: '交通', user: '用户', weather: '天气', zodiac: '星座',
+}
+
+// 所有语言的分类翻译，标签搜索支持多语言
+const categoryI18n = {
+  arrow: ['箭头', '箭頭', 'Arrow', '矢印', '화살표'],
+  basic: ['基础', '基礎', 'Basic', '基本', '기본'],
+  brand: ['品牌', '品牌', 'Brand', 'ブランド', '브랜드'],
+  building: ['建筑', '建築', 'Building', '建築', '건축'],
+  business: ['商业', '商業', 'Business', 'ビジネス', '비즈니스'],
+  communication: ['通讯', '通訊', 'Communication', 'コミュニケーション', '커뮤니케이션'],
+  contact: ['联系人', '聯絡人', 'Contact', '連絡先', '연락처'],
+  crypto: ['加密货币', '加密貨幣', 'Crypto', '暗号通貨', '암호화폐'],
+  design: ['设计', '設計', 'Design', 'デザイン', '디자인'],
+  development: ['开发', '開發', 'Development', '開発', '개발'],
+  device: ['设备', '設備', 'Device', 'デバイス', '디바이스'],
+  document: ['文档', '文件', 'Document', '文書', '문서'],
+  edit: ['编辑', '編輯', 'Edit', '編集', '편집'],
+  editor: ['编辑器', '編輯器', 'Editor', 'エディター', '에디터'],
+  education: ['教育', '教育', 'Education', '教育', '교육'],
+  emoji: ['表情', '表情', 'Emoji', '絵文字', '이모지'],
+  file: ['文件', '檔案', 'File', 'ファイル', '파일'],
+  finance: ['金融', '金融', 'Finance', '金融', '금융'],
+  food: ['食物', '食物', 'Food', '食べ物', '음식'],
+  game: ['游戏', '遊戲', 'Game', 'ゲーム', '게임'],
+  health: ['健康', '健康', 'Health', '健康', '건강'],
+  logo: ['标志', '標誌', 'Logo', 'ロゴ', '로고'],
+  map: ['地图', '地圖', 'Map', '地図', '지도'],
+  media: ['媒体', '媒體', 'Media', 'メディア', '미디어'],
+  nature: ['自然', '自然', 'Nature', '自然', '자연'],
+  other: ['其他', '其他', 'Other', 'その他', '기타'],
+  part: ['部件', '零件', 'Part', '部品', '부품'],
+  shape: ['形状', '形狀', 'Shape', '形状', '모양'],
+  sport: ['运动', '運動', 'Sport', 'スポーツ', '스포츠'],
+  system: ['系统', '系統', 'System', 'システム', '시스템'],
+  transport: ['交通', '交通', 'Transport', '交通', '운송'],
+  user: ['用户', '用戶', 'User', 'ユーザー', '사용자'],
+  weather: ['天气', '天氣', 'Weather', '天気', '날씨'],
+  zodiac: ['星座', '星座', 'Zodiac', '星座', '별자리'],
+}
+
+function generateKeywords(name, category) {
   const parts = name.split('-')
-  return [...new Set([name, ...parts, categoryLabel])]
+  const labels = categoryI18n[category] || []
+  return [...new Set([name, ...parts, ...labels])]
 }
 
 function scanIcons() {
@@ -98,7 +148,6 @@ function scanIcons() {
         category,
         linearSvg: formatLinearSvg(extractSvgContent(linearPath)),
         filledSvg: formatFilledSvg(extractSvgContent(filledPath)),
-        categoryLabel: category,
       })
     }
   }
@@ -119,7 +168,7 @@ function generate(icons) {
   const output = `${lines.filter(l => l.trim()).join('\n')}
 const iconsData: IconItem[] = [
 ${icons.map(icon => {
-  const kw = JSON.stringify(generateKeywords(icon.name, icon.categoryLabel))
+  const kw = JSON.stringify(generateKeywords(icon.name, icon.category))
   return `  {
     id: '${icon.name}',
     name: '${icon.name}',

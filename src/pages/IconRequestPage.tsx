@@ -14,6 +14,11 @@ export default function IconRequestPage() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    const subject = encodeURIComponent(`图标申请: ${form.name}`)
+    const body = encodeURIComponent(
+      `图标名称: ${form.name}\n风格: ${form.style === 'linear' ? '线性' : form.style === 'filled' ? '面型' : '两者都要'}\n使用场景: ${form.scenario}\n参考链接: ${form.reference}\n联系方式: ${form.email}`
+    )
+    window.open(`mailto:iconstore@request.com?subject=${subject}&body=${body}`)
     setSubmitted(true)
   }
 

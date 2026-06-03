@@ -1,4 +1,5 @@
 import { Clipboard, Copy, Download, Star, X } from 'lucide-react'
+import { useEffect } from 'react'
 import { getIconLabel } from '@/utils/iconLabel'
 
 import { cn } from '@/lib/utils'
@@ -30,6 +31,14 @@ export function IconDetailModal({
   const { language } = useLanguageStore()
   const t = translations[language]
 
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [onClose])
+
   if (!icon) {
     return null
   }
@@ -37,9 +46,9 @@ export function IconDetailModal({
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[rgba(0,0,0,0.4)]">
       <button type="button" className="absolute inset-0" aria-label="关闭详情弹窗" onClick={onClose} />
-      <div className="relative z-10 flex w-[640px] gap-6 rounded-[24px] bg-[var(--is-white)] p-6">
-        {/* 左侧：图标展示区域 240×240 */}
-        <div className="flex h-[240px] w-[240px] shrink-0 items-center justify-center self-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)]">
+      <div className="relative z-10 flex h-[288px] w-[640px] gap-6 rounded-[24px] bg-[var(--is-white)] p-6">
+        {/* 左侧：图标展示区域 */}
+        <div className="flex h-full w-[240px] shrink-0 items-center justify-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)]">
           <div
             className="icon-preview flex h-[120px] w-[120px] items-center justify-center text-[var(--is-ink)]"
             dangerouslySetInnerHTML={{ __html: svg }}
@@ -100,7 +109,7 @@ export function IconDetailModal({
           </div>
 
           {/* 关键词 - 间距 24px */}
-          <div className="mt-6">
+          <div className="mt-4">
             <p className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-soft)]">{t.modal.keywords}</p>
             <div className="mt-2 flex flex-wrap gap-2">
               {icon.keywords.map((keyword) => (
@@ -115,7 +124,7 @@ export function IconDetailModal({
           </div>
 
           {/* 操作按钮 - 底部，间距 24px */}
-          <div className="mt-auto grid grid-cols-2 gap-3 pt-6">
+          <div className="mt-auto grid grid-cols-2 gap-3 pt-4">
             <button
               type="button"
               onClick={onCopy}

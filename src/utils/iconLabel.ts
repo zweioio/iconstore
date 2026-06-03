@@ -59,6 +59,7 @@ const dict: Record<string, { zh: string; ja: string; ko: string }> = {
   outline: { zh: '轮廓', ja: 'アウトライン', ko: '윤곽선' },
   mark: { zh: '标记', ja: 'マーク', ko: '마크' },
   // media
+  media: { zh: '媒体', ja: 'メディア', ko: '미디어' },
   play: { zh: '播放', ja: '再生', ko: '재생' },
   orbit: { zh: '轨道', ja: '軌道', ko: '궤도' },
   wave: { zh: '声波', ja: '波形', ko: '파형' },
@@ -94,7 +95,10 @@ const dict: Record<string, { zh: string; ja: string; ko: string }> = {
   recover: { zh: '恢复', ja: '復元', ko: '복구' },
   control: { zh: '控制', ja: '制御', ko: '제어' },
   health: { zh: '健康', ja: 'ヘルス', ko: '건강' },
+  // system
+  system: { zh: '系统', ja: 'システム', ko: '시스템' },
   // brand
+  brand: { zh: '品牌', ja: 'ブランド', ko: '브랜드' },
   chat: { zh: '聊天', ja: 'チャット', ko: '채팅' },
   badge: { zh: '徽章', ja: 'バッジ', ko: '뱃지' },
   star: { zh: '星标', ja: 'スター', ko: '별표' },

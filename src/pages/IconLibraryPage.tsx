@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { WheatDecoration } from '@/components/icons/WheatDecoration'
 
@@ -60,6 +60,25 @@ export default function IconLibraryPage() {
 
   const selectedIcon = icons.find((icon) => icon.id === selectedIconId) ?? null
   const selectedSvg = selectedIcon ? getIconSvg(selectedIcon, styleMode, strokeWidth) : ''
+
+  // ↑↓ 键盘导航
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (!selectedIconId) return
+      const idx = visibleIcons.findIndex((icon) => icon.id === selectedIconId)
+      if (idx === -1) return
+      if (e.key === 'ArrowDown' && idx < visibleIcons.length - 1) {
+        e.preventDefault()
+        setSelectedIconId(visibleIcons[idx + 1].id)
+      }
+      if (e.key === 'ArrowUp' && idx > 0) {
+        e.preventDefault()
+        setSelectedIconId(visibleIcons[idx - 1].id)
+      }
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [selectedIconId, visibleIcons, setSelectedIconId])
 
   // 按分类分组图标（搜索模式下不受 category 筛选影响）
   const groupedIcons = useMemo(() => {
