@@ -6,6 +6,7 @@ import { IconCard } from '@/components/icons/IconCard'
 import { IconControls } from '@/components/icons/IconControls'
 import { IconDetailModal } from '@/components/icons/IconDetailModal'
 import { IconSettingsPanel } from '@/components/icons/IconSettingsPanel'
+import { BackToTop } from '@/components/layout/BackToTop'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
 import { categoryLabels } from '@/data/icons'
@@ -261,6 +262,7 @@ export default function IconLibraryPage() {
           }
         }}
       />
+      <BackToTop />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
+import { SiteLogo } from './SiteLogo'
 
 export function SiteFooter() {
   const { language } = useLanguageStore()
@@ -22,11 +23,8 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-2 py-6 lg:px-0">
         {/* 左侧：品牌 */}
         <div className="flex items-center gap-3">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded-[6px] bg-[#0395ff]">
-              <span className="text-[12px] font-bold leading-none text-white">Ic</span>
-            </div>
-            <p className="text-[16px] font-bold leading-[19px] text-[var(--is-ink)]">iconStore</p>
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <SiteLogo />
           </Link>
         </div>
 

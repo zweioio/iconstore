@@ -1,4 +1,5 @@
 import { Github, CreditCard, Wallet, MessageCircle, ExternalLink, Star, Coffee } from 'lucide-react'
+import { BackToTop } from '@/components/layout/BackToTop'
 
 export default function SupportPage() {
   const methods = [
@@ -106,6 +107,7 @@ export default function SupportPage() {
           </div>
         </div>
       </section>
+      <BackToTop />
     </div>
   )
 }

@@ -37,7 +37,7 @@ export function IconDetailModal({
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[rgba(0,0,0,0.4)]">
       <button type="button" className="absolute inset-0" aria-label="关闭详情弹窗" onClick={onClose} />
-      <div className="relative z-10 flex gap-6 rounded-[24px] bg-[var(--is-white)] p-6">
+      <div className="relative z-10 flex w-[640px] gap-6 rounded-[24px] bg-[var(--is-white)] p-6">
         {/* 左侧：图标展示区域 240×240 */}
         <div className="flex h-[240px] w-[240px] shrink-0 items-center justify-center self-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)]">
           <div
@@ -66,7 +66,7 @@ export function IconDetailModal({
                 >
                   <Clipboard size={16} />
                 </button>
-                <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-[var(--is-ink)] px-3 py-1 text-[12px] leading-5 text-white opacity-0 transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-ink)]">
+                <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-[var(--is-ink)] px-3 py-1 text-[12px] leading-5 text-[var(--is-white)] opacity-0 transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-ink)]">
                   {t.modal.copyName}
                 </span>
               </div>
@@ -84,7 +84,7 @@ export function IconDetailModal({
                 >
                   <Star size={16} fill={isFavorite ? 'currentColor' : 'none'} />
                 </button>
-                <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-[var(--is-ink)] px-3 py-1 text-[12px] leading-5 text-white opacity-0 transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-ink)]">
+                <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-[var(--is-ink)] px-3 py-1 text-[12px] leading-5 text-[var(--is-white)] opacity-0 transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-ink)]">
                   {isFavorite ? t.card.unfavorite : t.card.favorite}
                 </span>
               </div>
@@ -119,7 +119,7 @@ export function IconDetailModal({
             <button
               type="button"
               onClick={onCopy}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-[12px] bg-[var(--is-ink)] text-[16px] leading-6 text-white transition hover:bg-[var(--is-ink-soft)]"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-[12px] bg-[var(--is-ink)] text-[16px] leading-6 text-[var(--is-white)] transition hover:bg-[var(--is-ink-soft)]"
             >
               <Copy size={20} />
               {t.modal.copySVG}

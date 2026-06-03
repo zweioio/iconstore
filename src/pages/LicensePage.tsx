@@ -1,4 +1,5 @@
 import { Check, Ban, RefreshCw, Heart, Shield, ExternalLink } from 'lucide-react'
+import { BackToTop } from '@/components/layout/BackToTop'
 
 export default function LicensePage() {
   const terms = [
@@ -82,6 +83,7 @@ export default function LicensePage() {
           </div>
         </div>
       </section>
+      <BackToTop />
     </div>
   )
 }

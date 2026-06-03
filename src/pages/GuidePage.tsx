@@ -1,4 +1,5 @@
 import { Code2, Paintbrush, Copy, Download, FileCode, Package } from 'lucide-react'
+import { BackToTop } from '@/components/layout/BackToTop'
 
 export default function GuidePage() {
   const workflows = [
@@ -125,6 +126,7 @@ export default function GuidePage() {
           </div>
         </div>
       </section>
+      <BackToTop />
     </div>
   )
 }

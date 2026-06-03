@@ -142,7 +142,7 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
         className={cn(
           'inline-flex h-12 w-[180px] items-center justify-between rounded-[12px] px-4 text-[16px] leading-6 transition',
           viewMode === 'favorites'
-            ? 'bg-[var(--is-ink)] text-white'
+            ? 'bg-[var(--is-ink)] text-[var(--is-white)]'
             : 'bg-[var(--is-surface)] text-[var(--is-ink)] hover:bg-[var(--is-surface-hover)]',
         )}
       >

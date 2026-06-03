@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Send, Sparkles, Lightbulb, ArrowRight } from 'lucide-react'
+import { BackToTop } from '@/components/layout/BackToTop'
 
 export default function IconRequestPage() {
   const [form, setForm] = useState({
@@ -18,37 +19,41 @@ export default function IconRequestPage() {
 
   if (submitted) {
     return (
-      <div className="pb-32 pt-14">
-        <div className="mx-auto max-w-[960px]">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">/ 已提交</p>
-          <div className="mt-10">
-            <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-[var(--is-surface)]">
-              <Sparkles size={22} className="text-[var(--is-ink)]" />
+      <>
+        <div className="pb-32 pt-14">
+          <div className="mx-auto max-w-[960px]">
+            <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">/ 已提交</p>
+            <div className="mt-10">
+              <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-[var(--is-surface)]">
+                <Sparkles size={22} className="text-[var(--is-ink)]" />
+              </div>
+              <h1 className="mt-6 text-[28px] font-bold leading-8 tracking-[-0.01em] text-[var(--is-ink)]">申请已收到</h1>
+              <p className="mt-3 max-w-[460px] text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
+                感谢你的建议！我们会认真评估每一个需求。如果该图标被采纳，我们会通过你留下的邮箱通知你。
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSubmitted(false)
+                  setForm({ name: '', style: 'both', scenario: '', reference: '', email: '' })
+                }}
+                className="is-button-primary mt-8 inline-flex items-center gap-2"
+              >
+                再提交一个
+                <ArrowRight size={16} />
+              </button>
             </div>
-            <h1 className="mt-6 text-[28px] font-bold leading-8 tracking-[-0.01em] text-[var(--is-ink)]">申请已收到</h1>
-            <p className="mt-3 max-w-[460px] text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
-              感谢你的建议！我们会认真评估每一个需求。如果该图标被采纳，我们会通过你留下的邮箱通知你。
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setSubmitted(false)
-                setForm({ name: '', style: 'both', scenario: '', reference: '', email: '' })
-              }}
-              className="is-button-primary mt-8 inline-flex items-center gap-2"
-            >
-              再提交一个
-              <ArrowRight size={16} />
-            </button>
           </div>
         </div>
-      </div>
+        <BackToTop />
+      </>
     )
   }
 
   return (
-    <div className="pb-32">
-      {/* Hero */}
+    <>
+      <div className="pb-32">
+        {/* Hero */}
       <section className="border-b border-[var(--is-border)] pb-20 pt-14">
         <div className="mx-auto max-w-[960px]">
           <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">01 / 图标申请</p>
@@ -154,7 +159,7 @@ export default function IconRequestPage() {
 
               {/* 提交 */}
               <div className="pt-4">
-                <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[15px] font-medium leading-6 text-white transition hover:bg-[var(--is-ink-soft)]">
+                <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[15px] font-medium leading-6 text-[var(--is-white)] transition hover:bg-[var(--is-ink-soft)]">
                   <Send size={15} />
                   提交申请
                 </button>
@@ -163,6 +168,8 @@ export default function IconRequestPage() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+      <BackToTop />
+    </>
   )
 }

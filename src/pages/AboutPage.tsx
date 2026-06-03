@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
+import { BackToTop } from '@/components/layout/BackToTop'
 
 export default function AboutPage() {
   const { language } = useLanguageStore()
@@ -52,7 +53,7 @@ export default function AboutPage() {
               而是真正能在产品界面里舒适工作、统一表达的实用工具。
             </p>
             <div className="mt-8 flex items-center gap-4">
-              <Link to="/" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[15px] font-medium leading-6 text-white transition hover:bg-[var(--is-ink-soft)]">
+              <Link to="/" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[15px] font-medium leading-6 text-[var(--is-white)] transition hover:bg-[var(--is-ink-soft)]">
                 {t.nav.enterLibrary}
                 <ArrowRight size={16} />
               </Link>
@@ -96,6 +97,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <BackToTop />
     </div>
   )
 }

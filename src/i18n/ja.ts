@@ -93,7 +93,7 @@ export const ja = {
   modal: {
     close: '閉じる',
     copySVG: 'SVGをコピー',
-    downloadSVG: 'SVGをダウンロード',
+    downloadSVG: 'SVGをDL',
     copyName: 'アイコン名をコピー',
     keywords: 'タグ',
     svgCode: 'SVGコード',

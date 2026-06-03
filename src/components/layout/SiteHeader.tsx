@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { SiteLogo } from './SiteLogo'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
 
@@ -54,11 +55,8 @@ export function SiteHeader() {
   return (
     <header className="border-b border-transparent bg-[var(--is-white)]">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between py-6">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-[6px] bg-[#0395ff]">
-            <span className="text-[12px] font-bold leading-none text-white">Ic</span>
-          </div>
-          <p className="text-[16px] font-bold leading-[19px] text-[var(--is-ink)]">iconStore</p>
+        <Link to="/">
+          <SiteLogo />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
