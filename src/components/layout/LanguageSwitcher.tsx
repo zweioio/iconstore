@@ -42,7 +42,7 @@ export function LanguageSwitcher() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-[60] mt-2 flex w-[180px] flex-col gap-[4px] rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
+        <div className="absolute right-0 top-full z-[60] mt-2 flex w-[160px] flex-col gap-[4px] rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
           {languageOptions.map((opt) => (
             <button
               key={opt.value}
