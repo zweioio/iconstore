@@ -28,7 +28,6 @@ export default function IconLibraryPage() {
     favoriteIds,
     selectedIconId,
     setSelectedIconId,
-    setStyleMode,
     toggleFavorite,
   } = useIconLibraryStore()
   const [feedback, setFeedback] = useState('')
@@ -122,7 +121,7 @@ export default function IconLibraryPage() {
     window.setTimeout(() => setFeedback(''), 1800)
   }
 
-  // 渲染图标列表的公共部分
+  // 渲染图标列表的公共部分 - 每个图标显示两次：线性 + 面型交替行
   function renderIconList(iconList: typeof filteredIcons) {
     if (iconList.length === 0) {
       return (
@@ -134,15 +133,25 @@ export default function IconLibraryPage() {
         </section>
       )
     }
+
+    // 每 10 个一组，每组先线性再面型交替行
+    const chunkSize = 10
+    const dualList: { icon: (typeof iconList)[number]; style: 'linear' | 'filled'; key: string }[] = []
+    for (let i = 0; i < iconList.length; i += chunkSize) {
+      const chunk = iconList.slice(i, i + chunkSize)
+      chunk.forEach((icon) => dualList.push({ icon, style: 'linear', key: `${icon.id}-linear-${i}` }))
+      chunk.forEach((icon) => dualList.push({ icon, style: 'filled', key: `${icon.id}-filled-${i}` }))
+    }
+
     return (
       <div style={{ overflow: 'visible' }}>
         <div className="grid min-w-[1200px] grid-cols-10 gap-y-8" style={{ overflow: 'visible' }}>
-          {iconList.map((icon) => {
-            const svg = getIconSvg(icon, styleMode, strokeWidth)
+          {dualList.map(({ icon, style, key }) => {
+            const svg = getIconSvg(icon, style, strokeWidth)
 
             return (
               <IconCard
-                key={icon.id}
+                key={key}
                 icon={icon}
                 svg={svg}
                 iconSize={iconSize}
