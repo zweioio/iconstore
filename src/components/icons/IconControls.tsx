@@ -89,7 +89,7 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
         </button>
 
         {dropdownOpen && (
-          <div className="absolute left-0 top-full z-[60] mt-2 flex max-h-[340px] w-[200px] flex-col gap-[4px] overflow-y-auto rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
+          <div className="absolute left-0 top-full z-[60] mt-2 flex max-h-[480px] w-[200px] flex-col gap-[4px] overflow-y-auto rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)] custom-scrollbar">
             {categories.map((item) => (
               <button
                 key={item.value}
