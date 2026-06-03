@@ -87,15 +87,7 @@ export function filterIcons(
   })
 }
 
-// 分类标签
-const categoryLabels: Record<string, string> = {
-  basic: '基础',
-  arrow: '箭头',
-  edit: '编辑',
-  media: '媒体',
-  system: '系统',
-  brand: '品牌',
-}
+import { categoryLabels } from '@/data/categories'
 
 // 生成下载文件名，让用户下载时能区分风格版本
 export function createDownloadName(icon: IconItem, styleMode: IconStyleMode) {

@@ -55,90 +55,92 @@ export default function IconRequestPage() {
       {/* 表单 */}
       <section className="py-16">
         <div className="mx-auto max-w-[560px]">
-          <form onSubmit={handleSubmit} className="space-y-7">
-            {/* 图标名称 */}
-            <div>
-              <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">
-                {t.request.form.name} <span className="text-[var(--is-ink-faint)]">*</span>
-              </label>
-              <input
-                type="text"
-                required
-                placeholder={t.request.form.namePlaceholder}
-                className="is-input mt-2 w-full"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-            </div>
-
-            {/* 风格偏好 */}
-            <div>
-              <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.request.form.style}</label>
-              <div className="mt-3 flex gap-6">
-                {[
-                  { value: 'linear', label: t.request.form.linear },
-                  { value: 'filled', label: t.request.form.filled },
-                  { value: 'both', label: t.request.form.both },
-                ].map((opt) => (
-                  <label key={opt.value} className="flex cursor-pointer items-center gap-2">
-                    <input
-                      type="radio"
-                      name="style"
-                      value={opt.value}
-                      checked={form.style === opt.value}
-                      onChange={(e) => setForm({ ...form, style: e.target.value })}
-                      className="h-4 w-4 accent-[var(--is-ink)]"
-                    />
-                    <span className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{opt.label}</span>
-                  </label>
-                ))}
+          <div className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-8 shadow-[0_1px_4px_rgba(0,0,0,0.08)]">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* 图标名称 */}
+              <div>
+                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">
+                  {t.request.form.name} <span className="text-[var(--is-ink-faint)]">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder={t.request.form.namePlaceholder}
+                  className="is-input mt-2 w-full"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
               </div>
-            </div>
 
-            {/* 使用场景 */}
-            <div>
-              <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.request.form.scenario}</label>
-              <textarea
-                rows={4}
-                placeholder={t.request.form.scenarioPlaceholder}
-                className="is-textarea mt-2 w-full"
-                value={form.scenario}
-                onChange={(e) => setForm({ ...form, scenario: e.target.value })}
-              />
-            </div>
+              {/* 风格偏好 */}
+              <div>
+                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.request.form.style}</label>
+                <div className="mt-3 flex gap-6">
+                  {[
+                    { value: 'linear', label: t.request.form.linear },
+                    { value: 'filled', label: t.request.form.filled },
+                    { value: 'both', label: t.request.form.both },
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex cursor-pointer items-center gap-2">
+                      <input
+                        type="radio"
+                        name="style"
+                        value={opt.value}
+                        checked={form.style === opt.value}
+                        onChange={(e) => setForm({ ...form, style: e.target.value })}
+                        className="h-4 w-4 accent-[var(--is-ink)]"
+                      />
+                      <span className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
 
-            {/* 参考链接 */}
-            <div>
-              <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.request.form.reference}</label>
-              <input
-                type="text"
-                placeholder={t.request.form.referencePlaceholder}
-                className="is-input mt-2 w-full"
-                value={form.reference}
-                onChange={(e) => setForm({ ...form, reference: e.target.value })}
-              />
-            </div>
+              {/* 使用场景 */}
+              <div>
+                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.request.form.scenario}</label>
+                <textarea
+                  rows={4}
+                  placeholder={t.request.form.scenarioPlaceholder}
+                  className="is-textarea mt-2 w-full"
+                  value={form.scenario}
+                  onChange={(e) => setForm({ ...form, scenario: e.target.value })}
+                />
+              </div>
 
-            {/* 联系方式 */}
-            <div>
-              <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.request.form.email}</label>
-              <input
-                type="email"
-                placeholder={t.request.form.emailPlaceholder}
-                className="is-input mt-2 w-full"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-              />
-            </div>
+              {/* 参考链接 */}
+              <div>
+                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.request.form.reference}</label>
+                <input
+                  type="text"
+                  placeholder={t.request.form.referencePlaceholder}
+                  className="is-input mt-2 w-full"
+                  value={form.reference}
+                  onChange={(e) => setForm({ ...form, reference: e.target.value })}
+                />
+              </div>
 
-            {/* 提交 */}
-            <div className="pt-4">
-              <button type="submit" className="is-button-primary inline-flex items-center gap-2">
-                <Send size={14} />
-                {t.request.form.submit}
-              </button>
-            </div>
-          </form>
+              {/* 联系方式 */}
+              <div>
+                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.request.form.email}</label>
+                <input
+                  type="email"
+                  placeholder={t.request.form.emailPlaceholder}
+                  className="is-input mt-2 w-full"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </div>
+
+              {/* 提交 */}
+              <div className="pt-2">
+                <button type="submit" className="is-button-primary inline-flex items-center gap-2">
+                  <Send size={14} />
+                  {t.request.form.submit}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
     </div>

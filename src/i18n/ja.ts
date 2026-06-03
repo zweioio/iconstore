@@ -1,7 +1,7 @@
 export const ja = {
   site: {
     title: 'IconStore',
-    tagline: 'シンプルでエレガントなオープンソースアイコンライブラリ',
+    tagline: 'シンプル＆エレガントなアイコンライブラリ',
     description: 'デザイナーと開発者のための中性スタイルのシステムアイコン。Webサイト、モバイルアプリ、製品UIに最適です。\nすべてのアイコンは個人・商用利用無料です。',
   },
   nav: {
@@ -64,10 +64,10 @@ export const ja = {
   },
   modal: {
     close: '閉じる',
-    copySVG: 'SVGコードをコピー',
+    copySVG: 'SVGをコピー',
     downloadSVG: 'SVGをダウンロード',
     copyName: 'アイコン名をコピー',
-    keywords: 'キーワード',
+    keywords: 'タグ',
     svgCode: 'SVGコード',
     linear: '線',
     filled: '塗り',
@@ -87,6 +87,7 @@ export const ja = {
   },
   language: {
     chinese: '中文',
+    traditionalChinese: '繁體中文',
     english: 'English',
     japanese: '日本語',
     korean: '한국어',

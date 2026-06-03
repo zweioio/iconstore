@@ -44,11 +44,14 @@ export default function SupportPage() {
         </div>
       </section>
 
-      {/* 支付方式 */}
+      {/* 支付方式 - 柔和阴影卡片 */}
       <section className="py-16">
-        <div className="grid gap-px overflow-hidden rounded-[12px] border border-[var(--is-border)] bg-[var(--is-border)] md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3">
           {methods.map((method) => (
-            <div key={method.name} className="flex flex-col items-center bg-white px-8 py-12 text-center">
+            <div
+              key={method.name}
+              className="flex flex-col items-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-8 py-12 text-center shadow-[0_1px_4px_rgba(0,0,0,0.08)]"
+            >
               <div className={`flex h-16 w-16 items-center justify-center rounded-[16px] ${method.bg} ${method.iconColor}`}>
                 <method.icon size={32} />
               </div>
@@ -61,7 +64,7 @@ export default function SupportPage() {
 
       {/* GitHub */}
       <section className="border-t border-[var(--is-border)] py-16">
-        <div className="text-center">
+        <div className="mx-auto max-w-[560px] rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-8 py-10 text-center shadow-[0_1px_4px_rgba(0,0,0,0.08)]">
           <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
             如果 IconStore 对你的工作或学习有所帮助，欢迎在 GitHub 上点个 Star。
             这不会花费你太多时间，但对开源作者来说是莫大的认可和动力。

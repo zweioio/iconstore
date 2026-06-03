@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
+import { useTheme } from '@/hooks/useTheme'
 import AboutPage from '@/pages/AboutPage'
 import GuidePage from '@/pages/GuidePage'
 import IconLibraryPage from '@/pages/IconLibraryPage'
@@ -10,9 +11,11 @@ import LicensePage from '@/pages/LicensePage'
 import SupportPage from '@/pages/SupportPage'
 
 export default function App() {
+  useTheme()
+
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-transparent text-black">
+      <div className="min-h-screen bg-transparent text-[var(--is-ink)]">
         <SiteHeader />
         <div className="relative">
           <main className="mx-auto max-w-[1200px] px-2 lg:px-0">

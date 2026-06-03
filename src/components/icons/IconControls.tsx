@@ -71,25 +71,25 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
   const currentCategory = categories.find((c) => c.value === category)
 
   return (
-    <div className="sticky top-0 z-[50] bg-white mt-6 mb-2 flex flex-wrap items-center gap-4 px-2 py-4 lg:px-0">
+    <div className="sticky top-0 z-[50] bg-[var(--is-white)] mt-6 mb-2 flex flex-wrap items-center gap-4 px-2 py-4 lg:px-0">
       {/* 自定义下拉框 */}
       <div className="relative w-[200px]" ref={dropdownRef}>
         <button
           type="button"
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="flex h-12 w-full items-center justify-between rounded-[12px] bg-[#f8f8fc] px-3"
+          className="flex h-12 w-full items-center justify-between rounded-[12px] bg-[var(--is-surface)] px-3 transition hover:bg-[var(--is-surface-hover)]"
         >
-          <span className="text-[16px] leading-6 text-[#202224]">
+          <span className="text-[16px] leading-6 text-[var(--is-ink)]">
             {currentCategory?.label}
           </span>
-          <span className="inline-flex items-center gap-1 text-[14px] text-[#60656b]">
+          <span className="inline-flex items-center gap-1 text-[14px] text-[var(--is-ink-soft)]">
             {categoryCounts[category] ?? ''}
-            <ChevronDown size={14} className="text-[#202224]" />
+            <ChevronDown size={14} className="text-[var(--is-ink)]" />
           </span>
         </button>
 
         {dropdownOpen && (
-          <div className="absolute left-0 top-full z-[60] mt-2 flex w-[200px] flex-col gap-[4px] rounded-[12px] border border-[#e9eaeb] bg-white p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
+          <div className="absolute left-0 top-full z-[60] mt-2 flex w-[200px] flex-col gap-[4px] rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
             {categories.map((item) => (
               <button
                 key={item.value}
@@ -98,12 +98,12 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
                 className={cn(
                   'flex w-full items-center justify-between rounded-[8px] px-3 py-3 text-left transition',
                   category === item.value
-                    ? 'bg-[#f8f8fc]'
-                    : 'bg-white hover:bg-[#f8f8fc]',
+                    ? 'bg-[var(--is-surface)]'
+                    : 'bg-[var(--is-white)] hover:bg-[var(--is-surface)]',
                 )}
               >
-                <span className="text-[16px] leading-6 text-[#202224]">{item.label}</span>
-                <span className="text-[14px] leading-[22px] text-[#60656b]">
+                <span className="text-[16px] leading-6 text-[var(--is-ink)]">{item.label}</span>
+                <span className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                   {categoryCounts[item.value]}
                 </span>
               </button>
@@ -113,13 +113,13 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
       </div>
 
       {/* 搜索框按设计稿做成长条，右侧保留清空按钮提高可用性 */}
-      <label className="flex h-12 flex-1 items-center justify-between rounded-[12px] bg-[#f8f8fc] px-3">
+      <label className="flex h-12 flex-1 items-center justify-between rounded-[12px] bg-[var(--is-surface)] px-3">
         <div className="flex items-center gap-2 cursor-text flex-1">
-          <Search size={18} className="text-[#202224]" />
+          <Search size={18} className="text-[var(--is-ink)]" />
           <input
             value={keyword}
             onChange={(event) => setKeyword(event.target.value)}
-            className="w-full bg-transparent text-[16px] leading-6 text-[#202224] outline-none placeholder:text-[#b5b9bf]"
+            className="w-full bg-transparent text-[16px] leading-6 text-[var(--is-ink)] outline-none placeholder:text-[var(--is-ink-faint)]"
             placeholder={t.controls.searchPlaceholder}
           />
         </div>
@@ -127,7 +127,7 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
           <button
             type="button"
             onClick={() => setKeyword('')}
-            className="inline-flex h-[24px] w-[24px] items-center justify-center rounded-[6px] bg-white text-[#60656b] transition hover:text-black"
+            className="inline-flex h-[24px] w-[24px] items-center justify-center rounded-[6px] bg-[var(--is-white)] text-[var(--is-ink-soft)] transition hover:text-black"
             aria-label="清空搜索"
           >
             <X size={16} />
@@ -142,15 +142,15 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
         className={cn(
           'inline-flex h-12 w-[180px] items-center justify-between rounded-[12px] px-4 text-[16px] leading-6 transition',
           viewMode === 'favorites'
-            ? 'bg-[#202224] text-white'
-            : 'bg-[#f8f8fc] text-[#202224] hover:bg-[#f1f2f6]',
+            ? 'bg-[var(--is-ink)] text-white'
+            : 'bg-[var(--is-surface)] text-[var(--is-ink)] hover:bg-[var(--is-surface-hover)]',
         )}
       >
         <span className="inline-flex items-center gap-1">
           <Star size={16} fill={viewMode === 'favorites' ? 'currentColor' : 'none'} />
           {t.controls.favorites}
         </span>
-        <span className={cn('text-[14px]', viewMode === 'favorites' ? 'text-white/70' : 'text-[#60656b]')}>
+        <span className={cn('text-[14px]', viewMode === 'favorites' ? 'text-white/70' : 'text-[var(--is-ink-soft)]')}>
           {favoriteCount}
         </span>
       </button>

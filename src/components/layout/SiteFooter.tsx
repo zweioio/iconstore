@@ -18,7 +18,7 @@ export function SiteFooter() {
   ]
 
   return (
-    <footer className="border-t border-[var(--is-border)] bg-white">
+    <footer className="border-t border-[var(--is-border)] bg-[var(--is-white)]">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-2 py-6 lg:px-0">
         {/* 左侧：品牌 */}
         <div className="flex items-center gap-3">
@@ -26,7 +26,7 @@ export function SiteFooter() {
             <div className="flex h-6 w-6 items-center justify-center rounded-[6px] bg-[#0395ff]">
               <span className="text-[12px] font-bold leading-none text-white">Ic</span>
             </div>
-            <p className="text-[16px] font-bold leading-[19px] text-black">iconStore</p>
+            <p className="text-[16px] font-bold leading-[19px] text-[var(--is-ink)]">iconStore</p>
           </Link>
         </div>
 
@@ -48,7 +48,7 @@ export function SiteFooter() {
             href="https://github.com/zweioio/iconstore"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-soft)] transition hover:bg-[#f8f8fc] hover:text-[var(--is-ink)]"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-soft)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
             aria-label="GitHub"
           >
             <Github size={16} />
@@ -57,7 +57,7 @@ export function SiteFooter() {
             href="https://x.com"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-soft)] transition hover:bg-[#f8f8fc] hover:text-[var(--is-ink)]"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-soft)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
             aria-label="X"
           >
             <Twitter size={16} />

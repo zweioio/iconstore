@@ -64,16 +64,16 @@ export default function HomePage() {
       <section className="pt-10">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-[8px] bg-[#f8f8fc] px-4 py-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[#60656b]">
+            <div className="inline-flex items-center gap-2 rounded-[8px] bg-[var(--is-surface)] px-4 py-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">
               <Sparkles size={14} />
               {t.home.badge}
             </div>
 
             <div className="space-y-6">
-              <h1 className="max-w-5xl whitespace-pre-line text-[36px] font-bold leading-10 text-[#202224] md:text-[48px] md:leading-[52px]">
+              <h1 className="max-w-5xl whitespace-pre-line text-[36px] font-bold leading-10 text-[var(--is-ink)] md:text-[48px] md:leading-[52px]">
                 {t.home.heroTitle}
               </h1>
-              <p className="max-w-2xl text-[16px] leading-6 text-[#60656b]">
+              <p className="max-w-2xl text-[16px] leading-6 text-[var(--is-ink-soft)]">
                 {t.home.heroDesc}
                 {t.home.heroDescDetail}
               </p>
@@ -95,17 +95,17 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="grid gap-2 text-[14px] leading-[22px] text-[#60656b] sm:grid-cols-3">
+            <div className="grid gap-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)] sm:grid-cols-3">
               <div className="inline-flex items-center gap-2">
-                <Star size={16} className="text-[#FADC19]" />
+                <Star size={16} className="text-[var(--is-yellow)]" />
                 {t.nav.freeCommercial}
               </div>
               <div className="inline-flex items-center gap-2">
-                <Star size={16} className="text-[#FADC19]" />
+                <Star size={16} className="text-[var(--is-yellow)]" />
                 {t.nav.unifiedSize}
               </div>
               <div className="inline-flex items-center gap-2">
-                <Star size={16} className="text-[#FADC19]" />
+                <Star size={16} className="text-[var(--is-yellow)]" />
                 {t.nav.defaultStroke}
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function HomePage() {
 
           {/* 图标预览展示 */}
           <div className="is-panel p-4">
-            <div className="mb-4 flex items-center justify-between px-4 py-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[#60656b]">
+            <div className="mb-4 flex items-center justify-between px-4 py-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">
               <span>{t.home.productOverview}</span>
               <span>{t.home.systemReady}</span>
             </div>
@@ -124,10 +124,10 @@ export default function HomePage() {
                   className="is-panel p-4"
                   style={{ transform: `translateY(${index % 3 === 1 ? 10 : 0}px)` }}
                 >
-                  <div className="flex h-[80px] w-[80px] items-center justify-center text-[#202224]">
+                  <div className="flex h-[80px] w-[80px] items-center justify-center text-[var(--is-ink)]">
                     <div dangerouslySetInnerHTML={{ __html: getIconSvg(icon, 'linear', 1.5) }} />
                   </div>
-                  <p className="mt-4 text-[12px] leading-[22px] text-[#60656b]">{icon.name}</p>
+                  <p className="mt-4 text-[12px] leading-[22px] text-[var(--is-ink-soft)]">{icon.name}</p>
                 </div>
               ))}
             </div>
@@ -139,9 +139,9 @@ export default function HomePage() {
       <section className="grid gap-5 md:grid-cols-3">
         {features.map((item) => (
           <div key={item.title} className="is-panel p-8">
-            <p className="text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[#60656b]">{item.title}</p>
-            <p className="mt-2 text-[24px] font-bold leading-8 text-[#202224]">{item.value}</p>
-            <p className="mt-4 text-[14px] leading-[22px] text-[#60656b]">{item.description}</p>
+            <p className="text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">{item.title}</p>
+            <p className="mt-2 text-[24px] font-bold leading-8 text-[var(--is-ink)]">{item.value}</p>
+            <p className="mt-4 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.description}</p>
           </div>
         ))}
       </section>
@@ -149,11 +149,11 @@ export default function HomePage() {
       {/* 产品理念 */}
       <section className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div className="space-y-4">
-          <p className="text-[14px] font-medium leading-[22px] text-[#60656b]">{t.home.coreValue}</p>
-          <h2 className="text-[36px] font-bold leading-10 text-[#202224]">
+          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-soft)]">{t.home.coreValue}</p>
+          <h2 className="text-[36px] font-bold leading-10 text-[var(--is-ink)]">
             {t.home.coreTitle}
           </h2>
-          <p className="max-w-2xl text-[16px] leading-6 text-[#60656b]">
+          <p className="max-w-2xl text-[16px] leading-6 text-[var(--is-ink-soft)]">
             {t.home.coreDesc}
           </p>
         </div>
@@ -161,8 +161,8 @@ export default function HomePage() {
         <div className="grid gap-4">
           {principles.map((item) => (
             <article key={item.title} className="is-panel p-8">
-              <h3 className="text-[18px] font-bold leading-7 text-[#202224]">{item.title}</h3>
-              <p className="mt-2 text-[14px] leading-[22px] text-[#60656b]">{item.description}</p>
+              <h3 className="text-[18px] font-bold leading-7 text-[var(--is-ink)]">{item.title}</h3>
+              <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.description}</p>
             </article>
           ))}
         </div>
@@ -171,11 +171,11 @@ export default function HomePage() {
       {/* 精选图标展示 */}
       <section className="is-panel grid gap-8 p-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="space-y-4">
-          <p className="text-[14px] font-medium leading-[22px] text-[#60656b]">{t.home.selectedIcons}</p>
-          <h2 className="text-[36px] font-bold leading-10 text-[#202224]">
+          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-soft)]">{t.home.selectedIcons}</p>
+          <h2 className="text-[36px] font-bold leading-10 text-[var(--is-ink)]">
             {t.home.selectedTitle}
           </h2>
-          <p className="max-w-2xl text-[16px] leading-6 text-[#60656b]">
+          <p className="max-w-2xl text-[16px] leading-6 text-[var(--is-ink-soft)]">
             {t.home.selectedDesc}
           </p>
         </div>
@@ -183,10 +183,10 @@ export default function HomePage() {
         <div className="grid grid-cols-3 gap-4">
           {featuredIcons.slice(0, 6).map((icon) => (
             <div key={icon.id} className="is-panel p-4">
-              <div className="flex h-[80px] w-[80px] items-center justify-center text-[#202224]">
+              <div className="flex h-[80px] w-[80px] items-center justify-center text-[var(--is-ink)]">
                 <div dangerouslySetInnerHTML={{ __html: getIconSvg(icon, 'linear', 1.5) }} />
               </div>
-              <p className="mt-4 text-[14px] leading-[22px] text-[#60656b]">{icon.name}</p>
+              <p className="mt-4 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{icon.name}</p>
             </div>
           ))}
         </div>
@@ -201,11 +201,11 @@ export default function HomePage() {
             aria-label={t.modal.close}
             onClick={() => setSelectedIconId(null)}
           />
-          <div className="relative z-10 w-[480px] rounded-[16px] border border-[#e9eaeb] bg-white p-6 shadow-[0_6px_32px_rgba(0,0,0,0.08)]">
+          <div className="relative z-10 w-[480px] rounded-[16px] border border-[var(--is-border)] bg-[var(--is-white)] p-6 shadow-[var(--is-shadow-modal)]">
             <button
               type="button"
               onClick={() => setSelectedIconId(null)}
-              className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[#919499] transition hover:bg-[#f8f8fc] hover:text-[#202224]"
+              className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
               aria-label={t.modal.close}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -213,9 +213,9 @@ export default function HomePage() {
               </svg>
             </button>
             <div className="space-y-6 pr-8">
-              <h2 className="text-[24px] font-bold leading-8 text-[#202224]">{selectedIcon.name}</h2>
-              <div className="flex h-[96px] w-full items-center justify-center rounded-[12px] border border-[#e9eaeb] bg-[#f8f8fc]">
-                <div className="inline-flex h-[96px] w-[96px] items-center justify-center text-[#202224]">
+              <h2 className="text-[24px] font-bold leading-8 text-[var(--is-ink)]">{selectedIcon.name}</h2>
+              <div className="flex h-[96px] w-full items-center justify-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-surface)]">
+                <div className="inline-flex h-[96px] w-[96px] items-center justify-center text-[var(--is-ink)]">
                   <div dangerouslySetInnerHTML={{ __html: selectedSvg }} />
                 </div>
               </div>

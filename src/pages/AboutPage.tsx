@@ -41,11 +41,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 核心数据 */}
+      {/* 核心数据 - 柔和阴影卡片 */}
       <section className="py-16">
-        <div className="grid gap-px overflow-hidden rounded-[12px] border border-[var(--is-border)] bg-[var(--is-border)] md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3">
           {stats.map((item) => (
-            <div key={item.label} className="bg-white px-8 py-10">
+            <div
+              key={item.label}
+              className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-8 py-10 shadow-[0_1px_4px_rgba(0,0,0,0.08)]"
+            >
               <p className="text-[32px] font-bold leading-9 text-[var(--is-ink)]">{item.value}</p>
               <p className="mt-2 text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{item.label}</p>
               <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.desc}</p>
@@ -60,15 +63,18 @@ export default function AboutPage() {
           <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">{t.about.principles.title}</p>
           <h2 className="mt-3 text-[32px] font-bold leading-9 text-[var(--is-ink)]">{t.home.coreTitle}</h2>
         </div>
-        <div className="mt-12 divide-y divide-[var(--is-border)]">
+        <div className="mx-auto mt-12 max-w-[720px] space-y-5">
           {values.map((item) => (
-            <div key={item.title} className="flex items-start gap-6 py-8 first:pt-0 last:pb-0">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[12px] bg-[var(--is-surface)] text-[20px] text-[var(--is-ink)]">
+            <div
+              key={item.title}
+              className="flex items-start gap-5 rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-6 py-6 shadow-[0_1px_4px_rgba(0,0,0,0.08)]"
+            >
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[10px] bg-[var(--is-surface)] text-[20px] text-[var(--is-ink)]">
                 {item.icon}
               </div>
               <div>
-                <h3 className="text-[18px] font-bold leading-7 text-[var(--is-ink)]">{item.title}</h3>
-                <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.desc}</p>
+                <h3 className="text-[16px] font-bold leading-6 text-[var(--is-ink)]">{item.title}</h3>
+                <p className="mt-1 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.desc}</p>
               </div>
             </div>
           ))}

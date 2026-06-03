@@ -64,10 +64,10 @@ export const ko = {
   },
   modal: {
     close: '닫기',
-    copySVG: 'SVG 코드 복사',
+    copySVG: 'SVG 복사',
     downloadSVG: 'SVG 다운로드',
     copyName: '아이콘 이름 복사',
-    keywords: '키워드',
+    keywords: '태그',
     svgCode: 'SVG 코드',
     linear: '선',
     filled: '면',
@@ -87,6 +87,7 @@ export const ko = {
   },
   language: {
     chinese: '中文',
+    traditionalChinese: '繁體中文',
     english: 'English',
     japanese: '日本語',
     korean: '한국어',

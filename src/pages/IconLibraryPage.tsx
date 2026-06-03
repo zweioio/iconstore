@@ -12,9 +12,7 @@ import { categoryLabels } from '@/data/icons'
 import { icons } from '@/data/icons'
 import { useIconLibraryStore } from '@/store/useIconLibraryStore'
 import { createDownloadName, filterIcons, getIconSvg } from '@/utils/iconLibrary'
-
-// 分类排序顺序
-const categoryOrder: (keyof typeof categoryLabels)[] = ['basic', 'arrow', 'edit', 'media', 'system', 'brand']
+import { categoryOrder } from '@/data/categories'
 
 export default function IconLibraryPage() {
   const { language } = useLanguageStore()
@@ -128,9 +126,9 @@ export default function IconLibraryPage() {
   function renderIconList(iconList: typeof filteredIcons) {
     if (iconList.length === 0) {
       return (
-        <section className="rounded-[12px] border border-dashed border-[#e9eaeb] bg-white px-4 py-20 text-center">
-          <p className="text-[32px] font-bold leading-10 text-[#202224]">{t.empty.noResults}</p>
-          <p className="mt-2 text-[14px] leading-[22px] text-[#60656b]">
+        <section className="rounded-[12px] border border-dashed border-[var(--is-border)] bg-[var(--is-white)] px-4 py-20 text-center">
+          <p className="text-[32px] font-bold leading-10 text-[var(--is-ink)]">{t.empty.noResults}</p>
+          <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
             {t.empty.noResultsHint}
           </p>
         </section>
@@ -172,20 +170,20 @@ export default function IconLibraryPage() {
 
       <section className="mx-auto flex max-w-[1200px] flex-col items-center pt-16 text-center">
         <div className="flex max-w-[1100px] flex-col items-center gap-4">
-          <h1 className="text-[48px] leading-[52px] text-[#202224]">
+          <h1 className="text-[48px] leading-[52px] text-[var(--is-ink)]">
             {t.site.tagline}
           </h1>
-          <p className="text-[16px] leading-6 text-[#60656b] whitespace-pre-line">{t.site.description}</p>
+          <p className="text-[16px] leading-6 text-[var(--is-ink-soft)] whitespace-pre-line">{t.site.description}</p>
         </div>
         <div className="mt-6 flex items-center gap-1">
           <WheatDecoration size={40} color="#D5B25F" />
           {metricItems.map((item) => (
             <div
               key={item.label}
-              className="flex h-[78px] w-[120px] flex-col items-center justify-center rounded-[12px] bg-white p-3"
+              className="group flex h-[78px] w-[120px] flex-col items-center justify-center rounded-[12px] bg-[var(--is-white)] p-3 transition hover:bg-[var(--is-surface)]"
             >
-              <p className="text-[20px] font-bold leading-7 text-[#202224]">{item.value}</p>
-              <p className="text-[14px] leading-[22px] text-[#60656b]">{item.label}</p>
+              <p className="text-[20px] font-bold leading-7 text-[var(--is-ink)] transition group-hover:text-[#D5B25F]">{item.value}</p>
+              <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.label}</p>
             </div>
           ))}
           <WheatDecoration size={40} color="#D5B25F" mirror />
@@ -201,10 +199,10 @@ export default function IconLibraryPage() {
             groupedIcons.map((group) => (
               <div key={group.category} id={`category-${group.category}`} className="mb-[96px] last:mb-0">
                 <div className="mb-6 flex items-center gap-3" style={{ overflow: 'visible', zIndex: 1 }}>
-                  <div className="rounded-[8px] bg-[#f8f8fc] px-3 py-1 text-[16px] leading-6 text-[#202224]">
+                  <div className="rounded-[8px] bg-[var(--is-surface)] px-3 py-1 text-[16px] leading-6 text-[var(--is-ink)]">
                     {group.label}
                   </div>
-                  <p className="text-[14px] leading-[22px] text-[#b5b9bf]">{group.icons.length} {t.controls.iconsCount}</p>
+                  <p className="text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{group.icons.length} {t.controls.iconsCount}</p>
                 </div>
                 {renderIconList(group.icons)}
               </div>
@@ -214,17 +212,17 @@ export default function IconLibraryPage() {
             <div>
               {visibleIcons.length > 0 && (
                 <div className="mb-6 flex items-center gap-3" style={{ overflow: 'visible', zIndex: 1 }}>
-                  <div className="rounded-[8px] bg-[#f8f8fc] px-3 py-1 text-[16px] leading-6 text-[#202224]">
+                  <div className="rounded-[8px] bg-[var(--is-surface)] px-3 py-1 text-[16px] leading-6 text-[var(--is-ink)]">
                     {viewMode === 'favorites' ? t.controls.favorites : t.empty.noResults}
                   </div>
-                  <p className="text-[14px] leading-[22px] text-[#b5b9bf]">{visibleIcons.length} {t.controls.iconsCount}</p>
+                  <p className="text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{visibleIcons.length} {t.controls.iconsCount}</p>
                 </div>
               )}
               {renderIconList(visibleIcons)}
             </div>
           )}
           {feedback && (
-            <span className="fixed left-1/2 top-8 z-[80] -translate-x-1/2 rounded-[10px] border border-[#e9eaeb] bg-white px-3 py-1.5 text-[14px] text-[#202224] shadow-[0_6px_20px_rgba(0,0,0,0.05)]">
+            <span className="fixed left-1/2 top-8 z-[80] -translate-x-1/2 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1.5 text-[14px] text-[var(--is-ink)] shadow-[var(--is-shadow-card)]">
               {feedback}
             </span>
           )}
@@ -237,7 +235,6 @@ export default function IconLibraryPage() {
         isFavorite={selectedIcon ? favoriteIds.includes(selectedIcon.id) : false}
         onClose={() => setSelectedIconId(null)}
         onCopy={() => selectedIcon && handleCopy(selectedSvg)}
-        onCopyCode={() => selectedIcon && handleCopy(selectedSvg)}
         onCopyName={() => {
           if (selectedIcon) {
             navigator.clipboard.writeText(selectedIcon.name).then(() => {

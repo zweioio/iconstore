@@ -8,7 +8,6 @@ export default function GuidePage() {
   const t = translations[language]
 
   const designSteps = [t.guide.steps.style, t.guide.steps.size, t.guide.steps.preview]
-
   const devSteps = [t.guide.steps.copy, t.guide.steps.adjust, t.guide.steps.organize]
 
   return (
@@ -23,35 +22,45 @@ export default function GuidePage() {
         </div>
       </section>
 
-      {/* 双栏步骤 */}
+      {/* 双栏步骤 - 柔和阴影卡片 */}
       <section className="py-16">
-        <div className="grid gap-12 md:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-2">
           {/* 设计师 */}
-          <div>
-            <div className="mb-8 flex items-center gap-3">
-              <Paintbrush size={20} className="text-[var(--is-ink)]" />
-              <h2 className="text-[20px] font-bold leading-7 text-[var(--is-ink)]">{t.guide.forDesigners}</h2>
+          <div className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-6 shadow-[0_1px_4px_rgba(0,0,0,0.08)]">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-[8px] bg-[var(--is-surface)]">
+                <Paintbrush size={18} className="text-[var(--is-ink)]" />
+              </div>
+              <h2 className="text-[18px] font-bold leading-6 text-[var(--is-ink)]">{t.guide.forDesigners}</h2>
             </div>
             <div className="space-y-3">
               {designSteps.map((step, i) => (
-                <p key={i} className="rounded-[8px] bg-[var(--is-surface)] px-4 py-3 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
-                  {step}
-                </p>
+                <div key={i} className="flex items-start gap-3 rounded-[8px] bg-[var(--is-surface)] px-4 py-3">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--is-ink-faint)] text-[11px] font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{step}</p>
+                </div>
               ))}
             </div>
           </div>
 
           {/* 前端 */}
-          <div>
-            <div className="mb-8 flex items-center gap-3">
-              <Code2 size={20} className="text-[var(--is-ink)]" />
-              <h2 className="text-[20px] font-bold leading-7 text-[var(--is-ink)]">{t.guide.forDevelopers}</h2>
+          <div className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-6 shadow-[0_1px_4px_rgba(0,0,0,0.08)]">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-[8px] bg-[var(--is-surface)]">
+                <Code2 size={18} className="text-[var(--is-ink)]" />
+              </div>
+              <h2 className="text-[18px] font-bold leading-6 text-[var(--is-ink)]">{t.guide.forDevelopers}</h2>
             </div>
             <div className="space-y-3">
               {devSteps.map((step, i) => (
-                <p key={i} className="rounded-[8px] bg-[var(--is-surface)] px-4 py-3 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
-                  {step}
-                </p>
+                <div key={i} className="flex items-start gap-3 rounded-[8px] bg-[var(--is-surface)] px-4 py-3">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--is-ink-faint)] text-[11px] font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{step}</p>
+                </div>
               ))}
             </div>
           </div>
@@ -64,7 +73,7 @@ export default function GuidePage() {
           <h2 className="text-[24px] font-bold leading-8 text-[var(--is-ink)]">{t.guide.svgSection}</h2>
           <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{t.guide.svgDesc}</p>
         </div>
-        <pre className="is-code mt-8 text-[13px]">
+        <pre className="is-code mx-auto mt-8 max-w-[640px] text-[13px] shadow-[0_1px_4px_rgba(0,0,0,0.08)]">
           <code>{`// 将复制到的 SVG 直接放入组件或静态资源目录
 export function ExampleIcon() {
   return (

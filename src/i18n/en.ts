@@ -64,10 +64,10 @@ export const en = {
   },
   modal: {
     close: 'Close',
-    copySVG: 'Copy SVG Code',
+    copySVG: 'Copy SVG',
     downloadSVG: 'Download SVG',
     copyName: 'Copy name',
-    keywords: 'Keywords',
+    keywords: 'Tags',
     svgCode: 'SVG code',
     linear: 'Linear',
     filled: 'Filled',
@@ -87,6 +87,7 @@ export const en = {
   },
   language: {
     chinese: '中文',
+    traditionalChinese: '繁體中文',
     english: 'English',
     japanese: '日本語',
     korean: '한국어',
