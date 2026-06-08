@@ -1,51 +1,55 @@
-import { Code2, Paintbrush, Copy, Download, FileCode, Package } from 'lucide-react'
+import { Code2, Paintbrush } from 'lucide-react'
 import { BackToTop } from '@/components/layout/BackToTop'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/i18n'
 
 export default function GuidePage() {
+  const { language } = useLanguageStore()
+  const t = translations[language]
+
   const workflows = [
     {
       role: 'Designer',
       icon: Paintbrush,
-      title: '设计师工作流',
+      title: t.guidePage.designerTitle,
       steps: [
-        '在图标库中搜索或浏览分类，找到需要的图标',
-        '点击图标打开详情面板，在线切换线性和面型风格',
-        '点击「复制 SVG」粘贴到 Figma / Sketch，或下载 SVG 文件',
+        t.guidePage.stepsDesigner[0],
+        t.guidePage.stepsDesigner[1],
+        t.guidePage.stepsDesigner[2],
       ],
-      tip: '所有图标使用 currentColor，在 Figma 中可直接修改颜色和描边粗细。',
+      tip: t.guidePage.tipDesigner,
     },
     {
       role: 'Developer',
       icon: Code2,
-      title: '开发者工作流',
+      title: t.guidePage.developerTitle,
       steps: [
-        '在弹窗中复制 SVG 代码或下载 .svg 文件',
-        '作为 React 组件内联使用，或通过 img 标签引用',
-        '将 SVG 源文件放入 src/icons/svg/ 目录，运行 npm run build-icons 自动构建',
+        t.guidePage.stepsDeveloper[0],
+        t.guidePage.stepsDeveloper[1],
+        t.guidePage.stepsDeveloper[2],
       ],
-      tip: '不需要安装任何 npm 包。SVG 是 Web 原生格式，0 依赖。',
+      tip: t.guidePage.tipDeveloper,
     },
   ]
 
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="border-b border-[var(--is-border)] pb-20 pt-14">
+      <section className="py-20 pt-14">
         <div className="mx-auto max-w-[960px]">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">01 / 使用指南</p>
           <div className="mt-6 max-w-[720px]">
             <h1 className="text-[44px] font-bold leading-[52px] tracking-[-0.02em] text-[var(--is-ink)]">
-              从浏览到落地，三步就够了
+              {t.guidePage.heroTitle}
             </h1>
             <p className="mt-6 text-[17px] leading-[28px] text-[var(--is-ink-soft)]">
-              IconStore 的使用路径非常直接。无论你习惯在 Figma 里画界面，还是在 VS Code 里写代码，图标都能顺畅地进入你的工作流。
+              {t.guidePage.heroDesc}
             </p>
           </div>
         </div>
       </section>
 
       {/* Workflows */}
-      <section className="border-b border-[var(--is-border)] py-20">
+      <section className="py-20">
         <div className="mx-auto max-w-[960px]">
           <div className="grid gap-16 md:grid-cols-2">
             {workflows.map((wf) => (
@@ -83,12 +87,11 @@ export default function GuidePage() {
       {/* Integration */}
       <section className="py-20">
         <div className="mx-auto max-w-[960px]">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">02 / 集成方式</p>
           <div className="mt-12 flex items-start gap-10">
             <span className="text-[14px] font-medium leading-6 text-[var(--is-ink-faint)]">React</span>
             <div className="flex-1">
               <p className="text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
-                复制 SVG 后直接内联使用，无需任何包装。
+                {t.guidePage.integrationReact}
               </p>
               <pre className="mt-5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-5 text-[13px] leading-6">
                 <code className="text-[var(--is-ink-soft)]">{`function UserIcon() {
@@ -106,7 +109,7 @@ export default function GuidePage() {
             <span className="text-[14px] font-medium leading-6 text-[var(--is-ink-faint)]">Vue</span>
             <div className="flex-1">
               <p className="text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
-                使用 v-html 指令渲染 SVG 内容。
+                {t.guidePage.integrationVue}
               </p>
               <pre className="mt-5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-5 text-[13px] leading-6">
                 <code className="text-[var(--is-ink-soft)]">{`<template>
@@ -120,7 +123,7 @@ export default function GuidePage() {
             <span className="text-[14px] font-medium leading-6 text-[var(--is-ink-faint)]">HTML</span>
             <div className="flex-1">
               <p className="text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
-                直接粘贴 SVG 标签到 HTML 中，或使用 img 标签引用。
+                {t.guidePage.integrationHtml}
               </p>
             </div>
           </div>

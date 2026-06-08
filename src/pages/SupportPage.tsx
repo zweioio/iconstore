@@ -1,29 +1,34 @@
 import { Github, CreditCard, Wallet, MessageCircle, ExternalLink, Star, Coffee } from 'lucide-react'
 import { BackToTop } from '@/components/layout/BackToTop'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/i18n'
 
 export default function SupportPage() {
+  const { language } = useLanguageStore()
+  const t = translations[language]
+
   const methods = [
     {
-      name: 'PayPal',
+      name: t.supportPage.paypal,
       icon: CreditCard,
-      desc: '支持国际信用卡和 PayPal 余额',
+      desc: t.supportPage.paypalDesc,
       detail: 'donate@iconstore.dev',
       color: '#0070BA',
       bg: 'bg-[#F0F7FF]',
     },
     {
-      name: '支付宝',
+      name: t.supportPage.alipay,
       icon: Wallet,
-      desc: '支持支付宝扫码支付',
+      desc: t.supportPage.alipayDesc,
       detail: 'iconstore@alipay.com',
       color: '#1677FF',
       bg: 'bg-[#F0F7FF]',
     },
     {
-      name: '微信',
+      name: t.supportPage.wechat,
       icon: MessageCircle,
-      desc: '支持微信扫码支付',
-      detail: '微信号: iconstore',
+      desc: t.supportPage.wechatDesc,
+      detail: `${t.nav.support}: iconstore`,
       color: '#07C160',
       bg: 'bg-[#F0FFF4]',
     },
@@ -32,25 +37,22 @@ export default function SupportPage() {
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="border-b border-[var(--is-border)] pb-20 pt-14">
+      <section className="py-20 pt-14">
         <div className="mx-auto max-w-[960px]">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">01 / 支持我们</p>
           <div className="mt-6 max-w-[720px]">
             <h1 className="text-[44px] font-bold leading-[52px] tracking-[-0.02em] text-[var(--is-ink)]">
-              让好图标持续生长
+              {t.supportPage.heroTitle}
             </h1>
             <p className="mt-6 text-[17px] leading-[28px] text-[var(--is-ink-soft)]">
-              IconStore 从第一天起就是免费、开源的。每个图标的设计、每行代码的打磨，背后都是真实投入的时间。
-              如果你觉得这个项目有价值，你的支持会让我们走得更远。
+              {t.supportPage.heroDesc}
             </p>
           </div>
         </div>
       </section>
 
       {/* Donate */}
-      <section className="border-b border-[var(--is-border)] py-20">
+      <section className="py-20">
         <div className="mx-auto max-w-[960px]">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">02 / 赞助方式</p>
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {methods.map((method) => (
               <div key={method.name} className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-7 py-10 text-center">
@@ -69,16 +71,15 @@ export default function SupportPage() {
       {/* Other ways */}
       <section className="py-20">
         <div className="mx-auto max-w-[960px]">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">03 / 其他方式</p>
           <div className="mt-12 space-y-10">
             <div className="flex items-start gap-6">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[var(--is-surface)]">
                 <Star size={18} className="text-[var(--is-ink)]" />
               </div>
               <div>
-                <h3 className="text-[17px] font-bold leading-6 text-[var(--is-ink)]">在 GitHub 点个 Star</h3>
+                <h3 className="text-[17px] font-bold leading-6 text-[var(--is-ink)]">{t.supportPage.starTitle}</h3>
                 <p className="mt-2 max-w-[480px] text-[14px] leading-[24px] text-[var(--is-ink-soft)]">
-                  这是最不需要成本但又最有意义的方式。一个 Star 不会占用你多少时间，但每一次点亮都是对开源的认可。
+                  {t.supportPage.starDesc}
                 </p>
                 <a
                   href="https://github.com/zweioio/iconstore"
@@ -98,9 +99,9 @@ export default function SupportPage() {
                 <Coffee size={18} className="text-[var(--is-ink)]" />
               </div>
               <div>
-                <h3 className="text-[17px] font-bold leading-6 text-[var(--is-ink)]">帮忙推广</h3>
+                <h3 className="text-[17px] font-bold leading-6 text-[var(--is-ink)]">{t.supportPage.shareTitle}</h3>
                 <p className="mt-2 max-w-[480px] text-[14px] leading-[24px] text-[var(--is-ink-soft)]">
-                  如果你觉得 IconStore 好用，推荐给同事、分享到社交媒体、写篇文章介绍它——每一种分享都在帮助这个项目被更多人看到。
+                  {t.supportPage.shareDesc}
                 </p>
               </div>
             </div>

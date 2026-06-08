@@ -10,47 +10,29 @@ export default function AboutPage() {
   const t = translations[language]
 
   const stats = [
-    { value: '108', label: '当前图标', desc: '首批精选图标，覆盖 34 个分类' },
-    { value: '2', label: '风格体系', desc: '线性与面型双版本，满足不同场景' },
-    { value: '100%', label: '免费开源', desc: 'Apache 2.0 授权，可商用可修改' },
+    { value: '108', label: t.aboutPage.statIcons, desc: t.aboutPage.statIconsDesc },
+    { value: '2', label: t.aboutPage.statStyle, desc: t.aboutPage.statStyleDesc },
+    { value: '100%', label: t.aboutPage.statFree, desc: t.aboutPage.statFreeDesc },
   ]
 
   const features = [
-    {
-      num: '01',
-      title: '中性的视觉语言',
-      desc: '不抢戏、不喧哗。每一个图标的弧度和比例都经过克制地设计，天然适配你产品的界面气质。',
-    },
-    {
-      num: '02',
-      title: '24px 网格系统',
-      desc: '所有图标基于统一的 24×24 网格绘制。放在一起时，它们看起来像同一双手画出来的。',
-    },
-    {
-      num: '03',
-      title: '双风格双稿交付',
-      desc: '线性用于结构表达，面型用于信息强调。每个图标两套独立稿，你选就行。',
-    },
-    {
-      num: '04',
-      title: 'SVG 优先的工作流',
-      desc: '不需要安装任何库。复制 SVG 代码直接粘贴到项目里，它是通用语言。',
-    },
+    { num: '01', title: t.aboutPage.feature1Title, desc: t.aboutPage.feature1Desc },
+    { num: '02', title: t.aboutPage.feature2Title, desc: t.aboutPage.feature2Desc },
+    { num: '03', title: t.aboutPage.feature3Title, desc: t.aboutPage.feature3Desc },
+    { num: '04', title: t.aboutPage.feature4Title, desc: t.aboutPage.feature4Desc },
   ]
 
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="border-b border-[var(--is-border)] pb-20 pt-14">
+      <section className="py-20 pt-14">
         <div className="mx-auto max-w-[960px]">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">01 / 项目介绍</p>
           <div className="mt-6 max-w-[720px]">
             <h1 className="text-[44px] font-bold leading-[52px] tracking-[-0.02em] text-[var(--is-ink)]">
-              IconStore 是什么
+              {t.aboutPage.heroTitle}
             </h1>
             <p className="mt-6 text-[17px] leading-[28px] text-[var(--is-ink-soft)]">
-              一套为设计师和前端准备的中性风格系统图标。不是那种"看起来很酷但用不上"的花哨图标，
-              而是真正能在产品界面里舒适工作、统一表达的实用工具。
+              {t.aboutPage.heroDesc}
             </p>
             <div className="mt-8 flex items-center gap-4">
               <Link to="/" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[15px] font-medium leading-6 text-[var(--is-white)] transition hover:bg-[var(--is-ink-soft)]">
@@ -66,7 +48,7 @@ export default function AboutPage() {
       </section>
 
       {/* Data row */}
-      <section className="border-b border-[var(--is-border)] py-16">
+      <section className="py-20">
         <div className="mx-auto max-w-[960px]">
           <div className="flex items-start gap-16">
             {stats.map((item) => (
@@ -83,7 +65,6 @@ export default function AboutPage() {
       {/* Features */}
       <section className="py-20">
         <div className="mx-auto max-w-[960px]">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-faint)]">02 / 设计原则</p>
           <div className="mt-12 space-y-14">
             {features.map((item) => (
               <div key={item.num} className="flex items-start gap-10">
