@@ -89,7 +89,7 @@ export default function SupportPage() {
                 >
                   <Github size={16} />
                   zweioio/iconstore
-                  <ExternalLink size={13} className="text-[var(--is-ink-faint)]" />
+                  <ExternalLink size={14} className="text-[var(--is-ink-faint)]" />
                 </a>
               </div>
             </div>

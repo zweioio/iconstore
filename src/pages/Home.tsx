@@ -65,7 +65,7 @@ export default function HomePage() {
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 rounded-[8px] bg-[var(--is-surface)] px-4 py-2 text-[12px] font-normal leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">
-              <Sparkles size={14} />
+              <Sparkles size={16} />
               {t.home.badge}
             </div>
 

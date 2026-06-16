@@ -83,6 +83,8 @@ export const en = {
   controls: {
     searchPlaceholder: 'Search icon name or keyword',
     favorites: 'Favorites',
+    clearAll: 'Clear All',
+    downloadAll: 'Download SVG',
     iconsCount: 'Icons',
   },
   card: {
@@ -213,6 +215,10 @@ export const en = {
     reset: 'Reset',
     iconSize: 'Icon Size',
     strokeWidth: 'Stroke Width',
+    strokeWidthHint: 'Filled icons cannot adjust stroke width',
+    sizeLock: 'Link icon size and stroke width proportionally',
+    sizeLinkedLabel: 'Linked',
+    sizeUnlinkedLabel: 'Link',
   },
   aboutPage: {
     heroTitle: 'What is IconStore',

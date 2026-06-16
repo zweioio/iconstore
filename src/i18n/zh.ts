@@ -83,6 +83,8 @@ export const zh = {
   controls: {
     searchPlaceholder: '搜索图标名称或关键词',
     favorites: '收藏夹',
+    clearAll: '全部清空',
+    downloadAll: '下载SVG',
     iconsCount: 'Icons',
   },
   card: {
@@ -213,6 +215,10 @@ export const zh = {
     reset: '重置',
     iconSize: '图标大小',
     strokeWidth: '线段粗细',
+    strokeWidthHint: '线段粗细调整不支持面性图标',
+    sizeLock: '等比调整字号与粗细',
+    sizeLinkedLabel: '已锁定',
+    sizeUnlinkedLabel: '绑定',
   },
   aboutPage: {
     heroTitle: 'IconStore 是什么',

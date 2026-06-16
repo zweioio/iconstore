@@ -9,7 +9,7 @@ import type {
 } from '@/types/icon'
 
 export const DEFAULT_ICON_SIZE = 24
-export const DEFAULT_STROKE_WIDTH = 1.5
+export const DEFAULT_STROKE_WIDTH = 1.8
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
@@ -34,6 +34,7 @@ type IconLibraryStore = {
   setBackground: (value: PreviewBackground) => void
   toggleFavorite: (iconId: string) => void
   resetIconSettings: () => void
+  clearFavorites: () => void
   setSelectedIconId: (value: string | null) => void
 }
 
@@ -68,6 +69,7 @@ export const useIconLibraryStore = create<IconLibraryStore>()(
           iconSize: DEFAULT_ICON_SIZE,
           strokeWidth: DEFAULT_STROKE_WIDTH,
         }),
+      clearFavorites: () => set({ favoriteIds: [] }),
       setSelectedIconId: (value) => set({ selectedIconId: value }),
     }),
     {

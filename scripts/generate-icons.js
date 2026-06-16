@@ -17,7 +17,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const SVG_DIR = path.join(ROOT, 'src', 'icons', 'svg')
 const OUTPUT = path.join(ROOT, 'src', 'data', 'icons.ts')
-const STROKE_ATTRS = 'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"'
+const STROKE_ATTRS = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"'
 
 function extractSvgContent(filePath) {
   const raw = fs.readFileSync(filePath, 'utf-8').trim()
@@ -26,14 +26,16 @@ function extractSvgContent(filePath) {
   return match ? match[1].trim() : raw
 }
 
-function formatLinearSvg(content) {
-  if (content.includes('stroke="')) return `<svg viewBox="0 0 24 24" ${STROKE_ATTRS}>${content}</svg>`
-  return `<svg viewBox="0 0 24 24" ${STROKE_ATTRS}>${content}</svg>`
+function formatLinearSvg(content, name) {
+  const title = name ? `<title>${name}</title>` : ''
+  if (content.includes('stroke="')) return `<svg viewBox="0 0 24 24" ${STROKE_ATTRS}>${title}${content}</svg>`
+  return `<svg viewBox="0 0 24 24" ${STROKE_ATTRS}>${title}${content}</svg>`
 }
 
-function formatFilledSvg(content) {
-  if (content.startsWith('<svg')) return content
-  return `<svg viewBox="0 0 24 24" fill="currentColor">${content}</svg>`
+function formatFilledSvg(content, name) {
+  const title = name ? `<title>${name}</title>` : ''
+  if (content.startsWith('<svg')) return content.replace('>', `>${title}`)
+  return `<svg viewBox="0 0 24 24" fill="currentColor">${title}${content}</svg>`
 }
 
 const categoryLabels = {
@@ -146,8 +148,8 @@ function scanIcons() {
       icons.push({
         name,
         category,
-        linearSvg: formatLinearSvg(extractSvgContent(linearPath)),
-        filledSvg: formatFilledSvg(extractSvgContent(filledPath)),
+        linearSvg: formatLinearSvg(extractSvgContent(linearPath), name),
+        filledSvg: formatFilledSvg(extractSvgContent(filledPath), name),
       })
     }
   }

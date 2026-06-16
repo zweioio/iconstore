@@ -15,9 +15,9 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-transparent text-[var(--is-ink)]">
+      <div className="flex min-h-screen flex-col bg-transparent text-[var(--is-ink)]">
         <SiteHeader />
-        <div className="relative">
+        <div className="relative flex-1">
           <main className="mx-auto max-w-[1200px] px-2 lg:px-0">
             <Routes>
               <Route path="/" element={<IconLibraryPage />} />

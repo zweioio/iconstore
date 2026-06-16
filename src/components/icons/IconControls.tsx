@@ -84,7 +84,7 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
           </span>
           <span className="inline-flex items-center gap-1 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
             {categoryCounts[category] ?? ''}
-            <ChevronDown size={14} className="text-[var(--is-ink)]" />
+            <ChevronDown size={16} className="text-[var(--is-ink)]" />
           </span>
         </button>
 

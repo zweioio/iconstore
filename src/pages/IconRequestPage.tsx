@@ -166,7 +166,7 @@ export default function IconRequestPage() {
               {/* 提交 */}
               <div className="pt-4">
                 <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[14px] font-normal leading-[22px] text-[var(--is-white)]">
-                  <Send size={15} />
+                  <Send size={16} />
                   {t.requestPage.formSubmit}
                 </button>
               </div>

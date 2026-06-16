@@ -53,7 +53,7 @@ export function SiteHeader() {
   ]
 
   return (
-    <header className="sticky top-0 z-50 bg-[var(--is-white)]">
+    <header className="sticky top-0 z-[55] bg-[var(--is-white)]">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between py-6">
         <Link to="/">
           <SiteLogo />

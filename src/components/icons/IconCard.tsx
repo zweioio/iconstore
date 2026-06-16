@@ -114,7 +114,7 @@ export function IconCard({
             aria-label={isFavorite ? `取消收藏 ${icon.name}` : `收藏 ${icon.name}`}
             aria-pressed={isFavorite}
           >
-            <Star size={14} fill={isFavorite ? 'currentColor' : 'none'} />
+            <Star size={16} fill={isFavorite ? 'currentColor' : 'none'} />
           </button>
         )}
 

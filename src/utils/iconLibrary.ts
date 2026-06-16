@@ -91,5 +91,5 @@ import { categoryLabels } from '@/data/categories'
 
 // 生成下载文件名，让用户下载时能区分风格版本
 export function createDownloadName(icon: IconItem, styleMode: IconStyleMode) {
-  return `${icon.name}-${styleMode === 'filled' ? 'filled' : 'linear'}.svg`
+  return `${icon.name}_${styleMode === 'filled' ? 'fill' : 'line'}.svg`
 }

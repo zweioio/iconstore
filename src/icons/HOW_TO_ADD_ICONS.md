@@ -85,7 +85,7 @@ git push
 |------|------|
 | viewBox | `0 0 24 24` |
 | 网格 | 24 × 24 |
-| 线性描边 | `stroke-width="1.5"` |
+| 线性描边 | `stroke-width="1.8"` |
 | 颜色 | 使用 `currentColor`（跟随文本颜色） |
 
 ## 新增分类

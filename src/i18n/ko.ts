@@ -83,6 +83,8 @@ export const ko = {
   controls: {
     searchPlaceholder: '아이콘 이름 또는 키워드 검색',
     favorites: '즐겨찾기',
+    clearAll: '모두 비우기',
+    downloadAll: 'SVG 다운로드',
     iconsCount: '아이콘',
   },
   card: {
@@ -213,6 +215,10 @@ export const ko = {
     reset: '초기화',
     iconSize: '아이콘 크기',
     strokeWidth: '선 두께',
+    strokeWidthHint: '면형 아이콘은 선 두께를 조정할 수 없습니다',
+    sizeLock: '크기와 선 두께를 함께 조정',
+    sizeLinkedLabel: '연동 중',
+    sizeUnlinkedLabel: '연동',
   },
   aboutPage: {
     heroTitle: 'IconStore란 무엇인가',

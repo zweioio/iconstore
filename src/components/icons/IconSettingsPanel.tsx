@@ -1,5 +1,6 @@
-import { RefreshCcw } from 'lucide-react'
+import { HelpCircle, Lock, RefreshCcw, Unlock } from 'lucide-react'
 import { useRef, useState } from 'react'
+
 import {
   DEFAULT_ICON_SIZE,
   DEFAULT_STROKE_WIDTH,
@@ -16,6 +17,7 @@ type SliderFieldProps = {
   step: number
   unit: string
   evenOnly?: boolean
+  hint?: string
   onChange: (value: number) => void
 }
 
@@ -27,6 +29,7 @@ function SliderField({
   step,
   unit,
   evenOnly,
+  hint,
   onChange,
 }: SliderFieldProps) {
   const percent = ((value - min) / (max - min)) * 100
@@ -81,7 +84,22 @@ function SliderField({
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
-        <p className="text-[14px] leading-[22px] text-[var(--is-ink)]">{label}</p>
+        <div className="flex items-center gap-1.5">
+          <p className="text-[14px] leading-[22px] text-[var(--is-ink)]">{label}</p>
+          {hint && (
+            <div className="group relative">
+              <button
+                type="button"
+                className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-faint)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
+              >
+                <HelpCircle size={16} />
+              </button>
+              <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
+                {hint}
+              </span>
+            </div>
+          )}
+        </div>
         {editing ? (
           <div className="flex h-[28px] w-[56px] items-center justify-between rounded-[8px] bg-[var(--is-code-bg)] px-2">
             <input
@@ -142,23 +160,66 @@ export function IconSettingsPanel() {
     resetIconSettings,
   } = useIconLibraryStore()
 
+  const [sizeLinked, setSizeLinked] = useState(false)
+
   const isDefault =
     iconSize === DEFAULT_ICON_SIZE && strokeWidth === DEFAULT_STROKE_WIDTH
+
+  const RATIO = DEFAULT_STROKE_WIDTH / DEFAULT_ICON_SIZE // 1.8 / 24 = 0.075
+
+  function handleLinkedIconSize(newSize: number) {
+    setIconSize(newSize)
+    if (sizeLinked) {
+      const linkedStroke = Math.round(newSize * RATIO * 10) / 10
+      setStrokeWidth(Math.min(4, Math.max(0.5, linkedStroke)))
+    }
+  }
+
+  function handleLinkedStrokeWidth(newWidth: number) {
+    setStrokeWidth(newWidth)
+    if (sizeLinked) {
+      const linkedSize = Math.round(newWidth / RATIO / 2) * 2
+      setIconSize(Math.min(48, Math.max(12, linkedSize)))
+    }
+  }
 
   return (
     <aside className="w-full rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-3 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
       <div className="flex items-center justify-between gap-3">
         <p className="text-[16px] leading-6 text-[var(--is-ink)]">{t.settings.title}</p>
-        <button
-          type="button"
-          onClick={resetIconSettings}
-          disabled={isDefault}
-          className="inline-flex items-center gap-1 rounded-[8px] px-[6px] py-1 text-[14px] leading-[22px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] disabled:cursor-not-allowed disabled:opacity-40"
-          aria-label={t.settings.reset}
-        >
-          <RefreshCcw size={14} />
-          {t.settings.reset}
-        </button>
+        <div className="flex items-center gap-1">
+          <div className="group relative">
+            <button
+              type="button"
+              onClick={() => setSizeLinked(!sizeLinked)}
+              className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition ${
+                sizeLinked
+                  ? 'text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
+                  : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)]'
+              }`}
+              aria-label={t.settings.sizeLock}
+            >
+              {sizeLinked ? <Lock size={16} /> : <Unlock size={16} />}
+            </button>
+            <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
+              {sizeLinked ? '绑定调整图标大小与粗细' : '自由设置图标大小与粗细'}
+            </span>
+          </div>
+          <div className="group relative">
+            <button
+            type="button"
+            onClick={resetIconSettings}
+            disabled={isDefault}
+            className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] disabled:cursor-not-allowed disabled:opacity-40"
+            aria-label={t.settings.reset}
+          >
+            <RefreshCcw size={16} />
+          </button>
+          <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
+            {t.settings.reset}
+          </span>
+          </div>
+        </div>
       </div>
 
       <div className="mt-6 space-y-6">
@@ -170,7 +231,7 @@ export function IconSettingsPanel() {
           step={2}
           unit="px"
           evenOnly
-          onChange={setIconSize}
+          onChange={handleLinkedIconSize}
         />
         <SliderField
           label={t.settings.strokeWidth}
@@ -179,7 +240,8 @@ export function IconSettingsPanel() {
           max={4}
           step={0.1}
           unit="px"
-          onChange={setStrokeWidth}
+          hint={t.settings.strokeWidthHint}
+          onChange={handleLinkedStrokeWidth}
         />
       </div>
     </aside>

@@ -83,6 +83,8 @@ export const ja = {
   controls: {
     searchPlaceholder: 'アイコン名またはキーワードを検索',
     favorites: 'お気に入り',
+    clearAll: 'すべてクリア',
+    downloadAll: 'SVGをダウンロード',
     iconsCount: 'アイコン',
   },
   card: {
@@ -213,6 +215,10 @@ export const ja = {
     reset: 'リセット',
     iconSize: 'アイコンサイズ',
     strokeWidth: '線の太さ',
+    strokeWidthHint: '塗りアイコンは線の太さを調整できません',
+    sizeLock: 'サイズと線の太さを連動',
+    sizeLinkedLabel: '連動中',
+    sizeUnlinkedLabel: '連動',
   },
   aboutPage: {
     heroTitle: 'IconStore とは',

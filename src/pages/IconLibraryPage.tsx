@@ -1,4 +1,6 @@
+import { Download, Trash2 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
+import JSZip from 'jszip'
 
 import { WheatDecoration } from '@/components/icons/WheatDecoration'
 
@@ -30,8 +32,11 @@ export default function IconLibraryPage() {
     selectedIconId,
     setSelectedIconId,
     toggleFavorite,
+    clearFavorites,
   } = useIconLibraryStore()
   const [feedback, setFeedback] = useState('')
+  const [selectedStyle, setSelectedStyle] = useState<'linear' | 'filled'>('linear')
+  const [confirmClear, setConfirmClear] = useState(false)
 
   // 滚动到对应分类的分组
   function scrollToCategory(cat: string) {
@@ -52,14 +57,19 @@ export default function IconLibraryPage() {
   const favoriteIconIds = useMemo(() => new Set(favoriteIds), [favoriteIds])
   const visibleIcons = useMemo(() => {
     if (viewMode === 'favorites') {
-      return filteredIcons.filter((icon) => favoriteIconIds.has(icon.id))
+      return filteredIcons.filter((icon) => favoriteIconIds.has(icon.id + '-linear') || favoriteIconIds.has(icon.id + '-filled'))
     }
 
     return filteredIcons
   }, [favoriteIconIds, filteredIcons, viewMode])
 
   const selectedIcon = icons.find((icon) => icon.id === selectedIconId) ?? null
-  const selectedSvg = selectedIcon ? getIconSvg(selectedIcon, styleMode, strokeWidth) : ''
+  const selectedSvg = selectedIcon ? getIconSvg(selectedIcon, selectedStyle, strokeWidth) : ''
+
+  function handlePreview(iconId: string, style: 'linear' | 'filled') {
+    setSelectedIconId(iconId)
+    setSelectedStyle(style)
+  }
 
   // ↑↓ 键盘导航
   useEffect(() => {
@@ -70,10 +80,12 @@ export default function IconLibraryPage() {
       if (e.key === 'ArrowDown' && idx < visibleIcons.length - 1) {
         e.preventDefault()
         setSelectedIconId(visibleIcons[idx + 1].id)
+        setSelectedStyle(selectedStyle)
       }
       if (e.key === 'ArrowUp' && idx > 0) {
         e.preventDefault()
         setSelectedIconId(visibleIcons[idx - 1].id)
+        setSelectedStyle(selectedStyle)
       }
     }
     document.addEventListener('keydown', handleKey)
@@ -109,15 +121,18 @@ export default function IconLibraryPage() {
     { value: '2.3K', label: t.metrics.githubStars },
   ]
 
-  async function handleCopy(svg: string) {
+  async function handleCopy(svg: string, styledName: string) {
+    // currentColor 在 Figma 中不生效，替换为实际颜色值
+    const svgForClipboard = svg
+      .replace(/<title>.*?<\/title>/, `<title>${styledName}</title>`)
+      .replace(/currentColor/g, '#202224')
     try {
-      await navigator.clipboard.writeText(svg)
+      await navigator.clipboard.writeText(svgForClipboard)
       setFeedback(t.modal.copied)
       window.setTimeout(() => setFeedback(''), 1800)
     } catch {
-      // fallback for older browsers
       const textarea = document.createElement('textarea')
-      textarea.value = svg
+      textarea.value = svgForClipboard
       textarea.style.position = 'fixed'
       textarea.style.opacity = '0'
       document.body.appendChild(textarea)
@@ -130,11 +145,35 @@ export default function IconLibraryPage() {
   }
 
   function handleDownload(name: string, svg: string) {
-    const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' })
+    const svgWithColor = svg.replace(/currentColor/g, '#202224')
+    const blob = new Blob([svgWithColor], { type: 'image/svg+xml;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
     link.download = name
+    link.click()
+    URL.revokeObjectURL(url)
+    setFeedback(t.modal.downloaded)
+    window.setTimeout(() => setFeedback(''), 1800)
+  }
+
+  async function handleDownloadAll() {
+    const zip = new JSZip()
+    favoriteIds.forEach((favId) => {
+      const sepIdx = favId.lastIndexOf('-')
+      const iconId = favId.slice(0, sepIdx)
+      const style = favId.slice(sepIdx + 1) as 'linear' | 'filled'
+      const icon = icons.find((i) => i.id === iconId)
+      if (!icon) return
+      const svg = getIconSvg(icon, style, 1.8).replace(/currentColor/g, '#202224')
+      const fileName = `${icon.name}_${style === 'filled' ? 'fill' : 'line'}.svg`
+      zip.file('iconstoreSVG/' + fileName, svg)
+    })
+    const blob = await zip.generateAsync({ type: 'blob' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'iconstoreSVG.zip'
     link.click()
     URL.revokeObjectURL(url)
     setFeedback(t.modal.downloaded)
@@ -154,35 +193,55 @@ export default function IconLibraryPage() {
       )
     }
 
-    // 每 10 个一组，每组先线性再面型交替行
+      // 每 10 个一组，每组先生成线性行，再生成面型行，确保两行分开
     const chunkSize = 10
-    const dualList: { icon: (typeof iconList)[number]; style: 'linear' | 'filled'; key: string }[] = []
+    const chunks: (typeof iconList)[number][][] = []
     for (let i = 0; i < iconList.length; i += chunkSize) {
-      const chunk = iconList.slice(i, i + chunkSize)
-      chunk.forEach((icon) => dualList.push({ icon, style: 'linear', key: `${icon.id}-linear-${i}` }))
-      chunk.forEach((icon) => dualList.push({ icon, style: 'filled', key: `${icon.id}-filled-${i}` }))
+      chunks.push(iconList.slice(i, i + chunkSize))
     }
 
     return (
       <div style={{ overflow: 'visible' }}>
-        <div className="grid min-w-[1200px] grid-cols-10 gap-y-8" style={{ overflow: 'visible' }}>
-          {dualList.map(({ icon, style, key }) => {
-            const svg = getIconSvg(icon, style, strokeWidth)
-
-            return (
-              <IconCard
-                key={key}
-                icon={icon}
-                svg={svg}
-                iconSize={iconSize}
-                isFavorite={favoriteIconIds.has(icon.id)}
-                isSelected={selectedIconId === icon.id}
-                onPreview={() => setSelectedIconId(icon.id)}
-                onToggleFavorite={() => toggleFavorite(icon.id)}
-              />
-            )
-          })}
-        </div>
+        {chunks.map((chunk, chunkIdx) => (
+          <div key={chunkIdx} className="space-y-8">
+            {/* 线性行 */}
+            <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
+              {chunk.map((icon) => {
+                const svg = getIconSvg(icon, 'linear', strokeWidth)
+                return (
+                  <IconCard
+                    key={`${icon.id}-linear-${chunkIdx}`}
+                    icon={icon}
+                    svg={svg}
+                    iconSize={iconSize}
+                    isFavorite={favoriteIconIds.has(icon.id + '-linear')}
+                    isSelected={selectedIconId === icon.id}
+                    onPreview={() => handlePreview(icon.id, 'linear')}
+                    onToggleFavorite={() => toggleFavorite(icon.id + '-linear')}
+                  />
+                )
+              })}
+            </div>
+            {/* 面型行 */}
+            <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
+              {chunk.map((icon) => {
+                const svg = getIconSvg(icon, 'filled', strokeWidth)
+                return (
+                  <IconCard
+                    key={`${icon.id}-filled-${chunkIdx}`}
+                    icon={icon}
+                    svg={svg}
+                    iconSize={iconSize}
+                    isFavorite={favoriteIconIds.has(icon.id + '-filled')}
+                    isSelected={selectedIconId === icon.id}
+                    onPreview={() => handlePreview(icon.id, 'filled')}
+                    onToggleFavorite={() => toggleFavorite(icon.id + '-filled')}
+                  />
+                )
+              })}
+            </div>
+          </div>
+        ))}
       </div>
     )
   }
@@ -239,15 +298,70 @@ export default function IconLibraryPage() {
           ) : (
             // 收藏夹或搜索模式：不分组显示
             <div>
-              {visibleIcons.length > 0 && (
-                <div className="mb-6 flex items-center gap-3" style={{ overflow: 'visible', zIndex: 1 }}>
-                  <div className="rounded-[8px] bg-[var(--is-surface)] px-3 py-1 text-[16px] leading-6 text-[var(--is-ink)]">
-                    {viewMode === 'favorites' ? t.controls.favorites : t.empty.noResults}
-                  </div>
-                  <p className="text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{visibleIcons.length} {t.controls.iconsCount}</p>
+              <div className="mb-6 flex items-center gap-3" style={{ overflow: 'visible', zIndex: 1 }}>
+                <div className="rounded-[8px] bg-[var(--is-surface)] px-3 py-1 text-[16px] leading-6 text-[var(--is-ink)]">
+                  {viewMode === 'favorites' ? t.controls.favorites : t.empty.noResults}
                 </div>
+                <p className="text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{visibleIcons.length} {t.controls.iconsCount}</p>
+                {viewMode === 'favorites' && favoriteIds.length > 0 && (
+                  <div className="ml-auto flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={handleDownloadAll}
+                        className="inline-flex h-8 items-center gap-1.5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
+                      >
+                        <Download size={16} />
+                        {t.controls.downloadAll}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setConfirmClear(true)}
+                        className="inline-flex h-8 items-center gap-1.5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 text-[14px] leading-[22px] text-[#d32f2f] transition hover:bg-[#fbe9e7]"
+                      >
+                        <Trash2 size={16} />
+                        {t.controls.clearAll}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              {viewMode === 'favorites' ? (
+                // 收藏夹模式：只显示被收藏的风格，不双行展示
+                <div style={{ overflow: 'visible' }}>
+                  {favoriteIds.length > 0 ? (
+                    <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
+                      {(() => {
+                        const items: { icon: typeof icons[number]; style: 'linear' | 'filled' }[] = []
+                        visibleIcons.forEach((icon) => {
+                          if (favoriteIconIds.has(icon.id + '-linear')) items.push({ icon, style: 'linear' })
+                          if (favoriteIconIds.has(icon.id + '-filled')) items.push({ icon, style: 'filled' })
+                        })
+                        return items.map(({ icon, style }) => {
+                          const svg = getIconSvg(icon, style, strokeWidth)
+                          return (
+                            <IconCard
+                              key={icon.id + '-' + style}
+                              icon={icon}
+                              svg={svg}
+                              iconSize={iconSize}
+                              isFavorite
+                              isSelected={selectedIconId === icon.id}
+                              onPreview={() => handlePreview(icon.id, style)}
+                              onToggleFavorite={() => toggleFavorite(icon.id + '-' + style)}
+                            />
+                          )
+                        })
+                      })()}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-32 text-center">
+                      <p className="text-[16px] leading-6 text-[var(--is-ink-soft)]">还没有收藏任何图标</p>
+                      <p className="mt-1 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">浏览图标时点击星星即可收藏</p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                renderIconList(visibleIcons)
               )}
-              {renderIconList(visibleIcons)}
             </div>
           )}
           {feedback && (
@@ -261,27 +375,59 @@ export default function IconLibraryPage() {
       <IconDetailModal
         icon={selectedIcon}
         svg={selectedSvg}
-        isFavorite={selectedIcon ? favoriteIds.includes(selectedIcon.id) : false}
+        styleMode={selectedStyle}
+        isFavorite={selectedIcon ? favoriteIds.includes(selectedIcon.id + '-' + selectedStyle) : false}
         onClose={() => setSelectedIconId(null)}
-        onCopy={() => selectedIcon && handleCopy(selectedSvg)}
-        onCopyName={() => {
+        onCopy={() => {
           if (selectedIcon) {
-            navigator.clipboard.writeText(selectedIcon.name).then(() => {
+            const styledName = selectedIcon.name + (selectedStyle === 'filled' ? '_fill' : '_line')
+            handleCopy(selectedSvg, styledName)
+          }
+        }}
+        onCopyName={(name) => {
+          if (name) {
+            navigator.clipboard.writeText(name).then(() => {
               setFeedback(t.modal.copiedName)
               window.setTimeout(() => setFeedback(''), 1800)
             })
           }
         }}
         onDownload={() =>
-          selectedIcon && handleDownload(createDownloadName(selectedIcon, styleMode), selectedSvg)
+          selectedIcon && handleDownload(createDownloadName(selectedIcon, selectedStyle), selectedSvg)
         }
         onToggleFavorite={() => {
           if (selectedIcon) {
-            toggleFavorite(selectedIcon.id)
+            toggleFavorite(selectedIcon.id + '-' + selectedStyle)
           }
         }}
       />
       <BackToTop />
+
+      {/* 全部清空确认弹窗 */}
+      {confirmClear && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-[rgba(0,0,0,0.4)]" onClick={() => setConfirmClear(false)}>
+          <div className="relative z-10 w-[360px] rounded-[16px] bg-[var(--is-white)] p-6 shadow-[0_6px_32px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
+            <p className="text-[18px] font-bold leading-7 text-[var(--is-ink)]">{t.controls.clearAll}</p>
+            <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">将清空全部 {favoriteIds.length} 个收藏图标，此操作不可撤销。</p>
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setConfirmClear(false)}
+                className="inline-flex h-10 items-center rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-5 text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
+              >
+                取消
+              </button>
+              <button
+                type="button"
+                onClick={() => { clearFavorites(); setConfirmClear(false) }}
+                className="inline-flex h-10 items-center rounded-[10px] bg-[var(--is-ink)] px-5 text-[14px] leading-[22px] text-[var(--is-white)] transition hover:opacity-90"
+              >
+                确认清空
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -86,10 +86,11 @@ function fireConfetti(e: React.MouseEvent) {
 type IconDetailModalProps = {
   icon: IconItem | null
   svg: string
+  styleMode: 'linear' | 'filled'
   isFavorite: boolean
   onClose: () => void
   onCopy: () => void
-  onCopyName: () => void
+  onCopyName: (name: string) => void
   onDownload: () => void
   onToggleFavorite: () => void
 }
@@ -97,6 +98,7 @@ type IconDetailModalProps = {
 export function IconDetailModal({
   icon,
   svg,
+  styleMode,
   isFavorite,
   onClose,
   onCopy,
@@ -136,7 +138,9 @@ export function IconDetailModal({
           {/* 图标名称 + 分类 + 操作按钮 */}
           <div className="flex items-start justify-between">
             <div className="space-y-1">
-              <h2 className="text-[20px] font-bold leading-7 text-[var(--is-ink)]">{icon.name}</h2>
+              <h2 className="text-[20px] font-bold leading-7 text-[var(--is-ink)]">
+                {icon.name}{styleMode === 'filled' ? '_fill' : '_line'}
+              </h2>
               <p className="text-[14px] leading-[22px] text-[var(--is-ink)]">
                 {getIconLabel(icon.name, language)}
               </p>
@@ -145,7 +149,7 @@ export function IconDetailModal({
               <div className="group relative">
                 <button
                   type="button"
-                  onClick={onCopyName}
+                  onClick={() => onCopyName(icon.name + (styleMode === 'filled' ? '_fill' : '_line'))}
                   className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
                   aria-label="复制图标名称"
                 >
@@ -188,6 +192,9 @@ export function IconDetailModal({
           <div className="mt-4">
             <p className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-soft)]">{t.modal.keywords}</p>
             <div className="mt-2 flex flex-wrap gap-2">
+              <span className="rounded-[6px] bg-[var(--is-surface)] px-3 py-1 text-[12px] leading-[20px] text-[var(--is-ink-soft)]">
+                {styleMode === 'filled' ? t.modal.filled : t.modal.linear}
+              </span>
               {icon.keywords.map((keyword) => (
                 <span
                   key={keyword}
