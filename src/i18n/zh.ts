@@ -16,7 +16,7 @@ export const zh = {
     viewGuide: '查看使用说明',
     freeCommercial: '免费可商用',
     unifiedSize: '24 x 24 统一尺寸',
-    defaultStroke: '线性默认描边 1.5',
+    defaultStroke: '线性默认描边 1.8',
   },
   home: {
     badge: '开源图标库',
@@ -221,7 +221,7 @@ export const zh = {
     sizeLock: '等比调整字号与粗细',
     sizeLinkedLabel: '已锁定',
     sizeUnlinkedLabel: '绑定',
-    sizeLockLinked: '绑定调整图标大小与粗细',
+    sizeLockLinked: '绑定同步图标大小与粗细',
     sizeLockUnlinked: '自由设置图标大小与粗细',
     confirmClearTitle: '将清空全部 {count} 个收藏图标，此操作不可撤销。',
     confirmClearCancel: '取消',

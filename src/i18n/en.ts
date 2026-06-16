@@ -16,7 +16,7 @@ export const en = {
     viewGuide: 'View Guide',
     freeCommercial: 'Free for Commercial',
     unifiedSize: '24 x 24 Grid',
-    defaultStroke: '1.5px Default Stroke',
+    defaultStroke: '1.8px Default Stroke',
   },
   home: {
     badge: 'Open Source Icon Library',
@@ -221,7 +221,7 @@ export const en = {
     sizeLock: 'Link icon size and stroke width proportionally',
     sizeLinkedLabel: 'Linked',
     sizeUnlinkedLabel: 'Link',
-    sizeLockLinked: 'Adjust icon size & stroke together',
+    sizeLockLinked: 'Sync icon size & stroke together',
     sizeLockUnlinked: 'Adjust icon size & stroke independently',
     confirmClearTitle: 'Clear all {count} favorited icons? This action cannot be undone.',
     confirmClearCancel: 'Cancel',

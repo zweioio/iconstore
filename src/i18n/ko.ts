@@ -16,7 +16,7 @@ export const ko = {
     viewGuide: '사용 설명 보기',
     freeCommercial: '상업용 무료',
     unifiedSize: '24 x 24 통일 크기',
-    defaultStroke: '기본 선 두께 1.5',
+    defaultStroke: '기본 선 두께 1.8',
   },
   home: {
     badge: '오픈소스 아이콘 라이브러리',
@@ -221,7 +221,7 @@ export const ko = {
     sizeLock: '크기와 선 두께를 함께 조정',
     sizeLinkedLabel: '연동 중',
     sizeUnlinkedLabel: '연동',
-    sizeLockLinked: '아이콘 크기와 선 두께를 함께 조정',
+    sizeLockLinked: '아이콘 크기와 선 두께 연동',
     sizeLockUnlinked: '아이콘 크기와 선 두께를 개별 조정',
     confirmClearTitle: '즐겨찾기 {count}개를 모두 비웁니다. 이 작업은 취소할 수 없습니다.',
     confirmClearCancel: '취소',

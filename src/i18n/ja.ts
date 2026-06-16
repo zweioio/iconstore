@@ -16,7 +16,7 @@ export const ja = {
     viewGuide: '使い方を見る',
     freeCommercial: '商用利用無料',
     unifiedSize: '24 x 24 統一サイズ',
-    defaultStroke: 'デフォルト線幅 1.5',
+    defaultStroke: 'デフォルト線幅 1.8',
   },
   home: {
     badge: 'オープンソースアイコンライブラリ',
@@ -221,7 +221,7 @@ export const ja = {
     sizeLock: 'サイズと線の太さを連動',
     sizeLinkedLabel: '連動中',
     sizeUnlinkedLabel: '連動',
-    sizeLockLinked: 'アイコンサイズと線の太さを連動して調整',
+    sizeLockLinked: 'アイコンサイズと線の太さを同期',
     sizeLockUnlinked: 'アイコンサイズと線の太さを個別に調整',
     confirmClearTitle: 'お気に入り {count} 個をすべてクリアします。この操作は元に戻せません。',
     confirmClearCancel: 'キャンセル',

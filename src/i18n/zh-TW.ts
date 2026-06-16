@@ -16,7 +16,7 @@ export const zhTW = {
     viewGuide: '查看使用說明',
     freeCommercial: '免費可商用',
     unifiedSize: '24 x 24 統一尺寸',
-    defaultStroke: '線性預設描邊 1.5',
+    defaultStroke: '線性預設描邊 1.8',
   },
   home: {
     badge: '開源圖標庫',
@@ -221,7 +221,7 @@ export const zhTW = {
     sizeLock: '等比調整字號與粗細',
     sizeLinkedLabel: '已鎖定',
     sizeUnlinkedLabel: '綁定',
-    sizeLockLinked: '綁定調整圖標大小與粗細',
+    sizeLockLinked: '綁定同步圖標大小與粗細',
     sizeLockUnlinked: '自由設置圖標大小與粗細',
     confirmClearTitle: '將清空全部 {count} 個收藏圖標，此操作不可撤銷。',
     confirmClearCancel: '取消',
