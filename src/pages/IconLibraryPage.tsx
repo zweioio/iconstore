@@ -197,7 +197,7 @@ export default function IconLibraryPage() {
         <IconSettingsPanel />
       </div>
 
-      <section className="mx-auto flex max-w-[1200px] flex-col items-center pt-16 text-center">
+      <section className="mx-auto flex max-w-[1200px] flex-col items-center pt-20 text-center">
         <div className="flex max-w-[1100px] flex-col items-center gap-4">
           <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
             {t.site.tagline}

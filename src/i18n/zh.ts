@@ -1,7 +1,7 @@
 export const zh = {
   site: {
     title: 'IconStore',
-    tagline: '简洁而精致的开源图标库',
+    tagline: '简洁优雅的图标库',
     description: '为设计师和开发者打造的中性风格系统图标，适合用于网页、移动应用与产品界面。\n所有图标均可免费用于个人和商业用途',
   },
   nav: {
@@ -216,7 +216,7 @@ export const zh = {
   },
   aboutPage: {
     heroTitle: 'IconStore 是什么',
-    heroDesc: '一套为设计师和前端准备的中性风格系统图标。不是那种"看起来很酷但用不上"的花哨图标，而是真正能在产品界面里舒适工作、统一表达的实用工具',
+    heroDesc: '一套为设计师和前端准备的中性风格系统图标。\n不是那种"看起来很酷但用不上"的花哨图标，而是真正能在产品界面里舒适工作、统一表达的实用工具',
     statIcons: '当前图标',
     statIconsDesc: '首批精选图标，覆盖 34 个分类',
     statStyle: '风格体系',
@@ -234,7 +234,7 @@ export const zh = {
   },
   guidePage: {
     heroTitle: '从浏览到落地，三步就够了',
-    heroDesc: 'IconStore 的使用路径非常直接。无论你习惯在 Figma 里画界面，还是在 VS Code 里写代码，图标都能顺畅地进入你的工作流',
+    heroDesc: 'IconStore 的使用路径非常直接。\n无论你习惯在 Figma 里画界面，还是在 VS Code 里写代码，图标都能顺畅地进入你的工作流',
     designerTitle: '设计师工作流',
     developerTitle: '开发者工作流',
     stepsDesigner: ['在图标库中搜索或浏览分类，找到需要的图标', '点击图标打开详情面板，在线切换线性和面型风格', '点击「复制 SVG」粘贴到 Figma / Sketch，或下载 SVG 文件'],
@@ -247,7 +247,7 @@ export const zh = {
   },
   licensePage: {
     heroTitle: '开源、免费，且对商业友好',
-    heroDesc: 'IconStore 采用 Apache 2.0 开源协议。这意味着你可以把它用在几乎任何地方——个人项目、商业产品、公司官网——都不需要额外授权',
+    heroDesc: '采用 Apache 2.0 开源协议。\n这意味着你可以把它用在几乎任何地方——个人项目、商业产品、公司官网——都不需要额外授权',
     termCommercial: '✅ 可商用',
     termCommercialDesc: '可用于个人项目、商业项目、网站、移动应用、印刷品、品牌设计。完全免费，无需支付任何费用',
     termModify: '✅ 可修改',
@@ -263,7 +263,7 @@ export const zh = {
   },
   requestPage: {
     heroTitle: '少了什么？告诉我们',
-    heroDesc: 'IconStore 还在持续成长中。如果你在工作中发现缺少某个图标，或者某个分类不够完整，直接告诉我们。每一个需求都在帮助我们理解社区真正需要什么',
+    heroDesc: '我们还在持续成长中，如果你在工作中发现缺少某个图标，或者某个分类不够完整，直接告诉我们。\n每一个需求都在帮助我们理解社区真正需要什么',
     formName: '图标名称',
     formNameHint: '英文连字符格式，例如 cloud-upload、user-profile',
     formNamePlaceholder: '例如: shopping-cart、bell-alert',
@@ -287,7 +287,7 @@ export const zh = {
   },
   supportPage: {
     heroTitle: '让好图标持续生长',
-    heroDesc: 'IconStore 从第一天起就是免费、开源的。每个图标的设计、每行代码的打磨，背后都是真实投入的时间。如果你觉得这个项目有价值，你的支持会让我们走得更远',
+    heroDesc: '从第一天起就是免费、开源的，每个图标的设计、每行代码的打磨，背后都是真实投入的时间。\n如果你觉得这个项目有价值，你的支持会让我们走得更远',
     paypal: 'PayPal',
     paypalDesc: '支持国际信用卡和 PayPal 余额',
     alipay: '支付宝',

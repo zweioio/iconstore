@@ -204,7 +204,7 @@ export function IconDetailModal({
             <button
               type="button"
               onClick={(e) => { onCopy(); fireConfetti(e) }}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-[12px] bg-[var(--is-ink)] text-[16px] leading-6 text-[var(--is-white)] transition hover:-translate-y-0.5 hover:shadow-md"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-[12px] bg-[var(--is-ink)] text-[16px] leading-6 text-[var(--is-white)]"
             >
               <Copy size={20} />
               {t.modal.copySVG}

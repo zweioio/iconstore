@@ -35,13 +35,13 @@ export default function GuidePage() {
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="pt-16 pb-20">
+      <section className="pt-20 pb-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="max-w-[720px] mx-auto text-center">
+          <div className="mx-auto text-center">
             <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
               {t.guidePage.heroTitle}
             </h1>
-            <p className="mt-6 text-[16px] leading-[24px] text-[var(--is-ink-soft)]">
+            <p className="mt-6 text-[16px] leading-[24px] whitespace-pre-line text-[var(--is-ink-soft)]">
               {t.guidePage.heroDesc}
             </p>
           </div>
@@ -49,7 +49,7 @@ export default function GuidePage() {
       </section>
 
       {/* Workflows */}
-      <section className="pt-20 pb-10">
+      <section className="py-10">
         <div className="mx-auto max-w-[1200px]">
           <div className="grid gap-16 md:grid-cols-2">
             {workflows.map((wf) => (
@@ -85,15 +85,15 @@ export default function GuidePage() {
       </section>
 
       {/* Integration */}
-      <section className="pt-20 pb-10">
+      <section className="py-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="mt-12 flex items-start gap-10">
-            <span className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-faint)]">React</span>
-            <div className="flex-1">
-              <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
+          <div className="grid gap-6 sm:grid-cols-3">
+            <div className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-6">
+              <span className="text-[12px] font-bold leading-4 tracking-[0.05em] text-[var(--is-ink-faint)]">REACT</span>
+              <p className="mt-4 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                 {t.guidePage.integrationReact}
               </p>
-              <pre className="mt-5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-5 text-[14px] leading-[22px]">
+              <pre className="mt-5 overflow-x-auto rounded-[8px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-4 text-[13px] leading-[20px]">
                 <code className="text-[var(--is-ink-soft)]">{`function UserIcon() {
   return (
     <span dangerouslySetInnerHTML={{
@@ -103,28 +103,28 @@ export default function GuidePage() {
 }`}</code>
               </pre>
             </div>
-          </div>
 
-          <div className="mt-12 flex items-start gap-10">
-            <span className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-faint)]">Vue</span>
-            <div className="flex-1">
-              <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
+            <div className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-6">
+              <span className="text-[12px] font-bold leading-4 tracking-[0.05em] text-[var(--is-ink-faint)]">VUE</span>
+              <p className="mt-4 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                 {t.guidePage.integrationVue}
               </p>
-              <pre className="mt-5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-5 text-[14px] leading-[22px]">
+              <pre className="mt-5 overflow-x-auto rounded-[8px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-4 text-[13px] leading-[20px]">
                 <code className="text-[var(--is-ink-soft)]">{`<template>
   <span v-html="userSvg" />
 </template>`}</code>
               </pre>
             </div>
-          </div>
 
-          <div className="mt-12 flex items-start gap-10">
-            <span className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-faint)]">HTML</span>
-            <div className="flex-1">
-              <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
+            <div className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-6">
+              <span className="text-[12px] font-bold leading-4 tracking-[0.05em] text-[var(--is-ink-faint)]">HTML</span>
+              <p className="mt-4 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                 {t.guidePage.integrationHtml}
               </p>
+              <pre className="mt-5 overflow-x-auto rounded-[8px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-4 text-[13px] leading-[20px]">
+                <code className="text-[var(--is-ink-soft)]">{`<img src="icon.svg" alt="" />
+<span>icon.svg</span>`}</code>
+              </pre>
             </div>
           </div>
         </div>

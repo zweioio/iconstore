@@ -1,7 +1,7 @@
 export const zhTW = {
   site: {
     title: 'IconStore',
-    tagline: '簡潔而精緻的開源圖標庫',
+    tagline: '簡潔優雅的圖標庫',
     description: '為設計師和開發者打造的中性風格系統圖標，適合用於網頁、行動應用與產品介面。\n所有圖標均可免費用於個人和商業用途',
   },
   nav: {
@@ -216,7 +216,7 @@ export const zhTW = {
   },
   aboutPage: {
     heroTitle: 'IconStore 是什麼',
-    heroDesc: '一套為設計師和前端準備的中性風格系統圖標。不是那種"看起來很酷但用不上"的花哨圖標，而是真正能在產品介面裡舒適工作、統一表達的實用工具',
+    heroDesc: '一套為設計師和前端準備的中性風格系統圖標。\n不是那種"看起來很酷但用不上"的花哨圖標，而是真正能在產品介面裡舒適工作、統一表達的實用工具',
     statIcons: '當前圖標',
     statIconsDesc: '首批精選圖標，覆蓋 34 個分類',
     statStyle: '風格體系',
@@ -234,7 +234,7 @@ export const zhTW = {
   },
   guidePage: {
     heroTitle: '從瀏覽到落地，三步就夠了',
-    heroDesc: 'IconStore 的使用路徑非常直接。無論你習慣在 Figma 裡畫介面，還是在 VS Code 裡寫程式碼，圖標都能順暢地進入你的工作流',
+    heroDesc: 'IconStore 的使用路徑非常直接。\n無論你習慣在 Figma 裡畫介面，還是在 VS Code 裡寫程式碼，圖標都能順暢地進入你的工作流',
     designerTitle: '設計師工作流',
     developerTitle: '開發者工作流',
     stepsDesigner: ['在圖標庫中搜索或瀏覽分類，找到需要的圖標', '點擊圖標打開詳情面板，在線切換線性和面型風格', '點擊「複製 SVG」貼上到 Figma / Sketch，或下載 SVG 檔案'],
@@ -247,7 +247,7 @@ export const zhTW = {
   },
   licensePage: {
     heroTitle: '開源、免費，且對商業友好',
-    heroDesc: 'IconStore 採用 Apache 2.0 開源協議。這意味著你可以把它用在幾乎任何地方——個人專案、商業產品、公司官網——都不需要額外授權',
+    heroDesc: '採用 Apache 2.0 開源協議。\n這意味著你可以把它用在幾乎任何地方——個人專案、商業產品、公司官網——都不需要額外授權',
     termCommercial: '✅ 可商用',
     termCommercialDesc: '可用於個人專案、商業專案、網站、行動應用、印刷品、品牌設計。完全免費，無需支付任何費用',
     termModify: '✅ 可修改',
@@ -263,7 +263,7 @@ export const zhTW = {
   },
   requestPage: {
     heroTitle: '少了什麼？告訴我們',
-    heroDesc: 'IconStore 還在持續成長中。如果你在工作中發現缺少某個圖標，或者某個分類不夠完整，直接告訴我們。每一個需求都在幫助我們理解社群真正需要什麼',
+    heroDesc: '我們還在持續成長中，如果你在工作中發現缺少某個圖標，或者某個分類不夠完整，直接告訴我們。\n每一個需求都在幫助我們理解社群真正需要什麼',
     formName: '圖標名稱',
     formNameHint: '英文連字符格式，例如 cloud-upload、user-profile',
     formNamePlaceholder: '例如: shopping-cart、bell-alert',
@@ -287,7 +287,7 @@ export const zhTW = {
   },
   supportPage: {
     heroTitle: '讓好圖標持續生長',
-    heroDesc: 'IconStore 從第一天起就是免費、開源的。每個圖標的設計、每行程式碼的打磨，背後都是真實投入的時間。如果你覺得這個專案有價值，你的支持會讓我們走得更遠',
+    heroDesc: '從第一天起就是免費、開源的，每個圖標的設計、每行程式碼的打磨，背後都是真實投入的時間。\n如果你覺得這個專案有價值，你的支持會讓我們走得更遠',
     paypal: 'PayPal',
     paypalDesc: '支援國際信用卡和 PayPal 餘額',
     alipay: '支付寶',

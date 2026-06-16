@@ -1,7 +1,7 @@
 export const en = {
   site: {
     title: 'IconStore',
-    tagline: 'Simple & Elegant Open Source Icon Library',
+    tagline: 'Simple & Elegant Icon Library',
     description: 'Neutral-style system icons designed for designers and developers, suitable for websites, mobile apps, and product interfaces.\nAll icons are free for personal and commercial use',
   },
   nav: {
@@ -216,7 +216,7 @@ export const en = {
   },
   aboutPage: {
     heroTitle: 'What is IconStore',
-    heroDesc: 'A set of neutral-style system icons for designers and developers. Not flashy icons that "look cool but are hard to use" — but practical tools that work comfortably and consistently in your product interfaces',
+    heroDesc: 'A set of neutral-style system icons for designers and developers.\nNot flashy icons that "look cool but are hard to use" — but practical tools that work comfortably and consistently in your product interfaces',
     statIcons: 'Icons',
     statIconsDesc: 'Curated icons covering 34 categories',
     statStyle: 'Style Systems',
@@ -234,7 +234,7 @@ export const en = {
   },
   guidePage: {
     heroTitle: 'From Browse to Integration, Three Steps',
-    heroDesc: 'IconStore is straightforward to use. Whether you work in Figma or VS Code, icons integrate seamlessly into your workflow',
+    heroDesc: 'IconStore is straightforward to use.\nWhether you work in Figma or VS Code, icons integrate seamlessly into your workflow',
     designerTitle: 'Designer Workflow',
     developerTitle: 'Developer Workflow',
     stepsDesigner: ['Search or browse categories to find the icon you need', 'Click an icon to preview and switch between linear and filled styles', 'Copy SVG to paste into Figma / Sketch, or download the SVG file'],
@@ -247,7 +247,7 @@ export const en = {
   },
   licensePage: {
     heroTitle: 'Open Source, Free, and Business-Friendly',
-    heroDesc: 'IconStore uses the Apache 2.0 license. You can use it almost anywhere — personal projects, commercial products, company websites — with no additional authorization required',
+    heroDesc: 'Uses the Apache 2.0 license.\nYou can use it almost anywhere — personal projects, commercial products, company websites — with no additional authorization required',
     termCommercial: '✅ Commercial Use',
     termCommercialDesc: 'Use in personal projects, commercial projects, websites, mobile apps, print, and brand design. Free, no payment required',
     termModify: '✅ Modification Allowed',
@@ -263,7 +263,7 @@ export const en = {
   },
   requestPage: {
     heroTitle: 'Missing Something? Let Us Know',
-    heroDesc: 'IconStore is continuously growing. If you find an icon is missing or a category is incomplete, tell us directly. Every request helps us understand what the community truly needs',
+    heroDesc: 'We are continuously growing — if you find an icon is missing or a category is incomplete, just tell us.\nEvery request helps us understand what the community truly needs',
     formName: 'Icon Name',
     formNameHint: 'Hyphenated English format, e.g. cloud-upload, user-profile',
     formNamePlaceholder: 'e.g. shopping-cart, bell-alert',
@@ -287,7 +287,7 @@ export const en = {
   },
   supportPage: {
     heroTitle: 'Help Quality Icons Thrive',
-    heroDesc: 'IconStore has been free and open source from day one. Every icon design and every line of code represents real time and effort. If you find this project valuable, your support helps us go further',
+    heroDesc: 'Free and open source from day one, every icon design and every line of code represents real time and effort.\nIf you find this project valuable, your support helps us go further',
     paypal: 'PayPal',
     paypalDesc: 'Accepts international cards and PayPal balance',
     alipay: 'Alipay',

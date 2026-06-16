@@ -37,13 +37,13 @@ export default function SupportPage() {
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="pt-16 pb-20">
+      <section className="pt-20 pb-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="max-w-[720px] mx-auto text-center">
+          <div className="mx-auto text-center">
             <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
               {t.supportPage.heroTitle}
             </h1>
-            <p className="mt-6 text-[16px] leading-[24px] text-[var(--is-ink-soft)]">
+            <p className="mt-6 text-[16px] leading-[24px] whitespace-pre-line text-[var(--is-ink-soft)]">
               {t.supportPage.heroDesc}
             </p>
           </div>
@@ -51,9 +51,9 @@ export default function SupportPage() {
       </section>
 
       {/* Donate */}
-      <section className="pt-20 pb-10">
+      <section className="py-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-3">
             {methods.map((method) => (
               <div key={method.name} className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-7 py-10 text-center">
                 <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-[14px] ${method.bg}`}>
@@ -69,9 +69,9 @@ export default function SupportPage() {
       </section>
 
       {/* Other ways */}
-      <section className="pt-20 pb-10">
+      <section className="py-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="mt-12 space-y-10">
+          <div className="grid gap-10 sm:grid-cols-2">
             <div className="flex items-start gap-6">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[var(--is-surface)]">
                 <Star size={18} className="text-[var(--is-ink)]" />

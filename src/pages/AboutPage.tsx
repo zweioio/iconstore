@@ -22,13 +22,13 @@ export default function AboutPage() {
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="pt-16 pb-20">
+      <section className="pt-20 pb-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="max-w-[720px] mx-auto text-center">
+          <div className="mx-auto text-center">
             <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
               {t.aboutPage.heroTitle}
             </h1>
-            <p className="mt-6 text-[16px] leading-[24px] text-[var(--is-ink-soft)]">
+            <p className="mt-6 text-[16px] leading-[24px] whitespace-pre-line text-[var(--is-ink-soft)]">
               {t.aboutPage.heroDesc}
             </p>
           </div>
@@ -36,7 +36,7 @@ export default function AboutPage() {
       </section>
 
       {/* Data row */}
-      <section className="pt-20 pb-10">
+      <section className="py-10">
         <div className="mx-auto max-w-[1200px]">
           <div className="flex items-start gap-16">
             {stats.map((item) => (
@@ -51,16 +51,13 @@ export default function AboutPage() {
       </section>
 
       {/* Features */}
-      <section className="pt-20 pb-10">
+      <section className="py-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="mt-12 space-y-14">
+          <div className="grid gap-10 sm:grid-cols-2">
             {features.map((item) => (
-              <div key={item.num} className="flex items-start gap-10">
-                <span className="w-10 shrink-0 text-[14px] font-normal leading-[22px] text-[var(--is-ink-faint)]">{item.num}</span>
-                <div className="border-t border-[var(--is-border)] pt-5 w-full">
-                  <h3 className="text-[22px] font-bold leading-[30px] tracking-[-0.01em] text-[var(--is-ink)]">{item.title}</h3>
-                  <p className="mt-3 max-w-[520px] text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.desc}</p>
-                </div>
+              <div key={item.num}>
+                <h3 className="text-[22px] font-bold leading-[30px] tracking-[-0.01em] text-[var(--is-ink)]">{item.title}</h3>
+                <p className="mt-3 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.desc}</p>
               </div>
             ))}
           </div>

@@ -1,7 +1,7 @@
 export const ko = {
   site: {
     title: 'IconStore',
-    tagline: '심플하고 우아한 오픈소스 아이콘 라이브러리',
+    tagline: '심플 & 우아한 아이콘 라이브러리',
     description: '디자이너와 개발자를 위한 중립 스타일의 시스템 아이콘입니다. 웹사이트, 모바일 앱, 제품 UI에 적합합니다.\n모든 아이콘은 개인 및 상업용으로 무료입니다',
   },
   nav: {
@@ -216,7 +216,7 @@ export const ko = {
   },
   aboutPage: {
     heroTitle: 'IconStore란 무엇인가',
-    heroDesc: '디자이너와 개발자를 위한 중립 스타일의 시스템 아이콘 세트입니다. "보기엔 멋있지만 사용하기 어려운" 화려한 아이콘이 아니라, 제품 인터페이스에서 편안하게 작동하는 실용적인 도구입니다',
+    heroDesc: '디자이너와 개발자를 위한 중립 스타일의 시스템 아이콘 세트입니다.\n"보기엔 멋있지만 사용하기 어려운" 화려한 아이콘이 아니라, 제품 인터페이스에서 편안하게 작동하는 실용적인 도구입니다',
     statIcons: '아이콘 수',
     statIconsDesc: '34개 카테고리의 엄선된 아이콘',
     statStyle: '스타일 체계',
@@ -234,7 +234,7 @@ export const ko = {
   },
   guidePage: {
     heroTitle: '브라우징부터 적용까지, 단 세 단계',
-    heroDesc: 'IconStore의 사용 방법은 매우 직관적입니다. Figma에서 디자인하든 VS Code에서 코드를 작성하든, 아이콘이 작업 흐름에 자연스럽게 통합됩니다',
+    heroDesc: 'IconStore의 사용 방법은 매우 직관적입니다.\nFigma에서 디자인하든 VS Code에서 코드를 작성하든, 아이콘이 작업 흐름에 자연스럽게 통합됩니다',
     designerTitle: '디자이너 워크플로우',
     developerTitle: '개발자 워크플로우',
     stepsDesigner: ['아이콘 라이브러리에서 검색하거나 카테고리별로 찾아보기', '아이콘 클릭하여 상세 패널 열고 선/면 스타일 전환', '「SVG 복사」로 Figma/Sketch에 붙여넣기 또는 SVG 파일 다운로드'],
@@ -247,7 +247,7 @@ export const ko = {
   },
   licensePage: {
     heroTitle: '오픈소스, 무료, 상업 친화적',
-    heroDesc: 'IconStore는 Apache 2.0 라이선스를 사용합니다. 개인 프로젝트, 상업 제품, 회사 웹사이트 등 거의 모든 곳에서 추가 인증 없이 사용할 수 있습니다',
+    heroDesc: 'Apache 2.0 라이선스를 사용합니다.\n개인 프로젝트, 상업 제품, 회사 웹사이트 등 거의 모든 곳에서 추가 인증 없이 사용할 수 있습니다',
     termCommercial: '✅ 상업적 사용 가능',
     termCommercialDesc: '개인 프로젝트, 상업 프로젝트, 웹사이트, 모바일 앱, 인쇄물, 브랜드 디자인에 사용 가능. 무료이며 추가 비용이 없습니다',
     termModify: '✅ 수정 가능',
@@ -263,7 +263,7 @@ export const ko = {
   },
   requestPage: {
     heroTitle: '무엇이 부족한가요? 알려주세요',
-    heroDesc: 'IconStore는 계속 성장하고 있습니다. 작업 중에 누락된 아이콘이나 불완전한 카테고리가 있다면 바로 알려주세요. 모든 요청이 커뮤니티의 실제 니즈를 이해하는 데 도움이 됩니다',
+    heroDesc: '우리는 계속 성장하고 있습니다 — 작업 중에 누락된 아이콘이나 불완전한 카테고리가 있다면 바로 알려주세요.\n모든 요청이 커뮤니티의 실제 니즈를 이해하는 데 도움이 됩니다',
     formName: '아이콘 이름',
     formNameHint: '영문 하이픈 형식 (예: cloud-upload, user-profile)',
     formNamePlaceholder: '예: shopping-cart, bell-alert',
@@ -287,7 +287,7 @@ export const ko = {
   },
   supportPage: {
     heroTitle: '좋은 아이콘이 계속 성장하도록',
-    heroDesc: 'IconStore는 첫날부터 무료 오픈소스였습니다. 모든 아이콘 디자인과 코드 한 줄 한 줄에는 실제 시간과 노력이 투자되었습니다. 이 프로젝트에 가치를 느끼신다면, 여러분의 지원이 더 멀리 나아갈 수 있게 합니다',
+    heroDesc: '첫날부터 무료 오픈소스, 모든 아이콘 디자인과 코드 한 줄 한 줄에는 실제 시간과 노력이 투자되었습니다.\n이 프로젝트에 가치를 느끼신다면, 여러분의 지원이 더 멀리 나아갈 수 있게 합니다',
     paypal: 'PayPal',
     paypalDesc: '국제 카드 및 PayPal 잔액 지원',
     alipay: 'Alipay',

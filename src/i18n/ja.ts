@@ -216,7 +216,7 @@ export const ja = {
   },
   aboutPage: {
     heroTitle: 'IconStore とは',
-    heroDesc: 'デザイナーと開発者のための中性スタイルのシステムアイコンセットです。「見た目はカッコイイけど使いにくい」というアイコンではなく、製品インターフェースで快適に機能する実用的なツールです',
+    heroDesc: 'デザイナーと開発者のための中性スタイルのシステムアイコンセットです。\n「見た目はカッコイイけど使いにくい」というアイコンではなく、製品インターフェースで快適に機能する実用的なツールです',
     statIcons: 'アイコン数',
     statIconsDesc: '厳選された34カテゴリーのアイコン',
     statStyle: 'スタイル体系',
@@ -234,7 +234,7 @@ export const ja = {
   },
   guidePage: {
     heroTitle: 'ブラウズから導入まで、たった3ステップ',
-    heroDesc: 'IconStore の使い方はとてもシンプルです。Figma でデザインする場合でも、VS Code でコードを書く場合でも、アイコンはスムーズにワークフローに溶け込みます',
+    heroDesc: 'IconStore の使い方はとてもシンプルです。\nFigma でデザインする場合でも、VS Code でコードを書く場合でも、アイコンはスムーズにワークフローに溶け込みます',
     designerTitle: 'デザイナーワークフロー',
     developerTitle: '開発者ワークフロー',
     stepsDesigner: ['アイコンライブラリを検索またはカテゴリからブラウズして必要なアイコンを見つける', 'アイコンをクリックして詳細パネルを開き、線と塗りのスタイルを切り替え', '「SVGをコピー」で Figma / Sketch に貼り付けるか、SVGファイルをダウンロード'],
@@ -247,7 +247,7 @@ export const ja = {
   },
   licensePage: {
     heroTitle: 'オープンソース、無料、商用利用可能',
-    heroDesc: 'IconStore は Apache 2.0 ライセンスを採用しています。個人プロジェクト、商用製品、企業サイトなど、ほとんどすべての場所で追加認証なしで使用できます',
+    heroDesc: 'Apache 2.0 ライセンスを採用しています。\n個人プロジェクト、商用製品、企業サイトなど、ほとんどすべての場所で追加認証なしで使用できます',
     termCommercial: '✅ 商用利用可能',
     termCommercialDesc: '個人プロジェクト、商用プロジェクト、Webサイト、モバイルアプリ、印刷物、ブランドデザインに使用可能。無料で支払いは不要です',
     termModify: '✅ 改変可能',
@@ -263,7 +263,7 @@ export const ja = {
   },
   requestPage: {
     heroTitle: '足りないものは？教えてください',
-    heroDesc: 'IconStore は成長を続けています。仕事で不足しているアイコンや、不十分なカテゴリがあれば、直接教えてください。すべてのリクエストがコミュニティの本当のニーズを理解する助けになります',
+    heroDesc: '私たちは成長を続けています — 仕事で不足しているアイコンや、不十分なカテゴリがあれば、直接教えてください。\nすべてのリクエストがコミュニティの本当のニーズを理解する助けになります',
     formName: 'アイコン名',
     formNameHint: '英字ハイフン形式（例：cloud-upload、user-profile）',
     formNamePlaceholder: '例：shopping-cart、bell-alert',
@@ -287,7 +287,7 @@ export const ja = {
   },
   supportPage: {
     heroTitle: '良いアイコンを育てていく',
-    heroDesc: 'IconStore は初日から無料でオープンソースです。すべてのアイコンのデザインとコードには、実際の時間と労力が注がれています。このプロジェクトに価値を感じていただければ、サポートがさらなる成長につながります',
+    heroDesc: '初日から無料でオープンソース、すべてのアイコンのデザインとコードには、実際の時間と労力が注がれています。\nこのプロジェクトに価値を感じていただければ、サポートがさらなる成長につながります',
     paypal: 'PayPal',
     paypalDesc: '国際カードとPayPal残高に対応',
     alipay: 'Alipay',

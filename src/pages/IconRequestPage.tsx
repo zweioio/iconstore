@@ -32,12 +32,12 @@ export default function IconRequestPage() {
       <>
         <div className="pb-32 pt-14">
           <div className="mx-auto max-w-[1200px]">
-            <div className="mt-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-[var(--is-surface)]">
+            <div className="mt-10 text-center">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[12px] bg-[var(--is-surface)]">
                 <Sparkles size={22} className="text-[var(--is-ink)]" />
               </div>
               <h1 className="mt-6 text-[28px] font-bold leading-9 tracking-[-0.01em] text-[var(--is-ink)]">{t.requestPage.successTitle}</h1>
-              <p className="mt-3 max-w-[460px] text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
+              <p className="mt-3 mx-auto max-w-[460px] text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                 {t.requestPage.successDesc}
               </p>
               <button
@@ -63,13 +63,13 @@ export default function IconRequestPage() {
     <>
       <div className="pb-32">
         {/* Hero */}
-      <section className="pt-16 pb-20">
+      <section className="pt-20 pb-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="max-w-[720px] mx-auto text-center">
+          <div className="mx-auto text-center">
             <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
               {t.requestPage.heroTitle}
             </h1>
-            <p className="mt-6 text-[16px] leading-[24px] text-[var(--is-ink-soft)]">
+            <p className="mt-6 text-[16px] leading-[24px] whitespace-pre-line text-[var(--is-ink-soft)]">
               {t.requestPage.heroDesc}
             </p>
           </div>
@@ -77,9 +77,9 @@ export default function IconRequestPage() {
       </section>
 
       {/* Form */}
-      <section className="pt-20 pb-10">
+      <section className="py-10">
         <div className="mx-auto max-w-[1200px]">
-          <div className="mt-12 max-w-[560px]">
+          <div className="mx-auto max-w-[560px]">
             <form onSubmit={handleSubmit} className="space-y-7">
               {/* 图标名称 */}
               <div>
@@ -165,7 +165,7 @@ export default function IconRequestPage() {
 
               {/* 提交 */}
               <div className="pt-4">
-                <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[14px] font-normal leading-[22px] text-[var(--is-white)] transition hover:-translate-y-0.5 hover:shadow-md">
+                <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[14px] font-normal leading-[22px] text-[var(--is-white)]">
                   <Send size={15} />
                   {t.requestPage.formSubmit}
                 </button>
