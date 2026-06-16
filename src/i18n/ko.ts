@@ -85,6 +85,8 @@ export const ko = {
     favorites: '즐겨찾기',
     clearAll: '모두 비우기',
     downloadAll: 'SVG 다운로드',
+    emptyFavorites: '즐겨찾는 아이콘이 아직 없습니다',
+    emptyFavoritesHint: '아이콘을 탐색할 때 별표를 클릭하여 즐겨찾기에 추가하세요',
     iconsCount: '아이콘',
   },
   card: {
@@ -219,6 +221,11 @@ export const ko = {
     sizeLock: '크기와 선 두께를 함께 조정',
     sizeLinkedLabel: '연동 중',
     sizeUnlinkedLabel: '연동',
+    sizeLockLinked: '아이콘 크기와 선 두께를 함께 조정',
+    sizeLockUnlinked: '아이콘 크기와 선 두께를 개별 조정',
+    confirmClearTitle: '즐겨찾기 {count}개를 모두 비웁니다. 이 작업은 취소할 수 없습니다.',
+    confirmClearCancel: '취소',
+    confirmClearConfirm: '모두 비우기',
   },
   aboutPage: {
     heroTitle: 'IconStore란 무엇인가',

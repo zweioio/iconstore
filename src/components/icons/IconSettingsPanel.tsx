@@ -202,7 +202,7 @@ export function IconSettingsPanel() {
               {sizeLinked ? <Lock size={16} /> : <Unlock size={16} />}
             </button>
             <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
-              {sizeLinked ? '绑定调整图标大小与粗细' : '自由设置图标大小与粗细'}
+              {sizeLinked ? t.settings.sizeLockLinked : t.settings.sizeLockUnlinked}
             </span>
           </div>
           <div className="group relative">

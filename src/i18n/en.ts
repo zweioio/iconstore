@@ -85,6 +85,8 @@ export const en = {
     favorites: 'Favorites',
     clearAll: 'Clear All',
     downloadAll: 'Download SVG',
+    emptyFavorites: 'No favorited icons yet',
+    emptyFavoritesHint: 'Click the star icon while browsing to add favorites',
     iconsCount: 'Icons',
   },
   card: {
@@ -219,6 +221,11 @@ export const en = {
     sizeLock: 'Link icon size and stroke width proportionally',
     sizeLinkedLabel: 'Linked',
     sizeUnlinkedLabel: 'Link',
+    sizeLockLinked: 'Adjust icon size & stroke together',
+    sizeLockUnlinked: 'Adjust icon size & stroke independently',
+    confirmClearTitle: 'Clear all {count} favorited icons? This action cannot be undone.',
+    confirmClearCancel: 'Cancel',
+    confirmClearConfirm: 'Clear All',
   },
   aboutPage: {
     heroTitle: 'What is IconStore',

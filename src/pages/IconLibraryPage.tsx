@@ -354,8 +354,8 @@ export default function IconLibraryPage() {
                     </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center py-32 text-center">
-                      <p className="text-[16px] leading-6 text-[var(--is-ink-soft)]">还没有收藏任何图标</p>
-                      <p className="mt-1 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">浏览图标时点击星星即可收藏</p>
+                      <p className="text-[16px] leading-6 text-[var(--is-ink-soft)]">{t.controls.emptyFavorites}</p>
+                      <p className="mt-1 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.controls.emptyFavoritesHint}</p>
                     </div>
                   )}
                 </div>
@@ -408,21 +408,21 @@ export default function IconLibraryPage() {
         <div className="fixed inset-0 z-[80] flex items-center justify-center bg-[rgba(0,0,0,0.4)]" onClick={() => setConfirmClear(false)}>
           <div className="relative z-10 w-[360px] rounded-[16px] bg-[var(--is-white)] p-6 shadow-[0_6px_32px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
             <p className="text-[18px] font-bold leading-7 text-[var(--is-ink)]">{t.controls.clearAll}</p>
-            <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">将清空全部 {favoriteIds.length} 个收藏图标，此操作不可撤销。</p>
+            <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{t.settings.confirmClearTitle.replace('{count}', String(favoriteIds.length))}</p>
             <div className="mt-6 flex justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setConfirmClear(false)}
                 className="inline-flex h-10 items-center rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-5 text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
               >
-                取消
+                {t.settings.confirmClearCancel}
               </button>
               <button
                 type="button"
                 onClick={() => { clearFavorites(); setConfirmClear(false) }}
                 className="inline-flex h-10 items-center rounded-[10px] bg-[var(--is-ink)] px-5 text-[14px] leading-[22px] text-[var(--is-white)] transition hover:opacity-90"
               >
-                确认清空
+                {t.settings.confirmClearConfirm}
               </button>
             </div>
           </div>

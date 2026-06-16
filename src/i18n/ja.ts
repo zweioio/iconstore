@@ -85,6 +85,8 @@ export const ja = {
     favorites: 'お気に入り',
     clearAll: 'すべてクリア',
     downloadAll: 'SVGをダウンロード',
+    emptyFavorites: 'お気に入りアイコンはまだありません',
+    emptyFavoritesHint: 'アイコンを閲覧中に星マークをクリックしてお気に入りに追加',
     iconsCount: 'アイコン',
   },
   card: {
@@ -219,6 +221,11 @@ export const ja = {
     sizeLock: 'サイズと線の太さを連動',
     sizeLinkedLabel: '連動中',
     sizeUnlinkedLabel: '連動',
+    sizeLockLinked: 'アイコンサイズと線の太さを連動して調整',
+    sizeLockUnlinked: 'アイコンサイズと線の太さを個別に調整',
+    confirmClearTitle: 'お気に入り {count} 個をすべてクリアします。この操作は元に戻せません。',
+    confirmClearCancel: 'キャンセル',
+    confirmClearConfirm: 'すべてクリア',
   },
   aboutPage: {
     heroTitle: 'IconStore とは',

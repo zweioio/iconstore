@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import { IconPreview } from '@/components/icons/IconPreview'
 import { cn } from '@/lib/utils'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/i18n'
 import type { IconItem } from '@/types/icon'
 
 type IconCardProps = {
@@ -25,6 +27,8 @@ export function IconCard({
   onPreview,
   onToggleFavorite,
 }: IconCardProps) {
+  const { language } = useLanguageStore()
+  const t = translations[language]
   const [isHovering, setIsHovering] = useState(false)
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -111,7 +115,7 @@ export function IconCard({
               isFavorite && 'text-[var(--is-yellow)] hover:text-[var(--is-yellow)]',
               !isFavorite && 'opacity-0 group-hover:opacity-100',
             )}
-            aria-label={isFavorite ? `取消收藏 ${icon.name}` : `收藏 ${icon.name}`}
+            aria-label={isFavorite ? `${t.card.unfavorite} ${icon.name}` : `${t.card.favorite} ${icon.name}`}
             aria-pressed={isFavorite}
           >
             <Star size={16} fill={isFavorite ? 'currentColor' : 'none'} />

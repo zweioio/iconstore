@@ -169,7 +169,7 @@ export function IconDetailModal({
                       ? 'text-[var(--is-yellow)] hover:text-[var(--is-yellow)]'
                       : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]',
                   )}
-                  aria-label={isFavorite ? '取消收藏' : '收藏'}
+                  aria-label={isFavorite ? t.card.unfavorite : t.card.favorite}
                 >
                   <Star size={16} fill={isFavorite ? 'currentColor' : 'none'} />
                 </button>

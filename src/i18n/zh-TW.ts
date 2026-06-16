@@ -85,6 +85,8 @@ export const zhTW = {
     favorites: '收藏夾',
     clearAll: '全部清空',
     downloadAll: '下載SVG',
+    emptyFavorites: '還沒有收藏任何圖標',
+    emptyFavoritesHint: '瀏覽圖標時點擊星星即可收藏',
     iconsCount: 'Icons',
   },
   card: {
@@ -219,6 +221,11 @@ export const zhTW = {
     sizeLock: '等比調整字號與粗細',
     sizeLinkedLabel: '已鎖定',
     sizeUnlinkedLabel: '綁定',
+    sizeLockLinked: '綁定調整圖標大小與粗細',
+    sizeLockUnlinked: '自由設置圖標大小與粗細',
+    confirmClearTitle: '將清空全部 {count} 個收藏圖標，此操作不可撤銷。',
+    confirmClearCancel: '取消',
+    confirmClearConfirm: '確認清空',
   },
   aboutPage: {
     heroTitle: 'IconStore 是什麼',
