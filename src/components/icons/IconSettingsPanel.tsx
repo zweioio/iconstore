@@ -166,7 +166,7 @@ export function IconSettingsPanel() {
           label={t.settings.iconSize}
           value={iconSize}
           min={12}
-          max={64}
+          max={48}
           step={2}
           unit="px"
           evenOnly

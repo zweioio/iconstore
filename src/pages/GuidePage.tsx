@@ -35,13 +35,13 @@ export default function GuidePage() {
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="py-20 pt-14">
-        <div className="mx-auto max-w-[960px]">
-          <div className="mt-6 max-w-[720px]">
-            <h1 className="text-[44px] font-bold leading-[52px] tracking-[-0.02em] text-[var(--is-ink)]">
+      <section className="pt-16 pb-20">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="max-w-[720px] mx-auto text-center">
+            <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
               {t.guidePage.heroTitle}
             </h1>
-            <p className="mt-6 text-[17px] leading-[28px] text-[var(--is-ink-soft)]">
+            <p className="mt-6 text-[16px] leading-[24px] text-[var(--is-ink-soft)]">
               {t.guidePage.heroDesc}
             </p>
           </div>
@@ -49,8 +49,8 @@ export default function GuidePage() {
       </section>
 
       {/* Workflows */}
-      <section className="py-20">
-        <div className="mx-auto max-w-[960px]">
+      <section className="pt-20 pb-10">
+        <div className="mx-auto max-w-[1200px]">
           <div className="grid gap-16 md:grid-cols-2">
             {workflows.map((wf) => (
               <div key={wf.role}>
@@ -59,8 +59,8 @@ export default function GuidePage() {
                     <wf.icon size={18} className="text-[var(--is-ink)]" />
                   </div>
                   <div>
-                    <p className="text-[12px] font-medium leading-4 text-[var(--is-ink-faint)]">{wf.role}</p>
-                    <h2 className="text-[18px] font-bold leading-6 text-[var(--is-ink)]">{wf.title}</h2>
+                    <p className="text-[12px] font-normal leading-5 text-[var(--is-ink-faint)]">{wf.role}</p>
+                    <h2 className="text-[18px] font-bold leading-[26px] text-[var(--is-ink)]">{wf.title}</h2>
                   </div>
                 </div>
                 <div className="mt-7 space-y-6">
@@ -69,13 +69,13 @@ export default function GuidePage() {
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--is-surface)] text-[12px] font-bold leading-5 text-[var(--is-ink)]">
                         {i + 1}
                       </span>
-                      <p className="pt-0.5 text-[14px] leading-[24px] text-[var(--is-ink-soft)]">{step}</p>
+                      <p className="pt-0.5 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{step}</p>
                     </div>
                   ))}
                 </div>
                 <div className="mt-6 rounded-[8px] bg-[var(--is-surface)] px-4 py-3">
-                  <p className="text-[13px] leading-[20px] text-[var(--is-ink-soft)]">
-                    <span className="font-medium text-[var(--is-ink)]">Tip: </span>{wf.tip}
+                  <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
+                    <span className="font-normal text-[var(--is-ink)]">Tip: </span>{wf.tip}
                   </p>
                 </div>
               </div>
@@ -85,15 +85,15 @@ export default function GuidePage() {
       </section>
 
       {/* Integration */}
-      <section className="py-20">
-        <div className="mx-auto max-w-[960px]">
+      <section className="pt-20 pb-10">
+        <div className="mx-auto max-w-[1200px]">
           <div className="mt-12 flex items-start gap-10">
-            <span className="text-[14px] font-medium leading-6 text-[var(--is-ink-faint)]">React</span>
+            <span className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-faint)]">React</span>
             <div className="flex-1">
-              <p className="text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
+              <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                 {t.guidePage.integrationReact}
               </p>
-              <pre className="mt-5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-5 text-[13px] leading-6">
+              <pre className="mt-5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-5 text-[14px] leading-[22px]">
                 <code className="text-[var(--is-ink-soft)]">{`function UserIcon() {
   return (
     <span dangerouslySetInnerHTML={{
@@ -106,12 +106,12 @@ export default function GuidePage() {
           </div>
 
           <div className="mt-12 flex items-start gap-10">
-            <span className="text-[14px] font-medium leading-6 text-[var(--is-ink-faint)]">Vue</span>
+            <span className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-faint)]">Vue</span>
             <div className="flex-1">
-              <p className="text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
+              <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                 {t.guidePage.integrationVue}
               </p>
-              <pre className="mt-5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-5 text-[13px] leading-6">
+              <pre className="mt-5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-code-bg)] p-5 text-[14px] leading-[22px]">
                 <code className="text-[var(--is-ink-soft)]">{`<template>
   <span v-html="userSvg" />
 </template>`}</code>
@@ -120,9 +120,9 @@ export default function GuidePage() {
           </div>
 
           <div className="mt-12 flex items-start gap-10">
-            <span className="text-[14px] font-medium leading-6 text-[var(--is-ink-faint)]">HTML</span>
+            <span className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-faint)]">HTML</span>
             <div className="flex-1">
-              <p className="text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
+              <p className="text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                 {t.guidePage.integrationHtml}
               </p>
             </div>

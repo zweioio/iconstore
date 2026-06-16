@@ -64,7 +64,7 @@ export default function HomePage() {
       <section className="pt-10">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-[8px] bg-[var(--is-surface)] px-4 py-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">
+            <div className="inline-flex items-center gap-2 rounded-[8px] bg-[var(--is-surface)] px-4 py-2 text-[12px] font-normal leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">
               <Sparkles size={14} />
               {t.home.badge}
             </div>
@@ -113,7 +113,7 @@ export default function HomePage() {
 
           {/* 图标预览展示 */}
           <div className="is-panel p-4">
-            <div className="mb-4 flex items-center justify-between px-4 py-2 text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">
+            <div className="mb-4 flex items-center justify-between px-4 py-2 text-[12px] font-normal leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">
               <span>{t.home.productOverview}</span>
               <span>{t.home.systemReady}</span>
             </div>
@@ -139,7 +139,7 @@ export default function HomePage() {
       <section className="grid gap-5 md:grid-cols-3">
         {features.map((item) => (
           <div key={item.title} className="is-panel p-8">
-            <p className="text-[12px] font-medium leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">{item.title}</p>
+            <p className="text-[12px] font-normal leading-[22px] tracking-[0.16em] text-[var(--is-ink-soft)]">{item.title}</p>
             <p className="mt-2 text-[24px] font-bold leading-8 text-[var(--is-ink)]">{item.value}</p>
             <p className="mt-4 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.description}</p>
           </div>
@@ -149,7 +149,7 @@ export default function HomePage() {
       {/* 产品理念 */}
       <section className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div className="space-y-4">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-soft)]">{t.home.coreValue}</p>
+          <p className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-soft)]">{t.home.coreValue}</p>
           <h2 className="text-[36px] font-bold leading-10 text-[var(--is-ink)]">
             {t.home.coreTitle}
           </h2>
@@ -171,7 +171,7 @@ export default function HomePage() {
       {/* 精选图标展示 */}
       <section className="is-panel grid gap-8 p-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="space-y-4">
-          <p className="text-[14px] font-medium leading-[22px] text-[var(--is-ink-soft)]">{t.home.selectedIcons}</p>
+          <p className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-soft)]">{t.home.selectedIcons}</p>
           <h2 className="text-[36px] font-bold leading-10 text-[var(--is-ink)]">
             {t.home.selectedTitle}
           </h2>

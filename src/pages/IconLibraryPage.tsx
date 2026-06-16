@@ -188,7 +188,7 @@ export default function IconLibraryPage() {
   }
 
   return (
-    <div className="pb-24 pt-2">
+    <div className="pb-24 pt-0">
       {/* 图标设置面板 - 右侧固定，与版心保持 16px 间距 */}
       <div
         className="fixed top-1/2 z-[60] w-[240px] -translate-y-1/2"
@@ -199,7 +199,7 @@ export default function IconLibraryPage() {
 
       <section className="mx-auto flex max-w-[1200px] flex-col items-center pt-16 text-center">
         <div className="flex max-w-[1100px] flex-col items-center gap-4">
-          <h1 className="text-[48px] leading-[52px] text-[var(--is-ink)]">
+          <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
             {t.site.tagline}
           </h1>
           <p className="text-[16px] leading-6 text-[var(--is-ink-soft)] whitespace-pre-line">{t.site.description}</p>
@@ -251,7 +251,7 @@ export default function IconLibraryPage() {
             </div>
           )}
           {feedback && (
-            <span className="fixed left-1/2 top-8 z-[80] -translate-x-1/2 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1.5 text-[14px] text-[var(--is-ink)] shadow-[var(--is-shadow-card)]">
+            <span className="fixed left-1/2 top-8 z-[80] -translate-x-1/2 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1.5 text-[14px] leading-[22px] text-[var(--is-ink)] shadow-[var(--is-shadow-card)]">
               {feedback}
             </span>
           )}

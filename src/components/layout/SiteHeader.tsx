@@ -53,7 +53,7 @@ export function SiteHeader() {
   ]
 
   return (
-    <header className="border-b border-transparent bg-[var(--is-white)]">
+    <header className="bg-[var(--is-white)]">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between py-6">
         <Link to="/">
           <SiteLogo />
@@ -100,7 +100,7 @@ export function SiteHeader() {
           <LanguageSwitcher />
           <Link
             to="/about"
-            className="inline-flex rounded-[8px] border border-[var(--is-border)] px-3 py-1.5 text-[13px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)] md:hidden"
+            className="inline-flex rounded-[8px] border border-[var(--is-border)] px-3 py-1.5 text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)] md:hidden"
           >
             {t.nav.aboutMobile}
           </Link>

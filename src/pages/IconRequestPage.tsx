@@ -31,13 +31,13 @@ export default function IconRequestPage() {
     return (
       <>
         <div className="pb-32 pt-14">
-          <div className="mx-auto max-w-[960px]">
+          <div className="mx-auto max-w-[1200px]">
             <div className="mt-10">
               <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-[var(--is-surface)]">
                 <Sparkles size={22} className="text-[var(--is-ink)]" />
               </div>
-              <h1 className="mt-6 text-[28px] font-bold leading-8 tracking-[-0.01em] text-[var(--is-ink)]">{t.requestPage.successTitle}</h1>
-              <p className="mt-3 max-w-[460px] text-[15px] leading-[26px] text-[var(--is-ink-soft)]">
+              <h1 className="mt-6 text-[28px] font-bold leading-9 tracking-[-0.01em] text-[var(--is-ink)]">{t.requestPage.successTitle}</h1>
+              <p className="mt-3 max-w-[460px] text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                 {t.requestPage.successDesc}
               </p>
               <button
@@ -63,13 +63,13 @@ export default function IconRequestPage() {
     <>
       <div className="pb-32">
         {/* Hero */}
-      <section className="py-20 pt-14">
-        <div className="mx-auto max-w-[960px]">
-          <div className="mt-6 max-w-[720px]">
-            <h1 className="text-[44px] font-bold leading-[52px] tracking-[-0.02em] text-[var(--is-ink)]">
+      <section className="pt-16 pb-20">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="max-w-[720px] mx-auto text-center">
+            <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
               {t.requestPage.heroTitle}
             </h1>
-            <p className="mt-6 text-[17px] leading-[28px] text-[var(--is-ink-soft)]">
+            <p className="mt-6 text-[16px] leading-[24px] text-[var(--is-ink-soft)]">
               {t.requestPage.heroDesc}
             </p>
           </div>
@@ -77,16 +77,16 @@ export default function IconRequestPage() {
       </section>
 
       {/* Form */}
-      <section className="py-20">
-        <div className="mx-auto max-w-[960px]">
+      <section className="pt-20 pb-10">
+        <div className="mx-auto max-w-[1200px]">
           <div className="mt-12 max-w-[560px]">
             <form onSubmit={handleSubmit} className="space-y-7">
               {/* 图标名称 */}
               <div>
-                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">
+                <label className="block text-[14px] font-normal leading-[22px] text-[var(--is-ink)]">
                   {t.requestPage.formName} <span className="text-[var(--is-ink-faint)]">*</span>
                 </label>
-                <p className="mt-0.5 text-[13px] leading-5 text-[var(--is-ink-faint)]">{t.requestPage.formNameHint}</p>
+                <p className="mt-0.5 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.requestPage.formNameHint}</p>
                 <input
                   type="text"
                   required
@@ -99,7 +99,7 @@ export default function IconRequestPage() {
 
               {/* 风格偏好 */}
               <div>
-                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.requestPage.formStyle}</label>
+                <label className="block text-[14px] font-normal leading-[22px] text-[var(--is-ink)]">{t.requestPage.formStyle}</label>
                 <div className="mt-3 flex gap-6">
                   {[
                     { value: 'linear', label: t.requestPage.formStyleLinear },
@@ -123,8 +123,8 @@ export default function IconRequestPage() {
 
               {/* 使用场景 */}
               <div>
-                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.requestPage.formScenario}</label>
-                <p className="mt-0.5 text-[13px] leading-5 text-[var(--is-ink-faint)]">{t.requestPage.formScenarioHint}</p>
+                <label className="block text-[14px] font-normal leading-[22px] text-[var(--is-ink)]">{t.requestPage.formScenario}</label>
+                <p className="mt-0.5 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.requestPage.formScenarioHint}</p>
                 <textarea
                   rows={3}
                   placeholder={t.requestPage.formScenarioPlaceholder}
@@ -136,8 +136,8 @@ export default function IconRequestPage() {
 
               {/* 参考链接 */}
               <div>
-                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{t.requestPage.formReference}</label>
-                <p className="mt-0.5 text-[13px] leading-5 text-[var(--is-ink-faint)]">{t.requestPage.formReferenceHint}</p>
+                <label className="block text-[14px] font-normal leading-[22px] text-[var(--is-ink)]">{t.requestPage.formReference}</label>
+                <p className="mt-0.5 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.requestPage.formReferenceHint}</p>
                 <input
                   type="text"
                   placeholder={t.requestPage.formReferencePlaceholder}
@@ -149,10 +149,10 @@ export default function IconRequestPage() {
 
               {/* 联系方式 */}
               <div>
-                <label className="block text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">
+                <label className="block text-[14px] font-normal leading-[22px] text-[var(--is-ink)]">
                   {t.requestPage.formEmail} <span className="text-[var(--is-ink-faint)]">*</span>
                 </label>
-                <p className="mt-0.5 text-[13px] leading-5 text-[var(--is-ink-faint)]">{t.requestPage.formEmailHint}</p>
+                <p className="mt-0.5 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.requestPage.formEmailHint}</p>
                 <input
                   type="email"
                   required
@@ -165,7 +165,7 @@ export default function IconRequestPage() {
 
               {/* 提交 */}
               <div className="pt-4">
-                <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[15px] font-medium leading-6 text-[var(--is-white)] transition hover:bg-[var(--is-ink-soft)]">
+                <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[14px] font-normal leading-[22px] text-[var(--is-white)] transition hover:-translate-y-0.5 hover:shadow-md">
                   <Send size={15} />
                   {t.requestPage.formSubmit}
                 </button>

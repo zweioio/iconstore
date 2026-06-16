@@ -37,13 +37,13 @@ export default function SupportPage() {
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="py-20 pt-14">
-        <div className="mx-auto max-w-[960px]">
-          <div className="mt-6 max-w-[720px]">
-            <h1 className="text-[44px] font-bold leading-[52px] tracking-[-0.02em] text-[var(--is-ink)]">
+      <section className="pt-16 pb-20">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="max-w-[720px] mx-auto text-center">
+            <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
               {t.supportPage.heroTitle}
             </h1>
-            <p className="mt-6 text-[17px] leading-[28px] text-[var(--is-ink-soft)]">
+            <p className="mt-6 text-[16px] leading-[24px] text-[var(--is-ink-soft)]">
               {t.supportPage.heroDesc}
             </p>
           </div>
@@ -51,17 +51,17 @@ export default function SupportPage() {
       </section>
 
       {/* Donate */}
-      <section className="py-20">
-        <div className="mx-auto max-w-[960px]">
+      <section className="pt-20 pb-10">
+        <div className="mx-auto max-w-[1200px]">
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {methods.map((method) => (
               <div key={method.name} className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-7 py-10 text-center">
                 <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-[14px] ${method.bg}`}>
                   <method.icon size={26} style={{ color: method.color }} />
                 </div>
-                <p className="mt-5 text-[17px] font-bold leading-6 text-[var(--is-ink)]">{method.name}</p>
-                <p className="mt-2 text-[13px] leading-5 text-[var(--is-ink-soft)]">{method.desc}</p>
-                <p className="mt-1 text-[12px] leading-[18px] text-[var(--is-ink-faint)]">{method.detail}</p>
+                <p className="mt-5 text-[18px] font-bold leading-[26px] text-[var(--is-ink)]">{method.name}</p>
+                <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{method.desc}</p>
+                <p className="mt-1 text-[12px] leading-[20px] text-[var(--is-ink-faint)]">{method.detail}</p>
               </div>
             ))}
           </div>
@@ -69,23 +69,23 @@ export default function SupportPage() {
       </section>
 
       {/* Other ways */}
-      <section className="py-20">
-        <div className="mx-auto max-w-[960px]">
+      <section className="pt-20 pb-10">
+        <div className="mx-auto max-w-[1200px]">
           <div className="mt-12 space-y-10">
             <div className="flex items-start gap-6">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[var(--is-surface)]">
                 <Star size={18} className="text-[var(--is-ink)]" />
               </div>
               <div>
-                <h3 className="text-[17px] font-bold leading-6 text-[var(--is-ink)]">{t.supportPage.starTitle}</h3>
-                <p className="mt-2 max-w-[480px] text-[14px] leading-[24px] text-[var(--is-ink-soft)]">
+                <h3 className="text-[18px] font-bold leading-[26px] text-[var(--is-ink)]">{t.supportPage.starTitle}</h3>
+                <p className="mt-2 max-w-[480px] text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                   {t.supportPage.starDesc}
                 </p>
                 <a
                   href="https://github.com/zweioio/iconstore"
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-4 inline-flex h-10 items-center gap-2 rounded-[8px] border border-[var(--is-border)] bg-[var(--is-white)] px-5 text-[14px] font-medium leading-6 text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
+                  className="mt-4 inline-flex h-10 items-center gap-2 rounded-[8px] border border-[var(--is-border)] bg-[var(--is-white)] px-5 text-[14px] font-normal leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
                 >
                   <Github size={16} />
                   zweioio/iconstore
@@ -99,8 +99,8 @@ export default function SupportPage() {
                 <Coffee size={18} className="text-[var(--is-ink)]" />
               </div>
               <div>
-                <h3 className="text-[17px] font-bold leading-6 text-[var(--is-ink)]">{t.supportPage.shareTitle}</h3>
-                <p className="mt-2 max-w-[480px] text-[14px] leading-[24px] text-[var(--is-ink-soft)]">
+                <h3 className="text-[18px] font-bold leading-[26px] text-[var(--is-ink)]">{t.supportPage.shareTitle}</h3>
+                <p className="mt-2 max-w-[480px] text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
                   {t.supportPage.shareDesc}
                 </p>
               </div>

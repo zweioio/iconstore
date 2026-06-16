@@ -82,7 +82,7 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
           <span className="text-[16px] leading-6 text-[var(--is-ink)]">
             {currentCategory?.label}
           </span>
-          <span className="inline-flex items-center gap-1 text-[14px] text-[var(--is-ink-soft)]">
+          <span className="inline-flex items-center gap-1 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
             {categoryCounts[category] ?? ''}
             <ChevronDown size={14} className="text-[var(--is-ink)]" />
           </span>
@@ -150,7 +150,7 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
           <Star size={16} fill={viewMode === 'favorites' ? 'currentColor' : 'none'} />
           {t.controls.favorites}
         </span>
-        <span className={cn('text-[14px]', viewMode === 'favorites' ? 'text-white/70' : 'text-[var(--is-ink-soft)]')}>
+        <span className={cn('text-[14px] leading-[22px]', viewMode === 'favorites' ? 'text-white/70' : 'text-[var(--is-ink-soft)]')}>
           {favoriteCount}
         </span>
       </button>

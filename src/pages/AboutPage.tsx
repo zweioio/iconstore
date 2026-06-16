@@ -1,6 +1,3 @@
-import { ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
-
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
 import { BackToTop } from '@/components/layout/BackToTop'
@@ -25,36 +22,27 @@ export default function AboutPage() {
   return (
     <div className="pb-32">
       {/* Hero */}
-      <section className="py-20 pt-14">
-        <div className="mx-auto max-w-[960px]">
-          <div className="mt-6 max-w-[720px]">
-            <h1 className="text-[44px] font-bold leading-[52px] tracking-[-0.02em] text-[var(--is-ink)]">
+      <section className="pt-16 pb-20">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="max-w-[720px] mx-auto text-center">
+            <h1 className="text-[48px] leading-[56px] text-[var(--is-ink)]">
               {t.aboutPage.heroTitle}
             </h1>
-            <p className="mt-6 text-[17px] leading-[28px] text-[var(--is-ink-soft)]">
+            <p className="mt-6 text-[16px] leading-[24px] text-[var(--is-ink-soft)]">
               {t.aboutPage.heroDesc}
             </p>
-            <div className="mt-8 flex items-center gap-4">
-              <Link to="/" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[15px] font-medium leading-6 text-[var(--is-white)] transition hover:bg-[var(--is-ink-soft)]">
-                {t.nav.enterLibrary}
-                <ArrowRight size={16} />
-              </Link>
-              <Link to="/guide" className="inline-flex h-11 items-center gap-2 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-6 text-[15px] font-medium leading-6 text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]">
-                {t.nav.viewGuide}
-              </Link>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Data row */}
-      <section className="py-20">
-        <div className="mx-auto max-w-[960px]">
+      <section className="pt-20 pb-10">
+        <div className="mx-auto max-w-[1200px]">
           <div className="flex items-start gap-16">
             {stats.map((item) => (
               <div key={item.label} className="flex-1">
-                <p className="text-[36px] font-bold leading-[40px] tracking-[-0.02em] text-[var(--is-ink)]">{item.value}</p>
-                <p className="mt-2 text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">{item.label}</p>
+                <p className="text-[36px] font-bold leading-[44px] tracking-[-0.02em] text-[var(--is-ink)]">{item.value}</p>
+                <p className="mt-2 text-[14px] font-normal leading-[22px] text-[var(--is-ink)]">{item.label}</p>
                 <p className="mt-1 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.desc}</p>
               </div>
             ))}
@@ -63,15 +51,15 @@ export default function AboutPage() {
       </section>
 
       {/* Features */}
-      <section className="py-20">
-        <div className="mx-auto max-w-[960px]">
+      <section className="pt-20 pb-10">
+        <div className="mx-auto max-w-[1200px]">
           <div className="mt-12 space-y-14">
             {features.map((item) => (
               <div key={item.num} className="flex items-start gap-10">
-                <span className="w-10 shrink-0 text-[14px] font-medium leading-6 text-[var(--is-ink-faint)]">{item.num}</span>
+                <span className="w-10 shrink-0 text-[14px] font-normal leading-[22px] text-[var(--is-ink-faint)]">{item.num}</span>
                 <div className="border-t border-[var(--is-border)] pt-5 w-full">
-                  <h3 className="text-[22px] font-bold leading-7 tracking-[-0.01em] text-[var(--is-ink)]">{item.title}</h3>
-                  <p className="mt-3 max-w-[520px] text-[15px] leading-[26px] text-[var(--is-ink-soft)]">{item.desc}</p>
+                  <h3 className="text-[22px] font-bold leading-[30px] tracking-[-0.01em] text-[var(--is-ink)]">{item.title}</h3>
+                  <p className="mt-3 max-w-[520px] text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{item.desc}</p>
                 </div>
               </div>
             ))}
