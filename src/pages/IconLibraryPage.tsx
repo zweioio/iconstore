@@ -378,6 +378,12 @@ export default function IconLibraryPage() {
         styleMode={selectedStyle}
         isFavorite={selectedIcon ? favoriteIds.includes(selectedIcon.id + '-' + selectedStyle) : false}
         onClose={() => setSelectedIconId(null)}
+        onStyleChange={(style) => {
+          if (selectedIcon) {
+            setSelectedIconId(selectedIcon.id)
+            setSelectedStyle(style)
+          }
+        }}
         onCopy={() => {
           if (selectedIcon) {
             const styledName = selectedIcon.name + (selectedStyle === 'filled' ? '_fill' : '_line')

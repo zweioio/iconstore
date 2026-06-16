@@ -93,6 +93,7 @@ type IconDetailModalProps = {
   onCopyName: (name: string) => void
   onDownload: () => void
   onToggleFavorite: () => void
+  onStyleChange?: (style: 'linear' | 'filled') => void
 }
 
 export function IconDetailModal({
@@ -105,6 +106,7 @@ export function IconDetailModal({
   onCopyName,
   onDownload,
   onToggleFavorite,
+  onStyleChange,
 }: IconDetailModalProps) {
   const { language } = useLanguageStore()
   const t = translations[language]
@@ -126,11 +128,38 @@ export function IconDetailModal({
       <button type="button" className="absolute inset-0" aria-label="关闭详情弹窗" onClick={onClose} />
       <div className="relative z-10 flex h-[288px] w-[640px] gap-6 rounded-[24px] bg-[var(--is-white)] p-6">
         {/* 左侧：图标展示区域 */}
-        <div className="flex h-full w-[240px] shrink-0 items-center justify-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)]">
+        <div className="relative flex h-full w-[240px] shrink-0 items-center justify-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)]">
           <div
             className="icon-preview flex h-[120px] w-[120px] items-center justify-center text-[var(--is-ink)]"
             dangerouslySetInnerHTML={{ __html: svg }}
           />
+          {/* 风格切换 tab - 叠在图标区域下方 */}
+          {onStyleChange && (
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 inline-flex h-8 items-center rounded-full bg-[var(--is-code-bg)] p-0.5">
+              <button
+                type="button"
+                onClick={() => onStyleChange('linear')}
+                className={`inline-flex h-full items-center rounded-full px-3 text-[12px] leading-none transition ${
+                  styleMode === 'linear'
+                    ? 'bg-[var(--is-white)] text-[var(--is-ink)] shadow-sm'
+                    : 'text-[var(--is-ink-soft)] hover:text-[var(--is-ink)]'
+                }`}
+              >
+                {t.modal.linear}
+              </button>
+              <button
+                type="button"
+                onClick={() => onStyleChange('filled')}
+                className={`inline-flex h-full items-center rounded-full px-3 text-[12px] leading-none transition ${
+                  styleMode === 'filled'
+                    ? 'bg-[var(--is-white)] text-[var(--is-ink)] shadow-sm'
+                    : 'text-[var(--is-ink-soft)] hover:text-[var(--is-ink)]'
+                }`}
+              >
+                {t.modal.filled}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* 右侧：详情信息 */}
