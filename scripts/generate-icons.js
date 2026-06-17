@@ -17,13 +17,23 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const SVG_DIR = path.join(ROOT, 'src', 'icons', 'svg')
 const OUTPUT = path.join(ROOT, 'src', 'data', 'icons.ts')
-const STROKE_ATTRS = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"'
+const STROKE_ATTRS = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"'
 
 function extractSvgContent(filePath) {
   const raw = fs.readFileSync(filePath, 'utf-8').trim()
   if (!raw.startsWith('<svg')) return raw
   const match = raw.match(/<svg[^>]*>([\s\S]*)<\/svg>/)
-  return match ? match[1].trim() : raw
+  let content = match ? match[1].trim() : raw
+  // 自动替换 Figma 导出的硬编码颜色为 currentColor
+  content = content.replace(/(stroke|fill)="(black|white|#000|#000000|#202224|#333|#333333|#222|#222222)"/gi, '$1="currentColor"')
+  content = content.replace(/<clipPath[\s\S]*?<\/clipPath>/g, '')
+  content = content.replace(/<defs[\s\S]*?<\/defs>/g, '')
+  // 移除引用 clip-path 的 <g> 包装（clipPath 已被删除，保留标签会导致 SVG 异常）
+  content = content.replace(/<g[^>]*clip-path[^>]*>([\s\S]*)<\/g>/g, '$1')
+  // 移除路径上冲突的 stroke-linecap/linejoin（由父级 SVG 统一控制）
+  content = content.replace(/\s+stroke-linecap="[^"]*"/gi, '')
+  content = content.replace(/\s+stroke-linejoin="[^"]*"/gi, '')
+  return content
 }
 
 function formatLinearSvg(content, name) {

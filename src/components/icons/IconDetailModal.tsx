@@ -1,4 +1,4 @@
-import { Clipboard, Copy, Download, Star, X } from 'lucide-react'
+import { Copy, Download, Star, X } from 'lucide-react'
 import { useEffect } from 'react'
 import { getIconLabel } from '@/utils/iconLabel'
 
@@ -165,11 +165,16 @@ export function IconDetailModal({
         {/* 右侧：详情信息 */}
         <div className="flex min-w-0 flex-1 flex-col">
           {/* 图标名称 + 分类 + 操作按钮 */}
-          <div className="flex items-start justify-between">
-            <div className="space-y-1">
-              <h2 className="text-[20px] font-bold leading-7 text-[var(--is-ink)]">
+          <div className="flex items-start gap-2">
+            <div className="min-w-0 flex-1 space-y-1">
+              <button
+                type="button"
+                onClick={() => onCopyName(icon.name + (styleMode === 'filled' ? '_fill' : '_line'))}
+                className="block w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-[18px] font-bold leading-7 text-[var(--is-ink)]"
+                aria-label="复制图标名称"
+              >
                 {icon.name}{styleMode === 'filled' ? '_fill' : '_line'}
-              </h2>
+              </button>
               <p className="text-[14px] leading-[22px] text-[var(--is-ink)]">
                 {getIconLabel(icon.name, language)}
               </p>
@@ -182,7 +187,7 @@ export function IconDetailModal({
                   className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
                   aria-label="复制图标名称"
                 >
-                  <Clipboard size={16} />
+                  <Copy size={16} />
                 </button>
                 <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-[var(--is-ink)] px-3 py-1 text-[12px] leading-5 text-[var(--is-white)] opacity-0 transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-ink)]">
                   {t.modal.copyName}
@@ -195,7 +200,7 @@ export function IconDetailModal({
                   className={cn(
                     'inline-flex h-8 w-8 items-center justify-center rounded-[8px] transition',
                     isFavorite
-                      ? 'text-[var(--is-yellow)] hover:text-[var(--is-yellow)]'
+                      ? 'text-[var(--is-yellow)] hover:bg-[var(--is-surface)] hover:text-[var(--is-yellow)]'
                       : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]',
                   )}
                   aria-label={isFavorite ? t.card.unfavorite : t.card.favorite}
@@ -206,24 +211,12 @@ export function IconDetailModal({
                   {isFavorite ? t.card.unfavorite : t.card.favorite}
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={onClose}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
-                aria-label="关闭"
-              >
-                <X size={16} />
-              </button>
             </div>
           </div>
 
           {/* 关键词 */}
-          <div className="mt-4">
-            <p className="text-[14px] font-normal leading-[22px] text-[var(--is-ink-soft)]">{t.modal.keywords}</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <span className="rounded-[6px] bg-[var(--is-surface)] px-3 py-1 text-[12px] leading-[20px] text-[var(--is-ink-soft)]">
-                {styleMode === 'filled' ? t.modal.filled : t.modal.linear}
-              </span>
+          <div className="mt-6">
+            <div className="flex flex-wrap gap-2">
               {icon.keywords.map((keyword) => (
                 <span
                   key={keyword}
@@ -236,21 +229,21 @@ export function IconDetailModal({
           </div>
 
           {/* 操作按钮 - 底部，间距 24px */}
-          <div className="mt-auto grid grid-cols-2 gap-3 pt-4">
+          <div className="mt-auto grid grid-cols-2 gap-3">
             <button
               type="button"
               onClick={(e) => { onCopy(); fireConfetti(e) }}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-[12px] bg-[var(--is-ink)] text-[16px] leading-6 text-[var(--is-white)]"
+              className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] bg-[var(--is-ink)] text-[14px] leading-[22px] text-[var(--is-white)]"
             >
-              <Copy size={20} />
+              <Copy size={16} />
               {t.modal.copySVG}
             </button>
             <button
               type="button"
               onClick={onDownload}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] text-[16px] leading-6 text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
+              className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
             >
-              <Download size={20} />
+              <Download size={16} />
               {t.modal.downloadSVG}
             </button>
           </div>

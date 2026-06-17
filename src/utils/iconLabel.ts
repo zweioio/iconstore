@@ -26,6 +26,8 @@ const dict: Record<string, { zh: string; ja: string; ko: string }> = {
   arrow: { zh: '箭头', ja: '矢印', ko: '화살표' },
   left: { zh: '左', ja: '左', ko: '왼쪽' },
   right: { zh: '右', ja: '右', ko: '오른쪽' },
+  up: { zh: '上', ja: '上', ko: '위' },
+  down: { zh: '下', ja: '下', ko: '아래' },
   rise: { zh: '上升', ja: '上昇', ko: '상승' },
   loop: { zh: '循环', ja: 'ループ', ko: '루프' },
   upward: { zh: '向上', ja: '上向き', ko: '위로' },
@@ -121,6 +123,12 @@ const dict: Record<string, { zh: string; ja: string; ko: string }> = {
 export function getIconLabel(name: string, lang: string): string {
   const parts = name.split('-')
   const separator = ' - '
+
+  // English: 首字母大写
+  if (lang === 'en') {
+    const translated = parts.map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+    return translated.join(separator)
+  }
 
   if (lang === 'ja') {
     const translated = parts.map((p) => dict[p]?.ja || p)
