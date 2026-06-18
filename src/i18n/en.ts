@@ -217,6 +217,7 @@ export const en = {
     reset: 'Reset',
     iconSize: 'Icon Size',
     strokeWidth: 'Stroke Width',
+    iconColor: 'Icon Color',
     strokeWidthHint: 'Filled icons cannot adjust stroke width',
     sizeLock: 'Link icon size and stroke width proportionally',
     sizeLinkedLabel: 'Linked',

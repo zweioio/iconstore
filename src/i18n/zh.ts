@@ -217,6 +217,7 @@ export const zh = {
     reset: '重置',
     iconSize: '图标大小',
     strokeWidth: '线段粗细',
+    iconColor: '图标颜色',
     strokeWidthHint: '线段粗细调整不支持面性图标',
     sizeLock: '等比调整字号与粗细',
     sizeLinkedLabel: '已锁定',

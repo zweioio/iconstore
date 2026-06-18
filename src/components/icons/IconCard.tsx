@@ -6,6 +6,7 @@ import { IconPreview } from '@/components/icons/IconPreview'
 import { cn } from '@/lib/utils'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
+import { getIconLabel } from '@/utils/iconLabel'
 import type { IconItem } from '@/types/icon'
 
 type IconCardProps = {
@@ -125,9 +126,22 @@ export function IconCard({
           <IconPreview svg={svg} name={icon.name} size={iconSize} framed={false} />
         </div>
       </div>
-      <p className="max-w-[106px] truncate text-center text-[12px] leading-5 text-[var(--is-ink)]">
-        {icon.name}
-      </p>
+      {/* 文字上滑替换效果：hover 时英文上滑移出，翻译上滑移入 */}
+      <div className="h-5 w-[106px] overflow-hidden">
+        <div
+          style={{
+            transform: `translateY(${isHovering ? -20 : 0}px)`,
+            transition: 'transform 300ms ease',
+          }}
+        >
+          <span className="block truncate text-center text-[12px] leading-5 text-[var(--is-ink)]">
+            {icon.name}
+          </span>
+          <span className="block truncate text-center text-[12px] leading-5 text-[var(--is-ink)]">
+            {getIconLabel(icon.name, language)}
+          </span>
+        </div>
+      </div>
     </article>
   )
 }

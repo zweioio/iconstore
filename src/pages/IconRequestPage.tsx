@@ -4,6 +4,82 @@ import { BackToTop } from '@/components/layout/BackToTop'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
 
+const confettiColors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9']
+
+function fireConfetti(e: React.MouseEvent) {
+  const cx = e.clientX
+  const cy = e.clientY
+
+  const container = document.createElement('div')
+  container.className = 'confetti-container'
+  Object.assign(container.style, {
+    position: 'fixed', top: '0', left: '0',
+    width: '100%', height: '100%',
+    pointerEvents: 'none', zIndex: '9999',
+  })
+  document.body.appendChild(container)
+
+  const layers = [
+    { count: 12, minDist: 30,  maxDist: 80  },
+    { count: 8,  minDist: 80,  maxDist: 150 },
+    { count: 5,  minDist: 150, maxDist: 220 },
+  ]
+
+  const style = document.createElement('style')
+  style.textContent = `
+    @keyframes confetti-burst {
+      0%   { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); }
+      20%  { opacity: 1; transform: translate(calc(var(--dx)*0.3), calc(var(--dy)*0.3)) rotate(calc(var(--r)*0.3)) scale(1.3); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(0.2); }
+    }
+  `
+  container.appendChild(style)
+
+  layers.forEach(({ count, minDist, maxDist }) => {
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div')
+      const shape = Math.random()
+      const isStripe = shape > 0.7
+      const isCircle = shape < 0.35
+
+      const angle = Math.random() * Math.PI * 2
+      const distance = minDist + Math.random() * (maxDist - minDist)
+      const dx = Math.cos(angle) * distance
+      const dy = Math.sin(angle) * distance + 50
+
+      let w: number, h: number, br: string
+      if (isStripe) {
+        w = 2 + Math.random() * 2
+        h = 8 + Math.random() * 6; br = '1px'
+        el.style.background = `linear-gradient(180deg, ${confettiColors[Math.floor(Math.random() * confettiColors.length)]}, ${confettiColors[Math.floor(Math.random() * confettiColors.length)]})`
+      } else if (isCircle) {
+        w = 5 + Math.random() * 3; h = w; br = '50%'
+        el.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)]
+      } else {
+        w = 4 + Math.random() * 4; h = 4 + Math.random() * 4; br = '1px'
+        el.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)]
+      }
+
+      Object.assign(el.style, {
+        position: 'absolute',
+        left: `${cx}px`,
+        top: `${cy}px`,
+        width: `${w}px`,
+        height: `${h}px`,
+        borderRadius: br,
+        animation: `confetti-burst ${0.6 + Math.random() * 0.5}s ease-out ${Math.random() * 0.06}s forwards`,
+      })
+      el.style.setProperty('--dx', `${dx}px`)
+      el.style.setProperty('--dy', `${dy}px`)
+      el.style.setProperty('--r', `${Math.random() * 720}deg`)
+
+      container.appendChild(el)
+    }
+  })
+
+  setTimeout(() => container.remove(), 1500)
+}
+
 export default function IconRequestPage() {
   const { language } = useLanguageStore()
   const t = translations[language]
@@ -16,9 +92,15 @@ export default function IconRequestPage() {
     email: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    const errors: Record<string, string> = {}
+    if (!form.name.trim()) errors.name = '请输入图标名称'
+    if (!form.email.trim()) errors.email = '请输入联系方式'
+    setFormErrors(errors)
+    if (Object.keys(errors).length > 0) return
     const subject = encodeURIComponent(`${t.requestPage.formName}: ${form.name}`)
     const body = encodeURIComponent(
       `${t.requestPage.formName}: ${form.name}\n${t.requestPage.formStyle}: ${form.style === 'linear' ? t.requestPage.formStyleLinear : form.style === 'filled' ? t.requestPage.formStyleFilled : t.requestPage.formStyleBoth}\n${t.requestPage.formScenario}: ${form.scenario}\n${t.requestPage.formReference}: ${form.reference}\n${t.requestPage.formEmail}: ${form.email}`
@@ -80,20 +162,22 @@ export default function IconRequestPage() {
       <section className="py-10">
         <div className="mx-auto max-w-[1200px]">
           <div className="mx-auto max-w-[560px]">
-            <form onSubmit={handleSubmit} className="space-y-7">
+            <form onSubmit={handleSubmit} className="space-y-7" noValidate>
               {/* 图标名称 */}
               <div>
                 <label className="block text-[14px] font-normal leading-[22px] text-[var(--is-ink)]">
                   {t.requestPage.formName} <span className="text-[var(--is-ink-faint)]">*</span>
                 </label>
-                <p className="mt-0.5 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.requestPage.formNameHint}</p>
+                <div className="mt-0.5 flex items-center justify-between">
+                  <p className="text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.requestPage.formNameHint}</p>
+                  {formErrors.name && <p className="text-[12px] leading-[22px] text-[#d32f2f]">{formErrors.name}</p>}
+                </div>
                 <input
                   type="text"
-                  required
                   placeholder={t.requestPage.formNamePlaceholder}
-                  className="is-input mt-2 w-full"
+                  className={`is-input mt-2 w-full ${formErrors.name ? 'border-[#d32f2f]' : ''}`}
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e) => { setForm({ ...form, name: e.target.value }); if (formErrors.name) setFormErrors({ ...formErrors, name: '' }) }}
                 />
               </div>
 
@@ -152,20 +236,22 @@ export default function IconRequestPage() {
                 <label className="block text-[14px] font-normal leading-[22px] text-[var(--is-ink)]">
                   {t.requestPage.formEmail} <span className="text-[var(--is-ink-faint)]">*</span>
                 </label>
-                <p className="mt-0.5 text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.requestPage.formEmailHint}</p>
+                <div className="mt-0.5 flex items-center justify-between">
+                  <p className="text-[14px] leading-[22px] text-[var(--is-ink-faint)]">{t.requestPage.formEmailHint}</p>
+                  {formErrors.email && <p className="text-[12px] leading-[22px] text-[#d32f2f]">{formErrors.email}</p>}
+                </div>
                 <input
                   type="email"
-                  required
                   placeholder={t.requestPage.formEmailPlaceholder}
-                  className="is-input mt-2 w-full"
+                  className={`is-input mt-2 w-full ${formErrors.email ? 'border-[#d32f2f]' : ''}`}
                   value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  onChange={(e) => { setForm({ ...form, email: e.target.value }); if (formErrors.email) setFormErrors({ ...formErrors, email: '' }) }}
                 />
               </div>
 
               {/* 提交 */}
               <div className="pt-4">
-                <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[14px] font-normal leading-[22px] text-[var(--is-white)]">
+                <button type="submit" onClick={(e) => fireConfetti(e)} className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[14px] font-normal leading-[22px] text-[var(--is-white)]">
                   <Send size={16} />
                   {t.requestPage.formSubmit}
                 </button>

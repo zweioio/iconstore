@@ -20,6 +20,14 @@ import { categoryOrder } from '@/data/categories'
 export default function IconLibraryPage() {
   const { language } = useLanguageStore()
   const t = translations[language]
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'))
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains('dark'))
+    })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
+  }, [])
 
   const {
     keyword,
@@ -28,12 +36,14 @@ export default function IconLibraryPage() {
     styleMode,
     iconSize,
     strokeWidth,
+    iconColor,
     favoriteIds,
     selectedIconId,
     setSelectedIconId,
     toggleFavorite,
     clearFavorites,
   } = useIconLibraryStore()
+  const effectiveColor = isDark && iconColor === '#000000' ? '#ffffff' : iconColor
   const [feedback, setFeedback] = useState('')
   const [selectedStyle, setSelectedStyle] = useState<'linear' | 'filled'>('linear')
   const [confirmClear, setConfirmClear] = useState(false)
@@ -64,7 +74,7 @@ export default function IconLibraryPage() {
   }, [favoriteIconIds, filteredIcons, viewMode])
 
   const selectedIcon = icons.find((icon) => icon.id === selectedIconId) ?? null
-  const selectedSvg = selectedIcon ? getIconSvg(selectedIcon, selectedStyle, strokeWidth) : ''
+  const selectedSvg = selectedIcon ? getIconSvg(selectedIcon, selectedStyle, strokeWidth, effectiveColor) : ''
 
   function handlePreview(iconId: string, style: 'linear' | 'filled') {
     setSelectedIconId(iconId)
@@ -125,7 +135,7 @@ export default function IconLibraryPage() {
     // currentColor 在 Figma 中不生效，替换为实际颜色值
     const svgForClipboard = svg
       .replace(/<title>.*?<\/title>/, `<title>${styledName}</title>`)
-      .replace(/currentColor/g, '#202224')
+      .replace(/currentColor/g, effectiveColor)
     try {
       await navigator.clipboard.writeText(svgForClipboard)
       setFeedback(t.modal.copied)
@@ -145,7 +155,7 @@ export default function IconLibraryPage() {
   }
 
   function handleDownload(name: string, svg: string) {
-    const svgWithColor = svg.replace(/currentColor/g, '#202224')
+    const svgWithColor = svg.replace(/currentColor/g, effectiveColor)
     const blob = new Blob([svgWithColor], { type: 'image/svg+xml;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -165,7 +175,7 @@ export default function IconLibraryPage() {
       const style = favId.slice(sepIdx + 1) as 'linear' | 'filled'
       const icon = icons.find((i) => i.id === iconId)
       if (!icon) return
-      const svg = getIconSvg(icon, style, 1.8).replace(/currentColor/g, '#202224')
+      const svg = getIconSvg(icon, style, 1.8, effectiveColor)
       const fileName = `${icon.name}_${style === 'filled' ? 'fill' : 'line'}.svg`
       zip.file('iconstoreSVG/' + fileName, svg)
     })
@@ -207,7 +217,7 @@ export default function IconLibraryPage() {
             {/* 线性行 */}
             <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
               {chunk.map((icon) => {
-                const svg = getIconSvg(icon, 'linear', strokeWidth)
+                const svg = getIconSvg(icon, 'linear', strokeWidth, effectiveColor)
                 return (
                   <IconCard
                     key={`${icon.id}-linear-${chunkIdx}`}
@@ -225,7 +235,7 @@ export default function IconLibraryPage() {
             {/* 面型行 */}
             <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
               {chunk.map((icon) => {
-                const svg = getIconSvg(icon, 'filled', strokeWidth)
+                const svg = getIconSvg(icon, 'filled', strokeWidth, effectiveColor)
                 return (
                   <IconCard
                     key={`${icon.id}-filled-${chunkIdx}`}
@@ -336,7 +346,7 @@ export default function IconLibraryPage() {
                           if (favoriteIconIds.has(icon.id + '-filled')) items.push({ icon, style: 'filled' })
                         })
                         return items.map(({ icon, style }) => {
-                          const svg = getIconSvg(icon, style, strokeWidth)
+                          const svg = getIconSvg(icon, style, strokeWidth, effectiveColor)
                           return (
                             <IconCard
                               key={icon.id + '-' + style}

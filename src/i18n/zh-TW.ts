@@ -217,6 +217,7 @@ export const zhTW = {
     reset: '重設',
     iconSize: '圖標大小',
     strokeWidth: '線段粗細',
+    iconColor: '圖標顏色',
     strokeWidthHint: '線段粗細調整不支持面性圖標',
     sizeLock: '等比調整字號與粗細',
     sizeLinkedLabel: '已鎖定',

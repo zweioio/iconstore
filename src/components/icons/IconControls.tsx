@@ -142,15 +142,15 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
         className={cn(
           'inline-flex h-12 w-[180px] items-center justify-between rounded-[12px] px-4 text-[16px] leading-6 transition',
           viewMode === 'favorites'
-            ? 'bg-[var(--is-ink)] text-[var(--is-white)]'
-            : 'bg-[var(--is-surface)] text-[var(--is-ink)] hover:bg-[var(--is-surface-hover)]',
+            ? 'border border-[var(--is-border)] bg-[var(--is-white)] text-[var(--is-ink)]'
+            : 'border border-transparent bg-[var(--is-surface)] text-[var(--is-ink)] hover:bg-[var(--is-surface-hover)]',
         )}
       >
         <span className="inline-flex items-center gap-1">
-          <Star size={16} fill={viewMode === 'favorites' ? 'currentColor' : 'none'} />
+          <Star size={16} fill={viewMode === 'favorites' ? 'currentColor' : 'none'} className={viewMode === 'favorites' ? 'text-[var(--is-yellow)]' : ''} />
           {t.controls.favorites}
         </span>
-        <span className={cn('text-[14px] leading-[22px]', viewMode === 'favorites' ? 'text-white/70' : 'text-[var(--is-ink-soft)]')}>
+        <span className={cn('text-[14px] leading-[22px]', viewMode === 'favorites' ? 'text-[var(--is-ink)]' : 'text-[var(--is-ink-soft)]')}>
           {favoriteCount}
         </span>
       </button>

@@ -6,12 +6,10 @@ export function applyStrokeWidth(svg: string, strokeWidth: number) {
 }
 
 // 根据当前风格拿到应该显示的 SVG 内容
-export function getIconSvg(icon: IconItem, styleMode: IconStyleMode, strokeWidth: number) {
-  if (styleMode === 'filled') {
-    return icon.filledSvg
-  }
-
-  return applyStrokeWidth(icon.linearSvg, strokeWidth)
+export function getIconSvg(icon: IconItem, styleMode: IconStyleMode, strokeWidth: number, iconColor?: string) {
+  const svg = styleMode === 'filled' ? icon.filledSvg : applyStrokeWidth(icon.linearSvg, strokeWidth)
+  if (iconColor) return svg.replace(/currentColor/g, iconColor)
+  return svg
 }
 
 // 拼音首字母映射表（用于中文拼音首字母模糊搜索）

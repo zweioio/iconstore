@@ -217,6 +217,7 @@ export const ko = {
     reset: '초기화',
     iconSize: '아이콘 크기',
     strokeWidth: '선 두께',
+    iconColor: '아이콘 색상',
     strokeWidthHint: '면형 아이콘은 선 두께를 조정할 수 없습니다',
     sizeLock: '크기와 선 두께를 함께 조정',
     sizeLinkedLabel: '연동 중',

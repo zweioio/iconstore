@@ -217,6 +217,7 @@ export const ja = {
     reset: 'リセット',
     iconSize: 'アイコンサイズ',
     strokeWidth: '線の太さ',
+    iconColor: 'アイコンカラー',
     strokeWidthHint: '塗りアイコンは線の太さを調整できません',
     sizeLock: 'サイズと線の太さを連動',
     sizeLinkedLabel: '連動中',

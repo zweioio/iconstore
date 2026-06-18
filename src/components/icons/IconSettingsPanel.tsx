@@ -1,11 +1,16 @@
-import { HelpCircle, Lock, RefreshCcw, Unlock } from 'lucide-react'
-import { useRef, useState } from 'react'
-
+import { HelpCircle, Lock, Palette, RefreshCcw, Unlock } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import {
+  DEFAULT_ICON_COLOR,
   DEFAULT_ICON_SIZE,
   DEFAULT_STROKE_WIDTH,
   useIconLibraryStore,
 } from '@/store/useIconLibraryStore'
+
+const COLOR_PRESETS = [
+  '#FF6352', '#FEAE16', '#F7DC6F', '#2BC671',
+  '#08CACD', '#007AFF', '#956AFF', '#000000',
+]
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
 
@@ -152,18 +157,194 @@ export function IconSettingsPanel() {
   const { language } = useLanguageStore()
   const t = translations[language]
 
+  // 注入选中放大动画
+  useEffect(() => {
+    if (document.getElementById('is-swatch-pulse')) return
+    const s = document.createElement('style')
+    s.id = 'is-swatch-pulse'
+    s.textContent = `@keyframes swatch-pulse{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}`
+    document.head.appendChild(s)
+  }, [])
+
+  // 基于 DOM class 实时检测深色模式（跨组件共享，不受 useTheme 独立实例限制）
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'))
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains('dark'))
+    })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
+  }, [])
+
   const {
     iconSize,
     strokeWidth,
+    iconColor,
+    colorEnabled,
     setIconSize,
     setStrokeWidth,
+    setIconColor,
+    setColorEnabled,
     resetIconSettings,
   } = useIconLibraryStore()
 
   const [sizeLinked, setSizeLinked] = useState(false)
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const pickerRef = useRef<HTMLDivElement>(null)
+  const [pickerOffset, setPickerOffset] = useState({ x: 0, y: 0 })
+  const [colorMode, setColorMode] = useState('hex')
+  const [lastClickedColor, setLastClickedColor] = useState<string | null>(null)
+  const dragStart = useRef<{ x: number; y: number; ox: number; oy: number } | null>(null)
+
+  function openPicker(e: React.MouseEvent) {
+    setPickerOffset({ x: 0, y: 0 })
+    setPickerOpen(true)
+  }
+
+  function handlePickerDrag(e: React.MouseEvent<HTMLDivElement>) {
+    if (!pickerRef.current) return
+    const rect = pickerRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const pad = 12
+    // 点击内容区域（非 padding）时不启动拖动
+    if (
+      x > pad && x < rect.width - pad &&
+      y > pad && y < rect.height - pad
+    ) return
+    e.preventDefault()
+    const startX = e.clientX, startY = e.clientY
+    dragStart.current = { x: startX, y: startY, ox: pickerOffset.x, oy: pickerOffset.y }
+    const onMove = (ev: MouseEvent) => {
+      if (!dragStart.current) return
+      setPickerOffset({
+        x: dragStart.current.ox + ev.clientX - dragStart.current.x,
+        y: dragStart.current.oy + ev.clientY - dragStart.current.y,
+      })
+    }
+    const onUp = () => {
+      dragStart.current = null
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseup', onUp)
+    }
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
+
+  // 点击外部关闭选色器
+  useEffect(() => {
+    if (!pickerOpen) return
+    function handleClick(e: MouseEvent) {
+      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
+        setPickerOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [pickerOpen])
+  const [hueDeg, setHueDeg] = useState(0)
+  const [satPercent, setSatPercent] = useState(100)
+  const [briPercent, setBriPercent] = useState(100)
+  const [alpha, setAlpha] = useState(1)
+
+  // hex → HSL 转换
+  function hexToHsl(hex: string) {
+    let r = 0, g = 0, b = 0
+    const h = hex.replace('#', '')
+    if (h.length === 6) {
+      r = parseInt(h.slice(0, 2), 16) / 255
+      g = parseInt(h.slice(2, 4), 16) / 255
+      b = parseInt(h.slice(4, 6), 16) / 255
+    }
+    const max = Math.max(r, g, b), min = Math.min(r, g, b)
+    let hx = 0, s = 0, l = (max + min) / 2
+    if (max !== min) {
+      const d = max - min
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+      switch (max) {
+        case r: hx = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
+        case g: hx = ((b - r) / d + 2) / 6; break
+        case b: hx = ((r - g) / d + 4) / 6; break
+      }
+    }
+    return { h: hx * 360, s: s * 100, l: l * 100 }
+  }
+
+  // HSL → hex
+  function hslToHex(h: number, s: number, l: number) {
+    s /= 100; l /= 100
+    const a = s * Math.min(l, 1 - l)
+    const f = (n: number) => {
+      const k = (n + h / 30) % 12
+      const color = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1))
+      return Math.round(255 * color).toString(16).padStart(2, '0')
+    }
+    return `#${f(0)}${f(8)}${f(4)}`.toUpperCase()
+  }
+
+  // 打开选色器时同步 HSL
+  useEffect(() => {
+    if (pickerOpen) syncPickerFromColor()
+  }, [pickerOpen])
+
+  function syncPickerFromColor() {
+    const { h, s, l } = hexToHsl(iconColor)
+    setHueDeg(Math.round(h))
+    setSatPercent(Math.round(s))
+    setBriPercent(Math.round(l))
+  }
+
+  function handleSaturationBrightness(e: React.MouseEvent<HTMLDivElement>) {
+    e.preventDefault()
+    const rect = e.currentTarget.getBoundingClientRect()
+    const update = (ev: MouseEvent) => {
+      const x = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width))
+      const y = Math.max(0, Math.min(1, (ev.clientY - rect.top) / rect.height))
+      const sat = Math.round(x * 100)
+      const bri = Math.round((1 - y) * 100)
+      setSatPercent(sat)
+      setBriPercent(bri)
+      setIconColor(hslToHex(hueDeg, sat, bri))
+    }
+    update(e.nativeEvent as unknown as MouseEvent)
+    const onMove = (ev: MouseEvent) => update(ev)
+    const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp) }
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
+
+  function handleHue(e: React.MouseEvent<HTMLDivElement>) {
+    e.preventDefault()
+    const rect = e.currentTarget.getBoundingClientRect()
+    const update = (ev: MouseEvent) => {
+      const x = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width))
+      const h = Math.round(x * 360)
+      setHueDeg(h)
+      setIconColor(hslToHex(h, satPercent, briPercent))
+    }
+    update(e.nativeEvent as unknown as MouseEvent)
+    const onMove = (ev: MouseEvent) => update(ev)
+    const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp) }
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
+
+  function handleAlpha(e: React.MouseEvent<HTMLDivElement>) {
+    e.preventDefault()
+    const rect = e.currentTarget.getBoundingClientRect()
+    const update = (ev: MouseEvent) => {
+      const x = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width))
+      setAlpha(x)
+    }
+    update(e.nativeEvent as unknown as MouseEvent)
+    const onMove = (ev: MouseEvent) => update(ev)
+    const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp) }
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
 
   const isDefault =
-    iconSize === DEFAULT_ICON_SIZE && strokeWidth === DEFAULT_STROKE_WIDTH
+    iconSize === DEFAULT_ICON_SIZE && strokeWidth === DEFAULT_STROKE_WIDTH && iconColor === DEFAULT_ICON_COLOR
 
   const RATIO = DEFAULT_STROKE_WIDTH / DEFAULT_ICON_SIZE // 1.8 / 24 = 0.075
 
@@ -183,46 +364,367 @@ export function IconSettingsPanel() {
     }
   }
 
+
   return (
-    <aside className="w-full rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-3 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-[16px] leading-6 text-[var(--is-ink)]">{t.settings.title}</p>
-        <div className="flex items-center gap-1">
-          <div className="group relative">
-            <button
+    <aside className="w-full rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 pt-3 pb-4 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
+      <div>
+        {/* 标题工具栏 */}
+        <div className="mb-6 flex items-center justify-between gap-3">
+          <p className="text-[16px] leading-6 text-[var(--is-ink)]">{t.settings.title}</p>
+          <div className="flex items-center gap-1">
+            {/* 图标颜色开关 */}
+            <div className="group relative">
+              <button
+                type="button"
+                onClick={() => { if (colorEnabled) setPickerOpen(false); setColorEnabled(!colorEnabled) }}
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition ${
+                  colorEnabled
+                    ? 'text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
+                    : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)]'
+                }`}
+                aria-label="图标颜色"
+              >
+                <Palette size={16} />
+              </button>
+              <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
+                {colorEnabled ? '颜色开' : '颜色关'}
+              </span>
+            </div>
+            <div className="group relative">
+              <button
+                type="button"
+                onClick={() => setSizeLinked(!sizeLinked)}
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition ${
+                  sizeLinked
+                    ? 'text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
+                    : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)]'
+                }`}
+                aria-label={t.settings.sizeLock}
+              >
+                {sizeLinked ? <Lock size={16} /> : <Unlock size={16} />}
+              </button>
+              <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
+                {sizeLinked ? t.settings.sizeLockLinked : t.settings.sizeLockUnlinked}
+              </span>
+            </div>
+            <div className="group relative">
+              <button
               type="button"
-              onClick={() => setSizeLinked(!sizeLinked)}
-              className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition ${
-                sizeLinked
-                  ? 'text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
-                  : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)]'
-              }`}
-              aria-label={t.settings.sizeLock}
+              onClick={resetIconSettings}
+              disabled={isDefault}
+              className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label={t.settings.reset}
             >
-              {sizeLinked ? <Lock size={16} /> : <Unlock size={16} />}
+              <RefreshCcw size={16} />
             </button>
             <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
-              {sizeLinked ? t.settings.sizeLockLinked : t.settings.sizeLockUnlinked}
+              {t.settings.reset}
             </span>
-          </div>
-          <div className="group relative">
-            <button
-            type="button"
-            onClick={resetIconSettings}
-            disabled={isDefault}
-            className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] disabled:cursor-not-allowed disabled:opacity-40"
-            aria-label={t.settings.reset}
-          >
-            <RefreshCcw size={16} />
-          </button>
-          <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
-            {t.settings.reset}
-          </span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="mt-6 space-y-6">
+        {/* 图标颜色 - 始终在 DOM 中，通过 transition 平滑折叠 */}
+        <div
+          className="transition-all duration-300 ease-in-out"
+          style={{
+            maxHeight: colorEnabled ? '300px' : '0',
+            opacity: colorEnabled ? 1 : 0,
+            marginBottom: colorEnabled ? '24px' : '0',
+            overflow: pickerOpen ? 'visible' : 'hidden',
+          }}
+        >
+          <div>
+            <div className="flex items-center justify-between">
+            <p className="text-[14px] leading-[22px] text-[var(--is-ink)]">{t.settings.iconColor}</p>
+            <div className="flex h-7 items-center gap-2 rounded-[8px] bg-[var(--is-surface)] px-2">
+              <input
+                type="text"
+                value={iconColor.toUpperCase()}
+                onChange={(e) => {
+                  const val = e.target.value
+                  if (/^#[0-9a-fA-F]{0,6}$/.test(val)) setIconColor(val)
+                }}
+                onBlur={(e) => {
+                  if (!/^#[0-9a-fA-F]{6}$/.test(e.target.value)) setIconColor(DEFAULT_ICON_COLOR)
+                }}
+                className="w-[64px] bg-transparent text-right text-[14px] leading-[22px] text-[var(--is-ink)] outline-none"
+              />
+              <div className="relative flex items-center">
+                <button
+                  type="button"
+                  onClick={(e) => pickerOpen ? setPickerOpen(false) : openPicker(e)}
+                  className="h-4 w-4 shrink-0 rounded-[4px]"
+                  style={{ backgroundColor: iconColor === '#000000' && isDark ? '#ffffff' : iconColor }}
+                />
+                {pickerOpen && (
+                  <div ref={pickerRef} className="absolute right-full top-full z-20 mt-1 mr-1 w-[228px] select-none rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-3 shadow-[0_6px_32px_rgba(0,0,0,0.08)]"
+                    style={{ transform: `translate(${pickerOffset.x}px, ${pickerOffset.y}px)` }}
+                    onMouseDown={(e) => handlePickerDrag(e)}>
+                    {/* 主色板 */}
+                    <div className="relative h-[160px] w-full overflow-hidden rounded-[6px] cursor-crosshair"
+                      style={{
+                        background: `linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, hsl(${hueDeg}, 100%, 50%))`,
+                      }}
+                      onMouseDown={(e) => handleSaturationBrightness(e)}
+                    >
+                      <div
+                        className="absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-[0_0_4px_rgba(0,0,0,0.3)]"
+                        style={{ left: `${satPercent}%`, top: `${100 - briPercent}%`, backgroundColor: iconColor }}
+                      />
+                    </div>
+                    {/* 色相 + 透明度行 */}
+                    <div className="mt-2 flex items-center gap-2">
+                      <div className="flex-1 space-y-2">
+                        {/* 色相 */}
+                        <div className="relative h-3 w-full cursor-pointer rounded-[6px]"
+                          style={{
+                            background: 'linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%)',
+                          }}
+                          onMouseDown={(e) => handleHue(e)}
+                        >
+                          <div
+                            className="absolute top-1/2 h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-[0_0_4px_rgba(0,0,0,0.3)]"
+                            style={{ left: `${(hueDeg / 360) * 100}%`, backgroundColor: `hsl(${hueDeg}, 100%, 50%)` }}
+                          />
+                        </div>
+                        {/* 透明度 */}
+                        <div className="relative h-3 w-full cursor-pointer rounded-[6px]"
+                          style={{
+                            background: `linear-gradient(to right, transparent, hsl(${hueDeg}, ${satPercent}%, ${briPercent}%)), repeating-conic-gradient(#ccc 0% 25%, transparent 0% 50%) 0 0 / 6px 6px`,
+                            backgroundColor: '#f0f0f0',
+                          }}
+                          onMouseDown={(e) => handleAlpha(e)}
+                        >
+                          <div
+                            className="absolute top-1/2 h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-[0_0_4px_rgba(0,0,0,0.3)]"
+                            style={{ left: `${alpha * 100}%`, backgroundColor: iconColor }}
+                          />
+                        </div>
+                      </div>
+                      {/* 预览色块 */}
+                      {(() => {
+                        const displayColor = iconColor === '#000000' && isDark ? '#ffffff' : iconColor
+                        return (
+                          <div className="h-8 w-8 shrink-0 rounded-[6px] border border-[var(--is-border)]"
+                            style={{
+                              background: `
+                                linear-gradient(rgba(${parseInt(displayColor.slice(1,3),16)},${parseInt(displayColor.slice(3,5),16)},${parseInt(displayColor.slice(5,7),16)},${alpha}),
+                                rgba(${parseInt(displayColor.slice(1,3),16)},${parseInt(displayColor.slice(3,5),16)},${parseInt(displayColor.slice(5,7),16)},${alpha})),
+                                repeating-conic-gradient(#ccc 0% 25%, transparent 0% 50%) 0 0 / 6px 6px
+                              `,
+                            }}
+                          />
+                        )
+                      })()}
+                    </div>
+                    {/* 模式切换标签页 */}
+                    <div className="mt-2 flex gap-0.5 rounded-[6px] bg-[var(--is-surface)] p-0.5">
+                      {['HEX','RGB','HSB','HSL'].map((mode) => (
+                        <button
+                          key={mode}
+                          type="button"
+                          onClick={() => setColorMode(mode.toLowerCase())}
+                          className={`flex-1 rounded-[6px] py-0.5 text-[12px] leading-[18px] transition ${
+                            colorMode === mode.toLowerCase()
+                              ? 'bg-[var(--is-white)] text-[var(--is-ink)] shadow-[0_1px_2px_rgba(0,0,0,0.06)]'
+                              : 'text-[var(--is-ink-soft)] hover:text-[var(--is-ink)]'
+                          }`}
+                        >
+                          {mode}
+                        </button>
+                      ))}
+                    </div>
+                    {/* HEX 输入 */}
+                    {colorMode === 'hex' && (
+                      <div className="mt-1">
+                        <input
+                          type="text"
+                          value={iconColor.replace('#', '')}
+                          onChange={(e) => {
+                            const val = e.target.value
+                            if (/^[0-9a-fA-F]{0,6}$/.test(val)) setIconColor('#' + val)
+                          }}
+                          className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                          maxLength={6}
+                        />
+                      </div>
+                    )}
+                    {/* RGB 输入 */}
+                    {colorMode === 'rgb' && (
+                      <div className="mt-1 grid grid-cols-4 gap-1">
+                        {[
+                          { label: 'R', value: Math.round(parseInt(iconColor.slice(1,3), 16) || 0), max: 255 },
+                          { label: 'G', value: Math.round(parseInt(iconColor.slice(3,5), 16) || 0), max: 255 },
+                          { label: 'B', value: Math.round(parseInt(iconColor.slice(5,7), 16) || 0), max: 255 },
+                          { label: 'A', value: Math.round(alpha * 100), max: 100 },
+                        ].map(({ label, value, max }) => (
+                          <div key={label}>
+                            <input
+                              type="text"
+                              value={value}
+                              onChange={(e) => {
+                                const v = Math.min(max, Math.max(0, parseInt(e.target.value) || 0))
+                                if (label === 'A') {
+                                  setAlpha(v / 100)
+                                } else {
+                                  const idx = { R: 1, G: 3, B: 5 }[label]!
+                                  const newHex = iconColor.slice(0, idx) + v.toString(16).padStart(2, '0').toUpperCase() + iconColor.slice(idx + 2)
+                                  setIconColor(newHex)
+                                }
+                              }}
+                              className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {/* HSB 输入 */}
+                    {colorMode === 'hsb' && (
+                      <div className="mt-1 grid grid-cols-4 gap-1">
+                        {(() => {
+                          const r = parseInt(iconColor.slice(1,3), 16) / 255
+                          const g = parseInt(iconColor.slice(3,5), 16) / 255
+                          const b = parseInt(iconColor.slice(5,7), 16) / 255
+                          const max = Math.max(r, g, b), min = Math.min(r, g, b)
+                          const delta = max - min
+                          let h = 0
+                          if (delta !== 0) {
+                            if (max === r) h = ((g - b) / delta + (g < b ? 6 : 0)) * 60
+                            else if (max === g) h = ((b - r) / delta + 2) * 60
+                            else h = ((r - g) / delta + 4) * 60
+                          }
+                          const s = max === 0 ? 0 : (delta / max) * 100
+                          const br = max * 100
+                          return [
+                            { label: 'H', value: Math.round(h), max: 360 },
+                            { label: 'S', value: Math.round(s), max: 100 },
+                            { label: 'B', value: Math.round(br), max: 100 },
+                            { label: 'A', value: Math.round(alpha * 100), max: 100 },
+                          ].map(({ label, value, max }) => (
+                            <div key={label}>
+                              <input
+                                type="text"
+                                value={value}
+                                onChange={(e) => {
+                                  const v = Math.min(max, Math.max(0, parseInt(e.target.value) || 0))
+                                  if (label === 'A') { setAlpha(v / 100); return }
+                                  if (label === 'H') { setHueDeg(v); setIconColor(hslToHex(v, satPercent, briPercent)) }
+                                  if (label === 'S') { setSatPercent(v) }
+                                  if (label === 'B') { setBriPercent(v) }
+                                  if (label === 'S' || label === 'B') {
+                                    const nh = hueDeg
+                                    const ns = label === 'S' ? v : satPercent
+                                    const nb = label === 'B' ? v : briPercent
+                                    setIconColor(hslToHex(nh, ns, nb))
+                                  }
+                                }}
+                                className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                              />
+                            </div>
+                          ))
+                        })()}
+                      </div>
+                    )}
+                    {/* HSL 输入 */}
+                    {colorMode === 'hsl' && (
+                      <div className="mt-1 grid grid-cols-4 gap-1">
+                        {(() => {
+                          const r = parseInt(iconColor.slice(1,3), 16) / 255
+                          const g = parseInt(iconColor.slice(3,5), 16) / 255
+                          const b = parseInt(iconColor.slice(5,7), 16) / 255
+                          const max = Math.max(r, g, b), min = Math.min(r, g, b)
+                          const delta = max - min
+                          let h = 0, s = 0, l = (max + min) / 2
+                          if (delta !== 0) {
+                            s = l > 0.5 ? delta / (2 - max - min) : delta / (max + min)
+                            if (max === r) h = ((g - b) / delta + (g < b ? 6 : 0)) * 60
+                            else if (max === g) h = ((b - r) / delta + 2) * 60
+                            else h = ((r - g) / delta + 4) * 60
+                          }
+                          return [
+                            { label: 'H', value: Math.round(h), max: 360 },
+                            { label: 'S', value: Math.round(s * 100), max: 100 },
+                            { label: 'L', value: Math.round(l * 100), max: 100 },
+                            { label: 'A', value: Math.round(alpha * 100), max: 100 },
+                          ].map(({ label, value, max }) => (
+                            <div key={label}>
+                              <input
+                                type="text"
+                                value={value}
+                                onChange={(e) => {
+                                  const v = Math.min(max, Math.max(0, parseInt(e.target.value) || 0))
+                                  if (label === 'A') { setAlpha(v / 100); return }
+                                  if (label === 'H') { setHueDeg(v) }
+                                  if (label === 'S') { setSatPercent(v) }
+                                  if (label === 'L') { setBriPercent(v) }
+                                  const nh = label === 'H' ? v : hueDeg
+                                  const ns = label === 'S' ? v : satPercent
+                                  const nl = label === 'L' ? v : briPercent
+                                  setIconColor(hslToHex(nh, ns, nl))
+                                }}
+                                className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                              />
+                            </div>
+                          ))
+                        })()}
+                      </div>
+                    )}
+                    {/* 预设颜色 */}
+                    <div className="mt-2 grid grid-cols-8 gap-1">
+                      {['#FF6352','#FEAE16','#F7DC6F','#2BC671','#08CACD','#007AFF','#956AFF','#000000',
+                        '#333333','#666666','#999999','#BDBDBD','#CCCCCC','#E0E0E0','#F5F5F5','#FFFFFF'].map((c) => {
+                        const isBlackPick = c === '#000000'
+                        const swatchPick = isBlackPick && isDark ? '#ffffff' : c
+                        return (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() => { setIconColor(c); setPickerOpen(false) }}
+                            className="h-[18px] w-[18px] rounded-[4px] transition hover:scale-110"
+                            style={{
+                              backgroundColor: swatchPick,
+                              ...(c === '#000000' && isDark ? { border: '1px solid var(--is-border)' } : {}),
+                            }}
+                          />
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="mt-2 flex gap-2">
+            {COLOR_PRESETS.map((color) => {
+              const isBlack = color === '#000000'
+              const swatchColor = isBlack && isDark ? '#ffffff' : color
+              const isSelected = iconColor === color
+              return (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => { setIconColor(color); setLastClickedColor(color) }}
+                  className="group flex h-5 w-5 items-center justify-center rounded-[4px] bg-transparent transition-all duration-300"
+                >
+                  <span
+                    className={`h-4 w-4 rounded-[3px] ${
+                      isSelected && iconColor === lastClickedColor ? 'animate-[swatch-pulse_400ms_ease-out]' : 'transition-all duration-300 group-hover:rotate-[90deg]'
+                    }`}
+                    style={isSelected ? {
+                      backgroundColor: swatchColor,
+                      ...(isBlack && isDark ? { border: '1px solid var(--is-border)' } : {}),
+                    } : {
+                      backgroundColor: swatchColor,
+                      ...(isBlack && isDark ? { border: '1px solid var(--is-border)' } : {}),
+                    }}
+                  />
+                </button>
+              )
+            })}
+          </div>
+        </div>
+        </div>
+        <div className="mb-6">
         <SliderField
           label={t.settings.iconSize}
           value={iconSize}
@@ -233,6 +735,7 @@ export function IconSettingsPanel() {
           evenOnly
           onChange={handleLinkedIconSize}
         />
+        </div>
         <SliderField
           label={t.settings.strokeWidth}
           value={strokeWidth}
