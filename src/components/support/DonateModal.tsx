@@ -1,4 +1,4 @@
-import { X, Check, Copy } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useState } from 'react'
 
 type DonateMethod = {
@@ -12,17 +12,15 @@ type Props = {
   onClose: () => void
 }
 
-const AMOUNTS = [5, 10, 20, 50]
+const AMOUNTS = [
+  { value: 5, label: '柠檬水', desc: '请我喝杯柠檬水' },
+  { value: 9.9, label: '生椰拿铁', desc: '请我喝杯生椰拿铁' },
+  { value: 15, label: '隆江猪脚饭', desc: '请我吃份猪脚饭' },
+  { value: 50, label: '疯狂星期四', desc: '疯狂星期四，V我50' },
+]
 
 export function DonateModal({ method, onClose }: Props) {
-  const [copied, setCopied] = useState(false)
-  const [amount, setAmount] = useState(10)
-
-  function handleCopy() {
-    navigator.clipboard.writeText(method.account)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+  const [amount, setAmount] = useState(9.9)
 
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(method.account)}`
 
@@ -53,25 +51,26 @@ export function DonateModal({ method, onClose }: Props) {
         <div className="mt-5 grid grid-cols-4 gap-2">
           {AMOUNTS.map((a) => (
             <button
-              key={a}
+              key={a.value}
               type="button"
-              onClick={() => setAmount(a)}
-              className={`rounded-[8px] py-2 text-[14px] leading-[22px] transition ${
-                amount === a
+              onClick={() => setAmount(a.value)}
+              className={`rounded-[8px] py-2 text-center transition ${
+                amount === a.value
                   ? 'bg-[var(--is-ink)] text-[var(--is-white)]'
                   : 'border border-[var(--is-border)] bg-[var(--is-white)] text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
               }`}
             >
-              ¥{a}
+              <span className="block text-[14px] font-medium leading-[22px]">{a.label}</span>
+              <span className={`block text-[12px] leading-5 ${amount === a.value ? 'text-[var(--is-white)/70]' : 'text-[var(--is-ink-faint)]'}`}>¥{a.value}</span>
             </button>
           ))}
         </div>
-        <p className="mt-1 text-center text-[12px] leading-5 text-[var(--is-ink-faint)]">
-          扫码支付 ¥{amount}
+        <p className="mt-4 text-center text-[14px] font-medium leading-[22px] text-[var(--is-ink)]">
+          {AMOUNTS.find((a) => a.value === amount)?.desc}
         </p>
 
         {/* 二维码 */}
-        <div className="mt-4 flex justify-center">
+        <div className="mt-5 flex justify-center">
           <div className="rounded-[10px] border border-[var(--is-border)] p-2">
             <img
               src={qrUrl}
@@ -81,20 +80,8 @@ export function DonateModal({ method, onClose }: Props) {
           </div>
         </div>
 
-        {/* 收款账号 */}
-        <div className="mt-4 flex items-center justify-between rounded-[8px] bg-[var(--is-surface)] px-3 py-2">
-          <span className="text-[13px] leading-5 text-[var(--is-ink)]">{method.account}</span>
-          <button
-            type="button"
-            onClick={handleCopy}
-            className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-white)] hover:text-[var(--is-ink)]"
-          >
-            {copied ? <Check size={14} className="text-[var(--is-green)]" /> : <Copy size={14} />}
-          </button>
-        </div>
-
         {/* 感谢语 */}
-        <p className="mt-4 text-center text-[13px] leading-5 text-[var(--is-ink-faint)]">
+        <p className="mt-5 text-center text-[13px] leading-5 text-[var(--is-ink-faint)]">
           您的支持是该项目持续更新的最大动力 ❤️
         </p>
       </div>
