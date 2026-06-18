@@ -20,14 +20,7 @@ import { categoryOrder } from '@/data/categories'
 export default function IconLibraryPage() {
   const { language } = useLanguageStore()
   const t = translations[language]
-  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'))
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDark(document.documentElement.classList.contains('dark'))
-    })
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
-    return () => observer.disconnect()
-  }, [])
+
 
   const {
     keyword,
@@ -43,7 +36,7 @@ export default function IconLibraryPage() {
     toggleFavorite,
     clearFavorites,
   } = useIconLibraryStore()
-  const effectiveColor = isDark && iconColor === '#000000' ? '#ffffff' : iconColor
+  const effectiveColor = iconColor
   const [feedback, setFeedback] = useState('')
   const [selectedStyle, setSelectedStyle] = useState<'linear' | 'filled'>('linear')
   const [confirmClear, setConfirmClear] = useState(false)

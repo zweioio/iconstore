@@ -191,6 +191,9 @@ export function IconSettingsPanel() {
   const [sizeLinked, setSizeLinked] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
   const pickerRef = useRef<HTMLDivElement>(null)
+  const alphaDragRef = useRef<{ startX: number; startAlpha: number } | null>(null)
+  const alphaInputRef = useRef<HTMLInputElement>(null)
+  const [alphaEditing, setAlphaEditing] = useState(false)
   const [pickerOffset, setPickerOffset] = useState({ x: 0, y: 0 })
   const [colorMode, setColorMode] = useState('hex')
   const [lastClickedColor, setLastClickedColor] = useState<string | null>(null)
@@ -270,6 +273,21 @@ export function IconSettingsPanel() {
     return { h: hx * 360, s: s * 100, l: l * 100 }
   }
 
+  // HSB → hex（饱和度/明度面板使用 HSB 模型，非 HSL）
+  function hsb2hex(h: number, s: number, b: number) {
+    s /= 100; b /= 100
+    const i = Math.floor((h % 360) / 60)
+    const f = (h / 60) - i
+    const p = b * (1 - s)
+    const q = b * (1 - s * f)
+    const t = b * (1 - s * (1 - f))
+    const channels = [
+      [b, t, p], [q, b, p], [p, b, t],
+      [p, q, b], [t, p, b], [b, p, q],
+    ][i]
+    return '#' + channels.map(c => Math.round(c * 255).toString(16).padStart(2, '0')).join('').toUpperCase()
+  }
+
   // HSL → hex
   function hslToHex(h: number, s: number, l: number) {
     s /= 100; l /= 100
@@ -287,11 +305,29 @@ export function IconSettingsPanel() {
     if (pickerOpen) syncPickerFromColor()
   }, [pickerOpen])
 
+  // hex → HSB（用于面板指示器定位）
+  function hexToHsb(hex: string) {
+    const r = parseInt(hex.slice(1,3), 16) / 255
+    const g = parseInt(hex.slice(3,5), 16) / 255
+    const b = parseInt(hex.slice(5,7), 16) / 255
+    const max = Math.max(r, g, b), min = Math.min(r, g, b)
+    const delta = max - min
+    let h = 0
+    if (delta !== 0) {
+      if (max === r) h = ((g - b) / delta + (g < b ? 6 : 0)) * 60
+      else if (max === g) h = ((b - r) / delta + 2) * 60
+      else h = ((r - g) / delta + 4) * 60
+    }
+    const s = max === 0 ? 0 : (delta / max) * 100
+    const br = max * 100
+    return { h, s, b: br }
+  }
+
   function syncPickerFromColor() {
-    const { h, s, l } = hexToHsl(iconColor)
+    const { h, s, b } = hexToHsb(iconColor)
     setHueDeg(Math.round(h))
     setSatPercent(Math.round(s))
-    setBriPercent(Math.round(l))
+    setBriPercent(Math.round(b))
   }
 
   function handleSaturationBrightness(e: React.MouseEvent<HTMLDivElement>) {
@@ -304,7 +340,7 @@ export function IconSettingsPanel() {
       const bri = Math.round((1 - y) * 100)
       setSatPercent(sat)
       setBriPercent(bri)
-      setIconColor(hslToHex(hueDeg, sat, bri))
+      setIconColor(hsb2hex(hueDeg, sat, bri))
     }
     update(e.nativeEvent as unknown as MouseEvent)
     const onMove = (ev: MouseEvent) => update(ev)
@@ -320,7 +356,7 @@ export function IconSettingsPanel() {
       const x = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width))
       const h = Math.round(x * 360)
       setHueDeg(h)
-      setIconColor(hslToHex(h, satPercent, briPercent))
+      setIconColor(hsb2hex(h, satPercent, briPercent))
     }
     update(e.nativeEvent as unknown as MouseEvent)
     const onMove = (ev: MouseEvent) => update(ev)
@@ -341,6 +377,29 @@ export function IconSettingsPanel() {
     const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp) }
     document.addEventListener('mousemove', onMove)
     document.addEventListener('mouseup', onUp)
+  }
+
+  // 透明度拖拽调整（在 div 上触发，阻止文本选中）
+  function handleAlphaInputDrag(e: React.MouseEvent) {
+    e.preventDefault()
+    alphaDragRef.current = { startX: e.clientX, startAlpha: alpha }
+    const onMove = (ev: MouseEvent) => {
+      if (!alphaDragRef.current) return
+      const delta = (ev.clientX - alphaDragRef.current.startX) / 200
+      setAlpha(Math.max(0, Math.min(1, alphaDragRef.current.startAlpha + delta)))
+    }
+    const onUp = () => { alphaDragRef.current = null; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp) }
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
+
+  function handleAlphaEditClick() {
+    setAlphaEditing(true)
+    setTimeout(() => alphaInputRef.current?.select(), 0)
+  }
+
+  function commitAlphaEdit() {
+    setAlphaEditing(false)
   }
 
   const isDefault =
@@ -387,7 +446,7 @@ export function IconSettingsPanel() {
                 <Palette size={16} />
               </button>
               <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
-                {colorEnabled ? '颜色开' : '颜色关'}
+                图标颜色设置
               </span>
             </div>
             <div className="group relative">
@@ -418,8 +477,8 @@ export function IconSettingsPanel() {
               <RefreshCcw size={16} />
             </button>
             <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
-              {t.settings.reset}
-            </span>
+              重置图标
+          </span>
             </div>
           </div>
         </div>
@@ -439,13 +498,13 @@ export function IconSettingsPanel() {
             <div className="flex h-7 items-center gap-2 rounded-[8px] bg-[var(--is-surface)] px-2">
               <input
                 type="text"
-                value={iconColor.toUpperCase()}
+                value={iconColor.replace('#', '').toUpperCase()}
                 onChange={(e) => {
                   const val = e.target.value
-                  if (/^#[0-9a-fA-F]{0,6}$/.test(val)) setIconColor(val)
+                  if (/^[0-9a-fA-F]{0,6}$/.test(val)) setIconColor('#' + val)
                 }}
                 onBlur={(e) => {
-                  if (!/^#[0-9a-fA-F]{6}$/.test(e.target.value)) setIconColor(DEFAULT_ICON_COLOR)
+                  if (!/^[0-9a-fA-F]{6}$/.test(e.target.value)) setIconColor(DEFAULT_ICON_COLOR)
                 }}
                 className="w-[64px] bg-transparent text-right text-[14px] leading-[22px] text-[var(--is-ink)] outline-none"
               />
@@ -454,7 +513,7 @@ export function IconSettingsPanel() {
                   type="button"
                   onClick={(e) => pickerOpen ? setPickerOpen(false) : openPicker(e)}
                   className="h-4 w-4 shrink-0 rounded-[4px]"
-                  style={{ backgroundColor: iconColor === '#000000' && isDark ? '#ffffff' : iconColor }}
+                  style={{ backgroundColor: iconColor }}
                 />
                 {pickerOpen && (
                   <div ref={pickerRef} className="absolute right-full top-full z-20 mt-1 mr-1 w-[228px] select-none rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-3 shadow-[0_6px_32px_rgba(0,0,0,0.08)]"
@@ -503,7 +562,7 @@ export function IconSettingsPanel() {
                       </div>
                       {/* 预览色块 */}
                       {(() => {
-                        const displayColor = iconColor === '#000000' && isDark ? '#ffffff' : iconColor
+                        const displayColor = iconColor
                         return (
                           <div className="h-8 w-8 shrink-0 rounded-[6px] border border-[var(--is-border)]"
                             style={{
@@ -519,7 +578,7 @@ export function IconSettingsPanel() {
                     </div>
                     {/* 模式切换标签页 */}
                     <div className="mt-2 flex gap-0.5 rounded-[6px] bg-[var(--is-surface)] p-0.5">
-                      {['HEX','RGB','HSB','HSL'].map((mode) => (
+                      {['Hex','RGB','HSB','HSL'].map((mode) => (
                         <button
                           key={mode}
                           type="button"
@@ -536,17 +595,44 @@ export function IconSettingsPanel() {
                     </div>
                     {/* HEX 输入 */}
                     {colorMode === 'hex' && (
-                      <div className="mt-1">
-                        <input
-                          type="text"
-                          value={iconColor.replace('#', '')}
-                          onChange={(e) => {
-                            const val = e.target.value
-                            if (/^[0-9a-fA-F]{0,6}$/.test(val)) setIconColor('#' + val)
-                          }}
-                          className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
-                          maxLength={6}
-                        />
+                      <div className="mt-1 grid grid-cols-4 gap-1">
+                        <div className="col-span-3">
+                          <input
+                            type="text"
+                            value={iconColor.replace('#', '')}
+                            onChange={(e) => {
+                              const val = e.target.value
+                              if (/^[0-9a-fA-F]{0,6}$/.test(val)) setIconColor('#' + val)
+                            }}
+                            className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                            maxLength={6}
+                          />
+                        </div>
+                        <div className="relative">
+                          {alphaEditing ? (
+                            <input
+                              ref={alphaInputRef}
+                              type="text"
+                              value={Math.round(alpha * 100)}
+                              onChange={(e) => {
+                                const v = Math.min(100, Math.max(0, parseInt(e.target.value) || 0))
+                                setAlpha(v / 100)
+                              }}
+                              onBlur={commitAlphaEdit}
+                              onKeyDown={(e) => { if (e.key === 'Enter') commitAlphaEdit(); if (e.key === 'Escape') commitAlphaEdit() }}
+                              className="w-full rounded-[6px] border border-[var(--is-border)] py-0.5 pr-5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                            />
+                          ) : (
+                            <div
+                              onMouseDown={handleAlphaInputDrag}
+                              onClick={handleAlphaEditClick}
+                              className="flex h-full w-full cursor-ew-resize select-none items-center justify-center rounded-[6px] border border-[var(--is-border)] py-0.5 pr-5 text-center text-[12px] leading-[18px] text-[var(--is-ink)]"
+                            >
+                              {Math.round(alpha * 100)}
+                            </div>
+                          )}
+                          <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[12px] leading-[18px] text-[var(--is-ink-soft)]">%</span>
+                        </div>
                       </div>
                     )}
                     {/* RGB 输入 */}
@@ -556,9 +642,9 @@ export function IconSettingsPanel() {
                           { label: 'R', value: Math.round(parseInt(iconColor.slice(1,3), 16) || 0), max: 255 },
                           { label: 'G', value: Math.round(parseInt(iconColor.slice(3,5), 16) || 0), max: 255 },
                           { label: 'B', value: Math.round(parseInt(iconColor.slice(5,7), 16) || 0), max: 255 },
-                          { label: 'A', value: Math.round(alpha * 100), max: 100 },
-                        ].map(({ label, value, max }) => (
-                          <div key={label}>
+                          { label: 'A', value: Math.round(alpha * 100), max: 100, unit: '%' },
+                        ].map(({ label, value, max, unit }) => (
+                          <div key={label} className={unit ? 'relative' : ''}>
                             <input
                               type="text"
                               value={value}
@@ -572,8 +658,37 @@ export function IconSettingsPanel() {
                                   setIconColor(newHex)
                                 }
                               }}
-                              className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                              className={`w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none ${unit ? 'pr-5' : ''}`}
                             />
+                            {unit && (label === 'A' ? (
+                              <div className="relative" style={{ marginTop: '-1px' }}>
+                                {alphaEditing ? (
+                                  <input
+                                    ref={alphaInputRef}
+                                    type="text"
+                                    value={Math.round(alpha * 100)}
+                                    onChange={(e) => {
+                                      const v = Math.min(100, Math.max(0, parseInt(e.target.value) || 0))
+                                      setAlpha(v / 100)
+                                    }}
+                                    onBlur={commitAlphaEdit}
+                                    onKeyDown={(e) => { if (e.key === 'Enter') commitAlphaEdit(); if (e.key === 'Escape') commitAlphaEdit() }}
+                                    className="w-full rounded-[6px] border border-[var(--is-border)] py-0.5 pr-5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                                  />
+                                ) : (
+                                  <div
+                                    onMouseDown={handleAlphaInputDrag}
+                                    onClick={handleAlphaEditClick}
+                                    className="flex h-full w-full cursor-ew-resize select-none items-center justify-center rounded-[6px] border border-[var(--is-border)] py-0.5 pr-5 text-center text-[12px] leading-[18px] text-[var(--is-ink)]"
+                                  >
+                                    {Math.round(alpha * 100)}
+                                  </div>
+                                )}
+                                <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[12px] leading-[18px] text-[var(--is-ink-soft)]">%</span>
+                              </div>
+                            ) : (
+                              <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[12px] leading-[18px] text-[var(--is-ink-soft)]">{unit}</span>
+                            ))}
                           </div>
                         ))}
                       </div>
@@ -599,27 +714,53 @@ export function IconSettingsPanel() {
                             { label: 'H', value: Math.round(h), max: 360 },
                             { label: 'S', value: Math.round(s), max: 100 },
                             { label: 'B', value: Math.round(br), max: 100 },
-                            { label: 'A', value: Math.round(alpha * 100), max: 100 },
-                          ].map(({ label, value, max }) => (
-                            <div key={label}>
+                            { label: 'A', value: Math.round(alpha * 100), max: 100, unit: '%' },
+                          ].map(({ label, value, max, unit }) => (
+                            <div key={label} className={unit ? 'relative' : ''}>
                               <input
                                 type="text"
                                 value={value}
                                 onChange={(e) => {
                                   const v = Math.min(max, Math.max(0, parseInt(e.target.value) || 0))
                                   if (label === 'A') { setAlpha(v / 100); return }
-                                  if (label === 'H') { setHueDeg(v); setIconColor(hslToHex(v, satPercent, briPercent)) }
+                                  if (label === 'H') { setHueDeg(v); setIconColor(hsb2hex(v, satPercent, briPercent)) }
                                   if (label === 'S') { setSatPercent(v) }
                                   if (label === 'B') { setBriPercent(v) }
                                   if (label === 'S' || label === 'B') {
                                     const nh = hueDeg
                                     const ns = label === 'S' ? v : satPercent
                                     const nb = label === 'B' ? v : briPercent
-                                    setIconColor(hslToHex(nh, ns, nb))
+                                    setIconColor(hsb2hex(nh, ns, nb))
                                   }
                                 }}
-                                className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                                className={`w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none ${unit ? 'pr-5' : ''}`}
                               />
+                              {unit && (label === 'A' ? (
+                                <div className="relative" style={{ marginTop: '-1px' }}>
+                                  {alphaEditing ? (
+                                    <input
+                                      ref={alphaInputRef}
+                                      type="text"
+                                      value={Math.round(alpha * 100)}
+                                      onChange={(e) => { const v = Math.min(100, Math.max(0, parseInt(e.target.value) || 0)); setAlpha(v / 100) }}
+                                      onBlur={commitAlphaEdit}
+                                      onKeyDown={(e) => { if (e.key === 'Enter') commitAlphaEdit(); if (e.key === 'Escape') commitAlphaEdit() }}
+                                      className="w-full rounded-[6px] border border-[var(--is-border)] py-0.5 pr-5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                                    />
+                                  ) : (
+                                    <div
+                                      onMouseDown={handleAlphaInputDrag}
+                                      onClick={handleAlphaEditClick}
+                                      className="flex h-full w-full cursor-ew-resize select-none items-center justify-center rounded-[6px] border border-[var(--is-border)] py-0.5 pr-5 text-center text-[12px] leading-[18px] text-[var(--is-ink)]"
+                                    >
+                                      {Math.round(alpha * 100)}
+                                    </div>
+                                  )}
+                                  <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[12px] leading-[18px] text-[var(--is-ink-soft)]">%</span>
+                                </div>
+                              ) : (
+                                <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[12px] leading-[18px] text-[var(--is-ink-soft)]">{unit}</span>
+                              ))}
                             </div>
                           ))
                         })()}
@@ -645,9 +786,9 @@ export function IconSettingsPanel() {
                             { label: 'H', value: Math.round(h), max: 360 },
                             { label: 'S', value: Math.round(s * 100), max: 100 },
                             { label: 'L', value: Math.round(l * 100), max: 100 },
-                            { label: 'A', value: Math.round(alpha * 100), max: 100 },
-                          ].map(({ label, value, max }) => (
-                            <div key={label}>
+                            { label: 'A', value: Math.round(alpha * 100), max: 100, unit: '%' },
+                          ].map(({ label, value, max, unit }) => (
+                            <div key={label} className={unit ? 'relative' : ''}>
                               <input
                                 type="text"
                                 value={value}
@@ -662,8 +803,34 @@ export function IconSettingsPanel() {
                                   const nl = label === 'L' ? v : briPercent
                                   setIconColor(hslToHex(nh, ns, nl))
                                 }}
-                                className="w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                                className={`w-full rounded-[6px] border border-[var(--is-border)] px-1.5 py-0.5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none ${unit ? 'pr-5' : ''}`}
                               />
+                              {unit && (label === 'A' ? (
+                                <div className="relative" style={{ marginTop: '-1px' }}>
+                                  {alphaEditing ? (
+                                    <input
+                                      ref={alphaInputRef}
+                                      type="text"
+                                      value={Math.round(alpha * 100)}
+                                      onChange={(e) => { const v = Math.min(100, Math.max(0, parseInt(e.target.value) || 0)); setAlpha(v / 100) }}
+                                      onBlur={commitAlphaEdit}
+                                      onKeyDown={(e) => { if (e.key === 'Enter') commitAlphaEdit(); if (e.key === 'Escape') commitAlphaEdit() }}
+                                      className="w-full rounded-[6px] border border-[var(--is-border)] py-0.5 pr-5 text-center text-[12px] leading-[18px] text-[var(--is-ink)] outline-none"
+                                    />
+                                  ) : (
+                                    <div
+                                      onMouseDown={handleAlphaInputDrag}
+                                      onClick={handleAlphaEditClick}
+                                      className="flex h-full w-full cursor-ew-resize select-none items-center justify-center rounded-[6px] border border-[var(--is-border)] py-0.5 pr-5 text-center text-[12px] leading-[18px] text-[var(--is-ink)]"
+                                    >
+                                      {Math.round(alpha * 100)}
+                                    </div>
+                                  )}
+                                  <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[12px] leading-[18px] text-[var(--is-ink-soft)]">%</span>
+                                </div>
+                              ) : (
+                                <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[12px] leading-[18px] text-[var(--is-ink-soft)]">{unit}</span>
+                              ))}
                             </div>
                           ))
                         })()}
@@ -673,18 +840,13 @@ export function IconSettingsPanel() {
                     <div className="mt-2 grid grid-cols-8 gap-1">
                       {['#FF6352','#FEAE16','#F7DC6F','#2BC671','#08CACD','#007AFF','#956AFF','#000000',
                         '#333333','#666666','#999999','#BDBDBD','#CCCCCC','#E0E0E0','#F5F5F5','#FFFFFF'].map((c) => {
-                        const isBlackPick = c === '#000000'
-                        const swatchPick = isBlackPick && isDark ? '#ffffff' : c
                         return (
                           <button
                             key={c}
                             type="button"
                             onClick={() => { setIconColor(c); setPickerOpen(false) }}
                             className="h-[18px] w-[18px] rounded-[4px] transition hover:scale-110"
-                            style={{
-                              backgroundColor: swatchPick,
-                              ...(c === '#000000' && isDark ? { border: '1px solid var(--is-border)' } : {}),
-                            }}
+                            style={{ backgroundColor: c }}
                           />
                         )
                       })}
@@ -696,27 +858,21 @@ export function IconSettingsPanel() {
           </div>
           <div className="mt-2 flex gap-2">
             {COLOR_PRESETS.map((color) => {
-              const isBlack = color === '#000000'
-              const swatchColor = isBlack && isDark ? '#ffffff' : color
-              const isSelected = iconColor === color
+              const isLast = color === '#000000'
+              const targetColor = isLast && isDark ? '#ffffff' : color
+              const isSelected = iconColor === targetColor
               return (
                 <button
                   key={color}
                   type="button"
-                  onClick={() => { setIconColor(color); setLastClickedColor(color) }}
+                  onClick={() => { setIconColor(targetColor); setLastClickedColor(targetColor) }}
                   className="group flex h-5 w-5 items-center justify-center rounded-[4px] bg-transparent transition-all duration-300"
                 >
                   <span
                     className={`h-4 w-4 rounded-[3px] ${
                       isSelected && iconColor === lastClickedColor ? 'animate-[swatch-pulse_400ms_ease-out]' : 'transition-all duration-300 group-hover:rotate-[90deg]'
                     }`}
-                    style={isSelected ? {
-                      backgroundColor: swatchColor,
-                      ...(isBlack && isDark ? { border: '1px solid var(--is-border)' } : {}),
-                    } : {
-                      backgroundColor: swatchColor,
-                      ...(isBlack && isDark ? { border: '1px solid var(--is-border)' } : {}),
-                    }}
+                    style={{ backgroundColor: targetColor }}
                   />
                 </button>
               )

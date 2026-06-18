@@ -1,14 +1,18 @@
+import { useState } from 'react'
 import { Github, CreditCard, Wallet, MessageCircle, ExternalLink, Star, Coffee } from 'lucide-react'
 import { BackToTop } from '@/components/layout/BackToTop'
+import { DonateModal } from '@/components/support/DonateModal'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/i18n'
 
 export default function SupportPage() {
   const { language } = useLanguageStore()
   const t = translations[language]
+  const [modalMethod, setModalMethod] = useState<string | null>(null)
 
   const methods = [
     {
+      id: 'paypal',
       name: t.supportPage.paypal,
       icon: CreditCard,
       desc: t.supportPage.paypalDesc,
@@ -17,6 +21,7 @@ export default function SupportPage() {
       bg: 'bg-[#F0F7FF]',
     },
     {
+      id: 'alipay',
       name: t.supportPage.alipay,
       icon: Wallet,
       desc: t.supportPage.alipayDesc,
@@ -25,6 +30,7 @@ export default function SupportPage() {
       bg: 'bg-[#F0F7FF]',
     },
     {
+      id: 'wechat',
       name: t.supportPage.wechat,
       icon: MessageCircle,
       desc: t.supportPage.wechatDesc,
@@ -33,6 +39,8 @@ export default function SupportPage() {
       bg: 'bg-[#F0FFF4]',
     },
   ]
+
+  const selectedMethod = methods.find((m) => m.id === modalMethod)
 
   return (
     <div className="pb-32">
@@ -55,14 +63,19 @@ export default function SupportPage() {
         <div className="mx-auto max-w-[1200px]">
           <div className="grid gap-6 sm:grid-cols-3">
             {methods.map((method) => (
-              <div key={method.name} className="rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-7 py-10 text-center">
+              <button
+                key={method.name}
+                type="button"
+                onClick={() => setModalMethod(method.id)}
+                className="cursor-pointer rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] px-7 py-10 text-center transition hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
+              >
                 <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-[14px] ${method.bg}`}>
                   <method.icon size={26} style={{ color: method.color }} />
                 </div>
                 <p className="mt-5 text-[18px] font-bold leading-[26px] text-[var(--is-ink)]">{method.name}</p>
                 <p className="mt-2 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">{method.desc}</p>
                 <p className="mt-1 text-[12px] leading-[20px] text-[var(--is-ink-faint)]">{method.detail}</p>
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -109,6 +122,13 @@ export default function SupportPage() {
         </div>
       </section>
       <BackToTop />
+
+      {selectedMethod && (
+        <DonateModal
+          method={{ name: selectedMethod.name, account: selectedMethod.detail, color: selectedMethod.color }}
+          onClose={() => setModalMethod(null)}
+        />
+      )}
     </div>
   )
 }
