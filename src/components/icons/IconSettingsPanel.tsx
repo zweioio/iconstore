@@ -37,7 +37,13 @@ function SliderField({
   onChange,
 }: SliderFieldProps) {
   const percent = ((value - min) / (max - min)) * 100
-  const displayValue = Number.isInteger(value) ? value.toString() : value.toFixed(1)
+  // 根据 step 自动决定小数位数
+  function decimalsFromStep(s: number) {
+    const parts = String(s).split('.')
+    return parts.length > 1 ? parts[1].length : 0
+  }
+  const decimals = decimalsFromStep(step)
+  const displayValue = decimals === 0 ? value.toString() : value.toFixed(Math.max(decimals, 1)).replace(/\.?0+$/, '')
   const [editing, setEditing] = useState(false)
   const [editValue, setEditValue] = useState(displayValue)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -105,7 +111,7 @@ function SliderField({
           )}
         </div>
         {editing ? (
-          <div className="flex h-[28px] w-[56px] items-center justify-between rounded-[8px] bg-[var(--is-code-bg)] px-2">
+          <div className="flex h-[28px] w-[64px] items-center justify-between rounded-[8px] bg-[var(--is-code-bg)] px-2">
             <input
               ref={inputRef}
               type="text"
@@ -122,7 +128,7 @@ function SliderField({
           </div>
         ) : (
           <div
-            className="flex h-[28px] w-[56px] cursor-ew-resize select-none items-center justify-between rounded-[8px] bg-[var(--is-code-bg)] px-2 text-[14px] leading-[22px]"
+            className="flex h-[28px] w-[64px] cursor-ew-resize select-none items-center justify-end gap-1 rounded-[8px] bg-[var(--is-code-bg)] px-2 text-[14px] leading-[22px]"
             onClick={handleValueClick}
             onMouseDown={handleDragStart}
           >
@@ -433,7 +439,7 @@ export function IconSettingsPanel() {
   function handleLinkedIconSize(newSize: number) {
     setIconSize(newSize)
     if (sizeLinked) {
-      const linkedStroke = Math.round(newSize * RATIO * 10) / 10
+      const linkedStroke = Math.round(newSize * RATIO * 20) / 20
       setStrokeWidth(Math.min(4, Math.max(0.5, linkedStroke)))
     }
   }
@@ -920,7 +926,7 @@ export function IconSettingsPanel() {
           value={strokeWidth}
           min={0.5}
           max={4}
-          step={0.1}
+          step={0.05}
           unit="px"
           hint={t.settings.strokeWidthHint}
           onChange={handleLinkedStrokeWidth}
