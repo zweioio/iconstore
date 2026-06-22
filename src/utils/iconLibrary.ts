@@ -5,10 +5,14 @@ export function applyStrokeWidth(svg: string, strokeWidth: number) {
   return svg.replace(/stroke-width="[\d.]+"/g, `stroke-width="${strokeWidth}"`)
 }
 
+const DEFAULT_ICON_COLOR = '#000000'
+
 // 根据当前风格拿到应该显示的 SVG 内容
 export function getIconSvg(icon: IconItem, styleMode: IconStyleMode, strokeWidth: number, iconColor?: string) {
   const svg = styleMode === 'filled' ? icon.filledSvg : applyStrokeWidth(icon.linearSvg, strokeWidth)
-  if (iconColor) return svg.replace(/currentColor/g, iconColor)
+  // 默认颜色 #000000 = 不替换，让 SVG 继承父级 color（自动适配深浅模式）
+  // 用户自定义颜色时再硬编码替换 currentColor
+  if (iconColor && iconColor !== DEFAULT_ICON_COLOR) return svg.replace(/currentColor/g, iconColor)
   return svg
 }
 

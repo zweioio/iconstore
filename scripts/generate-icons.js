@@ -138,7 +138,14 @@ function scanIcons() {
 
     const svgFiles = fs.readdirSync(catLinearDir)
       .filter(f => f.endsWith('.svg'))
-      .sort()
+      .sort((a, b) => {
+        const nameA = a.replace(/\.svg$/, '')
+        const nameB = b.replace(/\.svg$/, '')
+        // 基础图标（无后缀）优先：arrow-left 排在 arrow-left-circle 前面
+        if (nameB.startsWith(nameA + '-')) return -1
+        if (nameA.startsWith(nameB + '-')) return 1
+        return nameA.localeCompare(nameB)
+      })
 
     if (svgFiles.length === 0) {
       console.warn(`⚠️  分类 "${category}" 中没有 SVG 文件`)

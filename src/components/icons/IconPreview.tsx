@@ -28,12 +28,12 @@ export function IconPreview({
       className={cn(
         'icon-preview',
         'inline-flex items-center justify-center',
-        framed && 'rounded-[5px] border border-[var(--ds-border)]',
+        framed && 'rounded-[5px] border border-[var(--is-border)]',
         framed && background === 'light'
-          ? 'bg-[var(--ds-surface)] text-[var(--ds-ink)]'
+          ? 'bg-[var(--is-surface)] text-[var(--is-ink)]'
           : '',
         framed && background === 'dark'
-          ? 'bg-[var(--ds-ink)] text-[var(--ds-neutral)]'
+          ? 'bg-[var(--is-ink)] text-[var(--is-white)]'
           : '',
         !framed && 'text-current',
         !isNumericSize && sizeClasses[size],

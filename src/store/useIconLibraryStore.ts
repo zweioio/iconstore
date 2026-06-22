@@ -12,6 +12,11 @@ export const DEFAULT_ICON_SIZE = 24
 export const DEFAULT_STROKE_WIDTH = 1.8
 export const DEFAULT_ICON_COLOR = '#000000'
 
+// 根据当前主题返回默认图标颜色
+export function getDefaultIconColor(isDark = false): string {
+  return isDark ? '#FFFFFF' : '#000000'
+}
+
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
 }

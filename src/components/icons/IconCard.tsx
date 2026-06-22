@@ -127,7 +127,7 @@ export function IconCard({
         </div>
       </div>
       {/* 文字上滑替换效果：hover 时英文上滑移出，翻译上滑移入 */}
-      <div className="h-5 w-[106px] overflow-hidden">
+      <div className="h-5 w-[104px] overflow-hidden">
         <div
           style={{
             transform: `translateY(${isHovering ? -20 : 0}px)`,

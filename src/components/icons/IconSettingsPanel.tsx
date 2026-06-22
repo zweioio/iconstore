@@ -1,7 +1,6 @@
 import { HelpCircle, Lock, Palette, RefreshCcw, Unlock } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import {
-  DEFAULT_ICON_COLOR,
   DEFAULT_ICON_SIZE,
   DEFAULT_STROKE_WIDTH,
   useIconLibraryStore,
@@ -402,8 +401,32 @@ export function IconSettingsPanel() {
     setAlphaEditing(false)
   }
 
+  // 当前主题对应的默认颜色
+  const defaultColor = isDark ? '#FFFFFF' : '#000000'
+
+  // 同步主题切换：如果当前颜色是切换前的默认色，自动变为新主题的默认色
+  const prevThemeRef = useRef(isDark)
+  useEffect(() => {
+    if (prevThemeRef.current !== isDark) {
+      const oldDefault = prevThemeRef.current ? '#FFFFFF' : '#000000'
+      const newDefault = isDark ? '#FFFFFF' : '#000000'
+      if (iconColor === oldDefault) {
+        setIconColor(newDefault)
+      }
+      prevThemeRef.current = isDark
+    }
+  }, [isDark, iconColor, setIconColor])
+
+  // 任一模式的默认色都视为「默认状态」
   const isDefault =
-    iconSize === DEFAULT_ICON_SIZE && strokeWidth === DEFAULT_STROKE_WIDTH && iconColor === DEFAULT_ICON_COLOR
+    iconSize === DEFAULT_ICON_SIZE && strokeWidth === DEFAULT_STROKE_WIDTH &&
+    (iconColor === '#000000' || iconColor === '#FFFFFF')
+
+  function handleReset() {
+    setIconSize(DEFAULT_ICON_SIZE)
+    setStrokeWidth(DEFAULT_STROKE_WIDTH)
+    setIconColor(defaultColor)
+  }
 
   const RATIO = DEFAULT_STROKE_WIDTH / DEFAULT_ICON_SIZE // 1.8 / 24 = 0.075
 
@@ -469,7 +492,7 @@ export function IconSettingsPanel() {
             <div className="group relative">
               <button
               type="button"
-              onClick={resetIconSettings}
+              onClick={handleReset}
               disabled={isDefault}
               className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] disabled:cursor-not-allowed disabled:opacity-40"
               aria-label={t.settings.reset}
@@ -504,7 +527,7 @@ export function IconSettingsPanel() {
                   if (/^[0-9a-fA-F]{0,6}$/.test(val)) setIconColor('#' + val)
                 }}
                 onBlur={(e) => {
-                  if (!/^[0-9a-fA-F]{6}$/.test(e.target.value)) setIconColor(DEFAULT_ICON_COLOR)
+                  if (!/^[0-9a-fA-F]{6}$/.test(e.target.value)) setIconColor(defaultColor)
                 }}
                 className="w-[64px] bg-transparent text-right text-[14px] leading-[22px] text-[var(--is-ink)] outline-none"
               />

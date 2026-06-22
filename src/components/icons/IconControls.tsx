@@ -71,7 +71,14 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
   const currentCategory = categories.find((c) => c.value === category)
 
   return (
-    <div className="sticky top-0 z-[50] bg-[var(--is-white)] mt-6 mb-2 flex flex-wrap items-center gap-4 px-2 py-4 lg:px-0">
+    <div className="sticky top-[80px] z-[50] mt-6 mb-2">
+      {/* 突破父级 max-w-[1200px] 的全宽背景 */}
+      <div
+        className="absolute inset-y-0 bg-[var(--is-white)]"
+        style={{ left: 'calc(-50vw + 50%)', width: '100vw' }}
+      />
+      {/* 内容区域保持 max-w-[1200px] 居中 */}
+      <div className="relative mx-auto flex max-w-[1200px] flex-wrap items-center gap-4 px-2 py-4 lg:px-0">
       {/* 自定义下拉框 */}
       <div className="relative w-[200px]" ref={dropdownRef}>
         <button
@@ -154,6 +161,7 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
           {favoriteCount}
         </span>
       </button>
+    </div>
     </div>
   )
 }
