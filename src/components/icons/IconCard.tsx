@@ -134,10 +134,10 @@ export function IconCard({
             transition: 'transform 300ms ease',
           }}
         >
-          <span className="block truncate text-center text-[12px] leading-5 text-[var(--is-ink)]">
+          <span className="block truncate text-center text-[12px] leading-5 text-[var(--is-ink-muted)]">
             {icon.name}
           </span>
-          <span className="block truncate text-center text-[12px] leading-5 text-[var(--is-ink)]">
+          <span className="block truncate text-center text-[12px] leading-5 text-[var(--is-ink-muted)]">
             {getIconLabel(icon.name, language)}
           </span>
         </div>
