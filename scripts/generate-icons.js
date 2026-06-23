@@ -141,9 +141,18 @@ function scanIcons() {
       .sort((a, b) => {
         const nameA = a.replace(/\.svg$/, '')
         const nameB = b.replace(/\.svg$/, '')
-        // 基础图标（无后缀）优先：arrow-left 排在 arrow-left-circle 前面
-        if (nameB.startsWith(nameA + '-')) return -1
-        if (nameA.startsWith(nameB + '-')) return 1
+        const segsA = nameA.split('-').length
+        const segsB = nameB.split('-').length
+        // 1) 段数少的优先（arrow-down 2段 < arrow-down-circle 3段）
+        if (segsA !== segsB) return segsA - segsB
+        // 2) 同段数时，数字后缀排字母后缀前面（home-1 < home-wifi）
+        const lastA = segsA > 1 ? nameA.split('-').pop() || '' : ''
+        const lastB = segsB > 1 ? nameB.split('-').pop() || '' : ''
+        const isNumA = /^\d+$/.test(lastA)
+        const isNumB = /^\d+$/.test(lastB)
+        if (isNumA && !isNumB) return -1
+        if (!isNumA && isNumB) return 1
+        // 3) 字母顺序
         return nameA.localeCompare(nameB)
       })
 
