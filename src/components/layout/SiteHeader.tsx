@@ -19,10 +19,12 @@ function ThemeToggle() {
   }, [])
 
   function toggle() {
+    document.documentElement.classList.add('transitioning')
     const next = !dark
     document.documentElement.classList.toggle('dark', next)
     localStorage.setItem('theme', next ? 'dark' : 'light')
     setDark(next)
+    setTimeout(() => document.documentElement.classList.remove('transitioning'), 300)
   }
 
   return (

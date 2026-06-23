@@ -202,7 +202,6 @@ export function IconSettingsPanel() {
   const [pickerOffset, setPickerOffset] = useState({ x: 0, y: 0 })
   const [colorMode, setColorMode] = useState('hex')
   const [lastClickedColor, setLastClickedColor] = useState<string | null>(null)
-  const [clickSeq, setClickSeq] = useState(0)
   const dragStart = useRef<{ x: number; y: number; ox: number; oy: number } | null>(null)
 
   function openPicker(e: React.MouseEvent) {
@@ -895,17 +894,12 @@ export function IconSettingsPanel() {
                 <button
                   key={color}
                   type="button"
-                  onClick={() => {
-                    setIconColor(targetColor)
-                    setLastClickedColor(targetColor)
-                    setClickSeq((n) => n + 1)
-                  }}
-                  className="group flex h-5 w-5 items-center justify-center rounded-[4px] bg-transparent"
+                  onClick={() => { setIconColor(targetColor); setLastClickedColor(targetColor) }}
+                  className="group flex h-5 w-5 items-center justify-center rounded-[4px] bg-transparent transition-all duration-300"
                 >
                   <span
-                    key={`${color}-${clickSeq}`}
-                    className={`h-4 w-4 rounded-[3px] transition-all duration-300 group-hover:rotate-[90deg] ${
-                      isSelected && lastClickedColor === targetColor ? 'animate-[swatch-pulse_400ms_ease-out]' : ''
+                    className={`h-4 w-4 rounded-[3px] ${
+                      isSelected && iconColor === lastClickedColor ? 'animate-[swatch-pulse_400ms_ease-out]' : 'transition-all duration-300 group-hover:rotate-[90deg]'
                     }`}
                     style={{ backgroundColor: targetColor }}
                   />

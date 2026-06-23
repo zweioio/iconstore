@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 主题切换即时生效，无过渡延迟 */
+/* 主题切换过渡动画 */
+html.transitioning,
+html.transitioning *,
+html.transitioning *::before,
+html.transitioning *::after {
+  transition: all 0.3s ease !important;
+}
 
 :root {
   font-family: "Inter", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans CJK JP", "Noto Sans CJK KR", Arial, sans-serif;
