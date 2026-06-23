@@ -42,7 +42,7 @@ type IconLibraryStore = {
   setIconColor: (value: string) => void
   setColorEnabled: (value: boolean) => void
   setBackground: (value: PreviewBackground) => void
-  toggleFavorite: (iconId: string) => void
+  toggleFavorite: (iconId: string) => boolean
   resetIconSettings: () => void
   clearFavorites: () => void
   setSelectedIconId: (value: string | null) => void
@@ -51,7 +51,7 @@ type IconLibraryStore = {
 // 集中管理图标库页的交互状态，并持久化收藏数据到 localStorage
 export const useIconLibraryStore = create<IconLibraryStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       keyword: '',
       category: 'all',
       viewMode: 'all',
@@ -72,12 +72,18 @@ export const useIconLibraryStore = create<IconLibraryStore>()(
       setIconColor: (value) => set({ iconColor: value }),
       setColorEnabled: (value) => set({ colorEnabled: value }),
       setBackground: (value) => set({ background: value }),
-      toggleFavorite: (iconId) =>
-        set((state) => ({
-          favoriteIds: state.favoriteIds.includes(iconId)
-            ? state.favoriteIds.filter((id) => id !== iconId)
-            : [...state.favoriteIds, iconId],
-        })),
+      toggleFavorite: (iconId) => {
+        const state = get()
+        if (state.favoriteIds.includes(iconId)) {
+          set({ favoriteIds: state.favoriteIds.filter((id) => id !== iconId) })
+          return true
+        }
+        if (state.favoriteIds.length >= 20) {
+          return false
+        }
+        set({ favoriteIds: [...state.favoriteIds, iconId] })
+        return true
+      },
       resetIconSettings: () =>
         set({
           iconSize: DEFAULT_ICON_SIZE,

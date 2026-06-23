@@ -15,6 +15,7 @@ type IconCardProps = {
   iconSize: number
   isFavorite: boolean
   isSelected: boolean
+  hideFavoriteStar?: boolean
   onPreview: () => void
   onToggleFavorite: () => void
 }
@@ -25,6 +26,7 @@ export function IconCard({
   iconSize,
   isFavorite,
   isSelected,
+  hideFavoriteStar,
   onPreview,
   onToggleFavorite,
 }: IconCardProps) {
@@ -104,7 +106,7 @@ export function IconCard({
         {/* 预览区保持 120 x 120 */}
         <div className="relative flex h-[120px] w-[120px] items-center justify-center bg-[var(--is-white)]">
         {/* 收藏按钮 - 已收藏时始终显示，未收藏时hover显示 */}
-        {(showHover || isFavorite) && (
+        {(showHover || (isFavorite && !hideFavoriteStar)) && (
           <button
             type="button"
             onClick={(event) => {

@@ -18,24 +18,66 @@ categoryCounts['all'] = icons.length
 
 type IconControlsProps = {
   favoriteCount: number
+  favoritesOpen: boolean
   onCategorySelect?: (cat: string) => void
+  onFavoritesToggle: () => void
 }
 
-export function IconControls({ favoriteCount, onCategorySelect }: IconControlsProps) {
+export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, onFavoritesToggle }: IconControlsProps) {
   const { language } = useLanguageStore()
   const t = translations[language]
 
   const {
     keyword,
     category,
-    viewMode,
     setKeyword,
     setCategory,
-    setViewMode,
   } = useIconLibraryStore()
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [visibleCategory, setVisibleCategory] = useState<string | null>(null)
+  const [animPhase, setAnimPhase] = useState<'enter' | 'exit' | 'idle'>('idle')
+  const displayRef = useRef({ name: t.categories.all, count: categoryCounts['all'] })
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const observerRef = useRef<IntersectionObserver | null>(null)
+
+  // 注入进出场动画
+  useEffect(() => {
+    if (document.getElementById('is-cat-anim')) return
+    const s = document.createElement('style')
+    s.id = 'is-cat-anim'
+    s.textContent = `@keyframes cat-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes cat-exit{from{opacity:1}to{opacity:0}}`
+    document.head.appendChild(s)
+  }, [])
+
+  // 滚动时检测顶部分类（基于元素到视口顶部的距离，准确无间隙）
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>('[id^="category-"]')
+    if (sections.length === 0) return
+
+    let ticking = false
+    function updateFromScroll() {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        let closest = ''
+        let closestDist = Infinity
+        for (const el of sections) {
+          const rect = el.getBoundingClientRect()
+          if (rect.top > -90 && rect.top < closestDist) {
+            closestDist = rect.top
+            closest = el.id.replace('category-', '')
+          }
+        }
+        setVisibleCategory(closest || null)
+        ticking = false
+      })
+    }
+
+    updateFromScroll()
+    window.addEventListener('scroll', updateFromScroll, { passive: true })
+    return () => window.removeEventListener('scroll', updateFromScroll)
+  }, [])
 
   // 点击外部关闭下拉
   useEffect(() => {
@@ -52,7 +94,6 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
 
   function handleSelect(value: IconCategory | 'all') {
     setCategory(value)
-    setViewMode('all')
     setDropdownOpen(false)
     if (onCategorySelect && value !== 'all') {
       onCategorySelect(value)
@@ -70,6 +111,26 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
 
   const currentCategory = categories.find((c) => c.value === category)
 
+  // 分类切换动画：先消失再入场
+  const currentCat = visibleCategory || 'all'
+  const currentCatLabel = categories.find((c) => c.value === currentCat)?.label || t.categories.all
+  useEffect(() => {
+    if (displayRef.current.name === currentCatLabel) return
+    setAnimPhase('exit')
+    const t1 = setTimeout(() => {
+      displayRef.current = { name: currentCatLabel, count: categoryCounts[currentCat] ?? categoryCounts['all'] }
+      setAnimPhase('enter')
+    }, 200)
+    const t2 = setTimeout(() => setAnimPhase('idle'), 500)
+    return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
+      // 避免快速切换时文本消失
+      displayRef.current = { name: currentCatLabel, count: categoryCounts[currentCat] ?? categoryCounts['all'] }
+      setAnimPhase('idle')
+    }
+  }, [currentCatLabel, currentCat])
+
   return (
     <div className="sticky top-[80px] z-[50] mt-6 mb-2">
       {/* 突破父级 max-w-[1200px] 的全宽背景 */}
@@ -86,11 +147,14 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
           onClick={() => setDropdownOpen(!dropdownOpen)}
           className="flex h-12 w-full items-center justify-between rounded-[12px] bg-[var(--is-surface)] px-3 transition hover:bg-[var(--is-surface-hover)]"
         >
-          <span className="text-[16px] leading-6 text-[var(--is-ink)]">
-            {currentCategory?.label}
+          <span className="text-[16px] leading-6 text-[var(--is-ink)]"
+            style={{ animation: animPhase === 'exit' ? 'cat-exit 200ms ease-out forwards' : animPhase === 'enter' ? 'cat-enter 300ms ease-out' : '' }}>
+            {displayRef.current.name}
           </span>
           <span className="inline-flex items-center gap-1 text-[14px] leading-[22px] text-[var(--is-ink-soft)]">
-            {categoryCounts[category] ?? ''}
+            <span style={{ animation: animPhase === 'exit' ? 'cat-exit 200ms ease-out forwards' : animPhase === 'enter' ? 'cat-enter 300ms ease-out' : '' }}>
+              {displayRef.current.count}
+            </span>
             <ChevronDown size={16} className="text-[var(--is-ink)]" />
           </span>
         </button>
@@ -145,19 +209,19 @@ export function IconControls({ favoriteCount, onCategorySelect }: IconControlsPr
       {/* 收藏按钮直接切换列表范围，避免额外再占一行 */}
       <button
         type="button"
-        onClick={() => setViewMode(viewMode === 'favorites' ? 'all' : 'favorites')}
+        onClick={onFavoritesToggle}
         className={cn(
           'inline-flex h-12 w-[180px] items-center justify-between rounded-[12px] px-4 text-[16px] leading-6 transition',
-          viewMode === 'favorites'
+          favoritesOpen
             ? 'border border-[var(--is-border)] bg-[var(--is-white)] text-[var(--is-ink)]'
             : 'border border-transparent bg-[var(--is-surface)] text-[var(--is-ink)] hover:bg-[var(--is-surface-hover)]',
         )}
       >
         <span className="inline-flex items-center gap-1">
-          <Star size={16} fill={viewMode === 'favorites' ? 'currentColor' : 'none'} className={viewMode === 'favorites' ? 'text-[var(--is-yellow)]' : ''} />
+          <Star size={16} />
           {t.controls.favorites}
         </span>
-        <span className={cn('text-[14px] leading-[22px]', viewMode === 'favorites' ? 'text-[var(--is-ink)]' : 'text-[var(--is-ink-soft)]')}>
+        <span className={cn('text-[14px] leading-[22px]', favoritesOpen ? 'text-[var(--is-ink)]' : 'text-[var(--is-ink-soft)]')}>
           {favoriteCount}
         </span>
       </button>

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import JSZip from 'jszip'
 
 import { WheatDecoration } from '@/components/icons/WheatDecoration'
+import { FavoritesPanel } from '@/components/favorites/FavoritesPanel'
 
 import { IconCard } from '@/components/icons/IconCard'
 import { IconControls } from '@/components/icons/IconControls'
@@ -40,12 +41,24 @@ export default function IconLibraryPage() {
   const [feedback, setFeedback] = useState('')
   const [selectedStyle, setSelectedStyle] = useState<'linear' | 'filled'>('linear')
   const [confirmClear, setConfirmClear] = useState(false)
+  const [favoritesOpen, setFavoritesOpen] = useState(false)
+
+  function handleToggleFavorite(favKey: string) {
+    const isFav = favoriteIds.includes(favKey)
+    const ok = toggleFavorite(favKey)
+    if (ok) {
+      setFeedback(isFav ? '已取消收藏' : '已收藏')
+    } else {
+      setFeedback('最多收藏 20 个图标')
+    }
+    setTimeout(() => setFeedback(''), 1800)
+  }
 
   // 滚动到对应分类的分组
   function scrollToCategory(cat: string) {
     const el = document.getElementById(`category-${cat}`)
     if (el) {
-      const yOffset = -80 // 吸顶搜索栏的偏移
+      const yOffset = -160 // 吸顶搜索栏 + 导航栏的总偏移
       const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
       window.scrollTo({ top: y, behavior: 'smooth' })
     }
@@ -97,10 +110,6 @@ export default function IconLibraryPage() {
 
   // 按分类分组图标（搜索模式下不受 category 筛选影响）
   const groupedIcons = useMemo(() => {
-    if (viewMode === 'favorites') {
-      // 收藏夹模式下不分组
-      return null
-    }
     // 使用 filterIcons 统一过滤逻辑（keyword 存在时 category 为 'all'）
     const searchFiltered = filterIcons(icons, keyword, keyword.trim() ? 'all' : 'all')
     const groups: { category: string; label: string; icons: typeof searchFiltered }[] = []
@@ -116,7 +125,7 @@ export default function IconLibraryPage() {
       }
     })
     return groups
-  }, [icons, viewMode, keyword, category, t.categories])
+  }, [icons, keyword, category, t.categories])
 
   const metricItems = [
     { value: '1,600+', label: t.metrics.iconCount },
@@ -206,7 +215,8 @@ export default function IconLibraryPage() {
     return (
       <div style={{ overflow: 'visible' }}>
         {chunks.map((chunk, chunkIdx) => (
-          <div key={chunkIdx} className="space-y-8">
+          <div key={chunkIdx} className="space-y-8 mb-8">
+
             {/* 线性行 */}
             <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
               {chunk.map((icon) => {
@@ -220,7 +230,7 @@ export default function IconLibraryPage() {
                     isFavorite={favoriteIconIds.has(icon.id + '-linear')}
                     isSelected={selectedIconId === icon.id}
                     onPreview={() => handlePreview(icon.id, 'linear')}
-                    onToggleFavorite={() => toggleFavorite(icon.id + '-linear')}
+                    onToggleFavorite={() => handleToggleFavorite(icon.id + '-linear')}
                   />
                 )
               })}
@@ -238,7 +248,7 @@ export default function IconLibraryPage() {
                     isFavorite={favoriteIconIds.has(icon.id + '-filled')}
                     isSelected={selectedIconId === icon.id}
                     onPreview={() => handlePreview(icon.id, 'filled')}
-                    onToggleFavorite={() => toggleFavorite(icon.id + '-filled')}
+                    onToggleFavorite={() => handleToggleFavorite(icon.id + '-filled')}
                   />
                 )
               })}
@@ -281,10 +291,17 @@ export default function IconLibraryPage() {
         </div>
       </section>
 
-      <IconControls favoriteCount={favoriteIds.length} onCategorySelect={scrollToCategory} />
+      <IconControls
+        favoriteCount={favoriteIds.length}
+        favoritesOpen={favoritesOpen}
+        onCategorySelect={scrollToCategory}
+        onFavoritesToggle={() => setFavoritesOpen(!favoritesOpen)}
+      />
 
       <div className="mt-4 relative" style={{ overflow: 'visible' }}>
         <section className="min-w-0" style={{ overflow: 'visible' }}>
+          {/* 页面顶部哨兵 - 让下拉回归"全部" */}
+          <div id="category-all" className="pointer-events-none" />
           {/* 按分类分组显示 */}
           {groupedIcons ? (
             groupedIcons.map((group) => (
@@ -349,7 +366,7 @@ export default function IconLibraryPage() {
                               isFavorite
                               isSelected={selectedIconId === icon.id}
                               onPreview={() => handlePreview(icon.id, style)}
-                              onToggleFavorite={() => toggleFavorite(icon.id + '-' + style)}
+                              onToggleFavorite={() => handleToggleFavorite(icon.id + '-' + style)}
                             />
                           )
                         })
@@ -368,7 +385,7 @@ export default function IconLibraryPage() {
             </div>
           )}
           {feedback && (
-            <span className="fixed left-1/2 top-8 z-[80] -translate-x-1/2 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1.5 text-[14px] leading-[22px] text-[var(--is-ink)] shadow-[var(--is-shadow-card)]">
+            <span className="fixed left-1/2 top-8 z-[80] -translate-x-1/2 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1.5 text-[14px] leading-[22px] text-[var(--is-ink)] shadow-[0_4px_16px_rgba(0,0,0,0.12)]">
               {feedback}
             </span>
           )}
@@ -406,9 +423,18 @@ export default function IconLibraryPage() {
         }
         onToggleFavorite={() => {
           if (selectedIcon) {
-            toggleFavorite(selectedIcon.id + '-' + selectedStyle)
+            handleToggleFavorite(selectedIcon.id + '-' + selectedStyle)
           }
         }}
+      />
+      <FavoritesPanel
+        open={favoritesOpen}
+        onClose={() => setFavoritesOpen(false)}
+        onPreview={(iconId, style) => {
+          setSelectedIconId(iconId)
+          setSelectedStyle(style)
+        }}
+        onToggleFavorite={handleToggleFavorite}
       />
       <BackToTop />
 
