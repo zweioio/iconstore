@@ -99,7 +99,7 @@ export const zhTW = {
     copySVG: '複製 SVG',
     downloadSVG: '下載 SVG',
     copyName: '複製圖標名稱',
-    keywords: '標籤',
+    keywords: '關鍵詞',
     svgCode: 'SVG 程式碼',
     linear: '線性',
     filled: '面型',

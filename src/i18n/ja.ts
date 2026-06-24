@@ -99,7 +99,7 @@ export const ja = {
     copySVG: 'SVGをコピー',
     downloadSVG: 'SVGをDL',
     copyName: 'アイコン名をコピー',
-    keywords: 'タグ',
+    keywords: 'キーワード',
     svgCode: 'SVGコード',
     linear: '線',
     filled: '塗り',

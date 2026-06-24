@@ -59,6 +59,36 @@ const categoryLabels = {
   transport: '交通', user: '用户', weather: '天气', zodiac: '星座',
 }
 
+// 图标名称词段多语言翻译，覆盖所有分类中出现的所有词
+const wordI18n = {
+  arrow:   ['箭头',   '箭頭',   'Arrow',     '矢印',    '화살표'],
+  up:      ['上',     '上',     'Up',        '上',      '위'],
+  down:    ['下',     '下',     'Down',      '下',      '아래'],
+  left:    ['左',     '左',     'Left',      '左',      '왼쪽'],
+  right:   ['右',     '右',     'Right',     '右',      '오른쪽'],
+  to:      ['到',     '到',     'To',        'へ',      '로'],
+  align:   ['对齐',   '對齊',   'Align',     '整列',    '정렬'],
+  big:     ['大',     '大',     'Big',       '大',      '큰'],
+  small:   ['小',     '小',     'Small',     '小',      '작은'],
+  circle:  ['圆形',   '圓形',   'Circle',    '丸',      '원'],
+  square:  ['方形',   '方形',   'Square',    '四角',    '사각형'],
+  home:    ['首页',   '首頁',   'Home',      'ホーム',  '홈'],
+  rectangle: ['矩形','矩形',   'Rectangle', '長方形',  '직사각형'],
+  round:   ['圆角',   '圓角',   'Round',     '丸',      '둥근'],
+  diamond: ['菱形',   '菱形',   'Diamond',   'ひし形',  '다이아몬드'],
+  hexagon: ['六边形', '六邊形', 'Hexagon',   '六角形',  '육각형'],
+  octagon: ['八边形', '八邊形', 'Octagon',   '八角形',  '팔각형'],
+  oval:    ['椭圆形', '橢圓形', 'Oval',      '楕円形',  '타원형'],
+  pentagon: ['五边形','五邊形', 'Pentagon',  '五角形',  '오각형'],
+  triangle:['三角形', '三角形', 'Triangle',  '三角形',  '삼각형'],
+  trapezoid:['梯形',  '梯形',   'Trapezoid', '台形',    '사다리꼴'],
+  parallelogram: ['平行四边形','平行四邊形','Parallelogram','平行四辺形','평행사변형'],
+  vertical:['垂直',   '垂直',   'Vertical',  '垂直',    '수직'],
+  angle:   ['角',     '角',     'Angle',     '角度',    '각도'],
+  1:       ['一',     '一',     'One',       '一',      '일'],
+  2:       ['二',     '二',     'Two',       '二',      '이'],
+}
+
 // 所有语言的分类翻译，标签搜索支持多语言
 const categoryI18n = {
   arrow: ['箭头', '箭頭', 'Arrow', '矢印', '화살표'],
@@ -97,10 +127,17 @@ const categoryI18n = {
   zodiac: ['星座', '星座', 'Zodiac', '星座', '별자리'],
 }
 
+const unknownWords = new Set()
+
 function generateKeywords(name, category) {
   const parts = name.split('-')
   const labels = categoryI18n[category] || []
-  return [...new Set([name, ...parts, ...labels])]
+  const wordTranslations = parts.flatMap((p) => {
+    const t = wordI18n[p]
+    if (!t) unknownWords.add(p)
+    return t || []
+  })
+  return [...new Set([name, ...parts, ...labels, ...wordTranslations])]
 }
 
 function scanIcons() {
@@ -231,6 +268,12 @@ export const icons: IconItem[] = iconsData
     }
   }
   if (missing) console.warn(`⚠️  共缺失 ${missing} 个面型文件`)
+  // 报告未翻译的词段
+  if (unknownWords.size) {
+    console.warn(`⚠️  以下词段缺少多语言翻译，搜索对应语言可能失败:`)
+    console.warn(`   ${[...unknownWords].join(', ')}`)
+    console.warn(`   请在 scripts/generate-icons.js 的 wordI18n 中添加翻译`)
+  }
 }
 
 const icons = scanIcons()

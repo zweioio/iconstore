@@ -99,7 +99,7 @@ export const zh = {
     copySVG: '复制 SVG',
     downloadSVG: '下载 SVG',
     copyName: '复制图标名称',
-    keywords: '标签',
+    keywords: '关键词',
     svgCode: 'SVG 代码',
     linear: '线性',
     filled: '面型',

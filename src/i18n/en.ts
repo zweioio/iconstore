@@ -99,7 +99,7 @@ export const en = {
     copySVG: 'Copy SVG',
     downloadSVG: 'Download SVG',
     copyName: 'Copy name',
-    keywords: 'Tags',
+    keywords: 'Keywords',
     svgCode: 'SVG code',
     linear: 'Linear',
     filled: 'Filled',

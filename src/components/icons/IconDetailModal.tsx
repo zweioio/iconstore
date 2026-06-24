@@ -215,9 +215,25 @@ export function IconDetailModal({
           </div>
 
           {/* 关键词 */}
-          <div className="mt-6">
-            <div className="flex flex-wrap gap-2">
-              {icon.keywords.map((keyword) => (
+          <div className="mt-4">
+            <p className="mb-1 text-[12px] leading-[20px] text-[var(--is-ink-muted)]">{t.modal.keywords}</p>
+            <div className="flex flex-wrap gap-2 overflow-hidden" style={{ maxHeight: '64px' }}>
+              {icon.keywords.filter((kw) => {
+                if (kw === icon.name) return false
+                const parts = icon.name.split('-')
+                return !parts.some((p) => p.toLowerCase() === kw.toLowerCase() && p !== kw)
+              }).sort((a, b) => {
+                // 按语言分组：英文 → 中日 → 韩文，同组保持原始顺序
+                const isAEn = /^[a-zA-Z]+$/.test(a)
+                const isBEn = /^[a-zA-Z]+$/.test(b)
+                if (isAEn && !isBEn) return -1
+                if (!isAEn && isBEn) return 1
+                const isAKo = /[\uAC00-\uD7AF]/.test(a)
+                const isBKo = /[\uAC00-\uD7AF]/.test(b)
+                if (isAKo && !isBKo) return 1
+                if (!isAKo && isBKo) return -1
+                return 0
+              }).map((keyword) => (
                 <span
                   key={keyword}
                   className="rounded-[6px] bg-[var(--is-code-bg)] px-3 py-1 text-[12px] leading-[20px] text-[var(--is-ink-soft)]"

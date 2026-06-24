@@ -1,4 +1,4 @@
-import { Download, Trash2, X } from 'lucide-react'
+import { Download, Star, Trash2, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import JSZip from 'jszip'
 
@@ -102,9 +102,10 @@ export function FavoritesPanel({ open, onClose, onPreview, onToggleFavorite }: F
         {/* 图标列表 — 和图标网格一致的 10 列布局 */}
         <div className="flex-1 pb-12">
           {favoriteItems.length === 0 ? (
-            <p className="py-8 text-center text-[14px] leading-[22px] text-[var(--is-ink-faint)]">
-              暂无收藏图标，点击图标上的星标即可收藏
-            </p>
+            <div className="flex h-full flex-col items-center justify-center gap-4 text-center text-[14px] leading-[22px] text-[var(--is-ink-faint)]">
+              <Star size={48} strokeWidth={1} className="text-[var(--is-ink-faint)]" />
+              <p>{t.controls.emptyFavorites}，{t.controls.emptyFavoritesHint}</p>
+            </div>
           ) : (
             <div className="grid min-w-[1200px] grid-cols-10 gap-y-8">
               {favoriteItems.map(({ icon, style }) => {

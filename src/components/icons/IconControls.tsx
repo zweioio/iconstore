@@ -1,4 +1,4 @@
-import { ChevronDown, Search, Star, X } from 'lucide-react'
+import { ChevronDown, Clock, Search, Star, Trash2, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 import { categoryLabels } from '@/data/icons'
@@ -34,12 +34,20 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
     setCategory,
   } = useIconLibraryStore()
 
+  const [inputValue, setInputValue] = useState(keyword)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [visibleCategory, setVisibleCategory] = useState<string | null>(null)
   const [animPhase, setAnimPhase] = useState<'enter' | 'exit' | 'idle'>('idle')
+  const [searchHistoryOpen, setSearchHistoryOpen] = useState(false)
+  const [searchHistory, setSearchHistory] = useState<string[]>(() => {
+    try { return JSON.parse(localStorage.getItem('is-search-history') || '[]').slice(0, 5) }
+    catch { return [] }
+  })
   const displayRef = useRef({ name: t.categories.all, count: categoryCounts['all'] })
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const searchHistoryRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>()
 
   // 注入进出场动画
   useEffect(() => {
@@ -55,22 +63,20 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
     const sections = document.querySelectorAll<HTMLElement>('[id^="category-"]')
     if (sections.length === 0) return
 
-    let ticking = false
     function updateFromScroll() {
-      if (ticking) return
-      ticking = true
       requestAnimationFrame(() => {
-        let closest = ''
-        let closestDist = Infinity
+        let lastInView = ''
         for (const el of sections) {
-          const rect = el.getBoundingClientRect()
-          if (rect.top > -90 && rect.top < closestDist) {
-            closestDist = rect.top
-            closest = el.id.replace('category-', '')
+          const top = el.getBoundingClientRect().top
+          if (top > -90 && top < window.innerHeight * 0.3) {
+            setVisibleCategory(el.id.replace('category-', ''))
+            return
           }
+          // 记录最后一个顶部在检测区附近的元素
+          if (top < window.innerHeight * 0.3) lastInView = el.id.replace('category-', '')
         }
-        setVisibleCategory(closest || null)
-        ticking = false
+        // 底部兜底：取最后一个分类
+        setVisibleCategory(lastInView || null)
       })
     }
 
@@ -131,6 +137,37 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
     }
   }, [currentCatLabel, currentCat])
 
+  // 搜索历史持久化
+  function saveSearchHistory(history: string[]) {
+    setSearchHistory(history)
+    localStorage.setItem('is-search-history', JSON.stringify(history))
+  }
+
+  function addSearchQuery(query: string) {
+    const trimmed = query.trim()
+    if (!trimmed) return
+    const next = [trimmed, ...searchHistory.filter((h) => h !== trimmed)].slice(0, 5)
+    saveSearchHistory(next)
+  }
+
+  function removeSearchQuery(query: string) {
+    saveSearchHistory(searchHistory.filter((h) => h !== query))
+  }
+
+  // 点击外部关闭历史面板
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (searchHistoryRef.current && !searchHistoryRef.current.contains(e.target as Node)) {
+        setSearchHistoryOpen(false)
+      }
+    }
+    if (searchHistoryOpen) document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [searchHistoryOpen])
+
+  // 组件卸载时清理防抖
+  useEffect(() => () => clearTimeout(debounceRef.current), [])
+
   return (
     <div className="sticky top-[80px] z-[50] mt-6 mb-2">
       {/* 突破父级 max-w-[1200px] 的全宽背景 */}
@@ -183,28 +220,73 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
         )}
       </div>
 
-      {/* 搜索框按设计稿做成长条，右侧保留清空按钮提高可用性 */}
-      <label className="flex h-12 flex-1 items-center justify-between rounded-[12px] bg-[var(--is-surface)] px-3">
-        <div className="flex items-center gap-2 cursor-text flex-1">
-          <Search size={18} className="text-[var(--is-ink)]" />
-          <input
-            value={keyword}
-            onChange={(event) => setKeyword(event.target.value)}
-            className="w-full bg-transparent text-[16px] leading-6 text-[var(--is-ink)] outline-none placeholder:text-[var(--is-ink-faint)]"
-            placeholder={t.controls.searchPlaceholder}
-          />
-        </div>
-        {keyword && (
-          <button
-            type="button"
-            onClick={() => setKeyword('')}
-            className="inline-flex h-[24px] w-[24px] items-center justify-center rounded-[6px] bg-[var(--is-white)] text-[var(--is-ink-soft)] transition hover:text-black"
-            aria-label="清空搜索"
-          >
-            <X size={16} />
-          </button>
+      {/* 搜索框 + 搜索历史 */}
+      <div className="relative flex-1" ref={searchHistoryRef}>
+        <label className="flex h-12 w-full items-center justify-between rounded-[12px] bg-[var(--is-surface)] px-3">
+          <div className="flex items-center gap-2 cursor-text flex-1">
+            <Search size={18} className="text-[var(--is-ink)]" />
+            <input
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value)
+                clearTimeout(debounceRef.current)
+                debounceRef.current = setTimeout(() => {
+                  setKeyword(e.target.value)
+                  addSearchQuery(e.target.value)
+                }, 800)
+              }}
+              onFocus={() => searchHistory.length > 0 && setSearchHistoryOpen(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  clearTimeout(debounceRef.current)
+                  setKeyword(e.currentTarget.value)
+                  addSearchQuery(e.currentTarget.value)
+                }
+                if (e.key === 'Escape') setSearchHistoryOpen(false)
+              }}
+              className="w-full bg-transparent text-[16px] leading-6 text-[var(--is-ink)] outline-none placeholder:text-[var(--is-ink-faint)]"
+              placeholder={t.controls.searchPlaceholder}
+            />
+          </div>
+          {keyword && (
+            <button
+              type="button"
+              onClick={() => { setInputValue(''); clearTimeout(debounceRef.current); setKeyword('') }}
+              className="inline-flex h-[24px] w-[24px] items-center justify-center rounded-[6px] bg-[var(--is-white)] text-[var(--is-ink-soft)] transition hover:text-black"
+              aria-label="清空搜索"
+            >
+              <X size={16} />
+            </button>
+          )}
+        </label>
+        {searchHistoryOpen && searchHistory.length > 0 && (
+          <div className="absolute left-0 top-full z-[60] mt-2 w-full rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
+            {searchHistory.map((query) => (
+              <div
+                key={query}
+                className="group flex items-center justify-between rounded-[8px] px-3 py-3 transition hover:bg-[var(--is-surface)]"
+              >
+                <button
+                  type="button"
+                  className="flex flex-1 items-center gap-2 text-left"
+                  onClick={() => { setInputValue(query); clearTimeout(debounceRef.current); setKeyword(query); setSearchHistoryOpen(false) }}
+                >
+                  <Clock size={16} className="shrink-0 text-[var(--is-ink-muted)]" />
+                  <span className="truncate text-[16px] leading-6 text-[var(--is-ink)]">{query}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeSearchQuery(query)}
+                  className="invisible ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] text-[var(--is-ink-muted)] transition hover:text-[#d32f2f] hover:bg-[#fbe9e7] group-hover:visible"
+                  aria-label="删除搜索记录"
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            ))}
+          </div>
         )}
-      </label>
+      </div>
 
       {/* 收藏按钮直接切换列表范围，避免额外再占一行 */}
       <button
