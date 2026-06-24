@@ -213,7 +213,7 @@ export const zhTW = {
     },
   },
   settings: {
-    title: '圖標設定',
+    title: '設定',
     reset: '重設',
     iconSize: '圖標大小',
     strokeWidth: '線段粗細',

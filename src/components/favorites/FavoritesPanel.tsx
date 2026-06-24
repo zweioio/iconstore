@@ -60,7 +60,7 @@ export function FavoritesPanel({ open, onClose, onPreview, onToggleFavorite }: F
       style={{ height: '450px' }}
     >
       {/* 面板内容 */}
-      <div className="flex h-full flex-col mx-auto max-w-[1200px] rounded-t-[16px] bg-[var(--is-white)]" style={{ boxShadow: '0 6px 32px rgba(0,0,0,0.05), 0 0 0 1px var(--is-border)' }}>
+      <div className="flex h-full flex-col mx-auto max-w-[1200px] rounded-t-[16px] bg-[var(--is-white)]" style={{ boxShadow: '0 -6px 32px rgba(0,0,0,0.05), 0 0 0 1px var(--is-border)' }}>
         {/* 标题栏 */}
         <div className="flex shrink-0 items-center justify-between px-6 py-6">
           <div className="flex items-center gap-3">

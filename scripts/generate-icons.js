@@ -87,6 +87,9 @@ const wordI18n = {
   angle:   ['角',     '角',     'Angle',     '角度',    '각도'],
   1:       ['一',     '一',     'One',       '一',      '일'],
   2:       ['二',     '二',     'Two',       '二',      '이'],
+  fullscreen: ['全屏',   '全螢幕', 'Fullscreen', '全画面', '전체화면'],
+  exit:    ['退出',   '退出',   'Exit',      '終了',    '종료'],
+  corner:  ['角落',   '角落',   'Corner',    '隅',      '모서리'],
 }
 
 // 所有语言的分类翻译，标签搜索支持多语言
@@ -178,18 +181,23 @@ function scanIcons() {
       .sort((a, b) => {
         const nameA = a.replace(/\.svg$/, '')
         const nameB = b.replace(/\.svg$/, '')
-        const segsA = nameA.split('-').length
-        const segsB = nameB.split('-').length
-        // 1) 段数少的优先（arrow-down 2段 < arrow-down-circle 3段）
-        if (segsA !== segsB) return segsA - segsB
-        // 2) 同段数时，数字后缀排字母后缀前面（home-1 < home-wifi）
-        const lastA = segsA > 1 ? nameA.split('-').pop() || '' : ''
-        const lastB = segsB > 1 ? nameB.split('-').pop() || '' : ''
+        const partsA = nameA.split('-')
+        const partsB = nameB.split('-')
+        // 1) 按第一个词段字母排序（arrow-xxx < corner-xxx < fullscreen）
+        const firstA = partsA[0]
+        const firstB = partsB[0]
+        const cmp = firstA.localeCompare(firstB)
+        if (cmp !== 0) return cmp
+        // 2) 同一首词时，段数少的优先
+        if (partsA.length !== partsB.length) return partsA.length - partsB.length
+        // 3) 同段数时，数字后缀排字母后缀前面
+        const lastA = partsA.length > 1 ? partsA[partsA.length - 1] || '' : ''
+        const lastB = partsB.length > 1 ? partsB[partsB.length - 1] || '' : ''
         const isNumA = /^\d+$/.test(lastA)
         const isNumB = /^\d+$/.test(lastB)
         if (isNumA && !isNumB) return -1
         if (!isNumA && isNumB) return 1
-        // 3) 字母顺序
+        // 4) 字母顺序
         return nameA.localeCompare(nameB)
       })
 

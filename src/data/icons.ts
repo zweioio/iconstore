@@ -363,6 +363,66 @@ const iconsData: IconItem[] = [
     filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>arrow-square-right-up</title><path d="M18 3C19.6569 3 21 4.34315 21 6V18C21 19.6569 19.6569 21 18 21H6C4.34315 21 3 19.6569 3 18V6C3 4.34315 4.34315 3 6 3H18ZM8.5 8.25V9.75H12.6895L7.96973 14.4697L9.03027 15.5303L13.75 10.8105V15H15.25V9C15.25 8.58579 14.9142 8.25 14.5 8.25H8.5Z" fill="currentColor"/></svg>`,
   },
   {
+    id: 'corner-down-left',
+    name: 'corner-down-left',
+    category: 'arrow',
+    keywords: ["corner-down-left","corner","down","left","箭头","箭頭","Arrow","矢印","화살표","角落","Corner","隅","모서리","下","Down","아래","左","Left","왼쪽"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>corner-down-left</title><path d="M18 4V12C18 13.1046 17.1046 14 16 14H4" stroke="currentColor" stroke-width="1.5"/>
+<path d="M9 9L4.70711 13.2929C4.31658 13.6834 4.31658 14.3166 4.70711 14.7071L9 19" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>corner-down-left</title><path d="M19.0003 12C19.0003 13.6568 17.657 14.9999 16.0003 15H6.41432L9.70729 18.293L8.29323 19.707L4.00026 15.4141C3.21932 14.633 3.21931 13.367 4.00026 12.5859L8.29323 8.29297L9.70729 9.70703L6.41432 13H16.0003C16.5524 12.9999 17.0003 12.5522 17.0003 12V4H19.0003V12Z" fill="currentColor"/></svg>`,
+  },
+  {
+    id: 'corner-down-right',
+    name: 'corner-down-right',
+    category: 'arrow',
+    keywords: ["corner-down-right","corner","down","right","箭头","箭頭","Arrow","矢印","화살표","角落","Corner","隅","모서리","下","Down","아래","右","Right","오른쪽"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>corner-down-right</title><path d="M6 4V12C6 13.1046 6.89543 14 8 14H20" stroke="currentColor" stroke-width="1.5"/>
+<path d="M15 9L20 14L15 19" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>corner-down-right</title><path d="M7 12C7 12.5523 7.44772 13 8 13H17.5859L14.293 9.70703L15.707 8.29297L20.707 13.293C21.0976 13.6835 21.0976 14.3165 20.707 14.707L15.707 19.707L14.293 18.293L17.5859 15H8C6.34315 15 5 13.6569 5 12V4H7V12Z" fill="currentColor"/></svg>`,
+  },
+  {
+    id: 'corner-up-left',
+    name: 'corner-up-left',
+    category: 'arrow',
+    keywords: ["corner-up-left","corner","up","left","箭头","箭頭","Arrow","矢印","화살표","角落","Corner","隅","모서리","上","Up","위","左","Left","왼쪽"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>corner-up-left</title><path d="M4 10H16C17.1046 10 18 10.8954 18 12V20" stroke="currentColor" stroke-width="1.5"/>
+<path d="M9 5L4.70711 9.29289C4.31658 9.68342 4.31658 10.3166 4.70711 10.7071L9 15" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>corner-up-left</title><path d="M9.70729 5.70703L6.41432 9H16.0003C17.657 9.00013 19.0003 10.3432 19.0003 12V20H17.0003V12C17.0003 11.4478 16.5524 11.0001 16.0003 11H6.41432L9.70729 14.293L8.29323 15.707L4.00026 11.4141C3.21932 10.633 3.21931 9.36697 4.00026 8.58594L8.29323 4.29297L9.70729 5.70703Z" fill="currentColor"/></svg>`,
+  },
+  {
+    id: 'corner-up-right',
+    name: 'corner-up-right',
+    category: 'arrow',
+    keywords: ["corner-up-right","corner","up","right","箭头","箭頭","Arrow","矢印","화살표","角落","Corner","隅","모서리","上","Up","위","右","Right","오른쪽"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>corner-up-right</title><path d="M20 10H8C6.89543 10 6 10.8954 6 12V20" stroke="currentColor" stroke-width="1.5"/>
+<path d="M15 5L20 10L15 15" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>corner-up-right</title><path d="M20.707 9.29297C21.0976 9.68349 21.0976 10.3165 20.707 10.707L15.707 15.707L14.293 14.293L17.5859 11H8C7.44772 11 7 11.4477 7 12V20H5V12C5 10.3431 6.34315 9 8 9H17.5859L14.293 5.70703L15.707 4.29297L20.707 9.29297Z" fill="currentColor"/></svg>`,
+  },
+  {
+    id: 'fullscreen',
+    name: 'fullscreen',
+    category: 'arrow',
+    keywords: ["fullscreen","箭头","箭頭","Arrow","矢印","화살표","全屏","全螢幕","Fullscreen","全画面","전체화면"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>fullscreen</title><path d="M4 20L10 14" stroke="currentColor" stroke-width="1.5"/>
+<path d="M14 10L20 4" stroke="currentColor" stroke-width="1.5"/>
+<path d="M14 4H19C19.5523 4 20 4.44772 20 5V10" stroke="currentColor" stroke-width="1.5"/>
+<path d="M4 14V19C4 19.5523 4.44772 20 5 20H10" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>fullscreen</title><path d="M10.707 14.707L6.41406 19H10V21H5C3.89543 21 3 20.1046 3 19V14H5V17.5859L9.29297 13.293L10.707 14.707Z" fill="currentColor"/>
+<path d="M19 3C20.1046 3 21 3.89543 21 5V10H19V6.41406L14.707 10.707L13.293 9.29297L17.5859 5H14V3H19Z" fill="currentColor"/></svg>`,
+  },
+  {
+    id: 'fullscreen-exit',
+    name: 'fullscreen-exit',
+    category: 'arrow',
+    keywords: ["fullscreen-exit","fullscreen","exit","箭头","箭頭","Arrow","矢印","화살표","全屏","全螢幕","Fullscreen","全画面","전체화면","退出","Exit","終了","종료"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>fullscreen-exit</title><path d="M4 20L10 14" stroke="currentColor" stroke-width="1.5"/>
+<path d="M20 4L14 10" stroke="currentColor" stroke-width="1.5"/>
+<path d="M4 14H9C9.55228 14 10 14.4477 10 15V20" stroke="currentColor" stroke-width="1.5"/>
+<path d="M14 4V9C14 9.55228 14.4477 10 15 10H20" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>fullscreen-exit</title><path d="M9 13C10.1046 13 11 13.8954 11 15V20H9V16.4141L4.70703 20.707L3.29297 19.293L7.58594 15H4V13H9Z" fill="currentColor"/>
+<path d="M20.707 4.70703L16.4141 9H20V11H15C13.8954 11 13 10.1046 13 9V4H15V7.58594L19.293 3.29297L20.707 4.70703Z" fill="currentColor"/></svg>`,
+  },
+  {
     id: 'home-1',
     name: 'home-1',
     category: 'building',
@@ -447,6 +507,28 @@ const iconsData: IconItem[] = [
     filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>rectangle</title><path d="M19 4C20.6569 4 22 5.34315 22 7V17C22 18.6569 20.6569 20 19 20H5C3.34315 20 2 18.6569 2 17V7C2 5.34315 3.34315 4 5 4H19Z" fill="currentColor"/></svg>`,
   },
   {
+    id: 'rectangle-vertical',
+    name: 'rectangle-vertical',
+    category: 'shape',
+    keywords: ["rectangle-vertical","rectangle","vertical","形状","形狀","Shape","모양","矩形","Rectangle","長方形","직사각형","垂直","Vertical","수직"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>rectangle-vertical</title><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>rectangle-vertical</title><path d="M17 2C18.6569 2 20 3.34315 20 5V19C20 20.6569 18.6569 22 17 22H7C5.34315 22 4 20.6569 4 19V5C4 3.34315 5.34315 2 7 2H17Z" fill="currentColor"/></svg>`,
+  },
+  {
+    id: 'right-angle',
+    name: 'right-angle',
+    category: 'shape',
+    keywords: ["right-angle","right","angle","形状","形狀","Shape","모양","右","Right","오른쪽","角","Angle","角度","각도"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>right-angle</title>
+<path d="M5 6.82843C5 5.04662 7.15428 4.15428 8.41421 5.41421L19.5858 16.5858C20.8457 17.8457 19.9534 20 18.1716 20H7C5.89543 20 5 19.1046 5 18V6.82843Z" stroke="currentColor" stroke-width="1.5"/>
+
+</svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>right-angle</title>
+<path d="M4 6.82835C4.00024 4.15591 7.23125 2.81765 9.12109 4.70725L20.293 15.8791C22.1824 17.769 20.8443 21 18.1719 21.0002H7C5.34321 21.0002 4.00011 19.657 4 18.0002V6.82835Z" fill="currentColor"/>
+
+</svg>`,
+  },
+  {
     id: 'round',
     name: 'round',
     category: 'shape',
@@ -461,6 +543,14 @@ const iconsData: IconItem[] = [
     keywords: ["square","形状","形狀","Shape","모양","方形","Square","四角","사각형"],
     linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>square</title><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>`,
     filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>square</title><path d="M18 3C19.6569 3 21 4.34315 21 6V18C21 19.6569 19.6569 21 18 21H6C4.34315 21 3 19.6569 3 18V6C3 4.34315 4.34315 3 6 3H18Z" fill="currentColor"/></svg>`,
+  },
+  {
+    id: 'square-small',
+    name: 'square-small',
+    category: 'shape',
+    keywords: ["square-small","square","small","形状","形狀","Shape","모양","方形","Square","四角","사각형","小","Small","작은"],
+    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>square-small</title><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>square-small</title><path d="M15 6C16.6569 6 18 7.34315 18 9V15C18 16.6569 16.6569 18 15 18H9C7.34315 18 6 16.6569 6 15V9C6 7.34315 7.34315 6 9 6H15Z" fill="currentColor"/></svg>`,
   },
   {
     id: 'trapezoid',
@@ -489,36 +579,6 @@ const iconsData: IconItem[] = [
 <path d="M9.41434 4.42339C10.5744 2.45194 13.4263 2.45183 14.5862 4.42339L21.0891 15.4781C22.2655 17.4779 20.8233 19.9994 18.5032 19.9996H5.49734C3.1771 19.9996 1.73499 17.478 2.91141 15.4781L9.41434 4.42339Z" fill="currentColor"/>
 
 </svg>`,
-  },
-  {
-    id: 'rectangle-vertical',
-    name: 'rectangle-vertical',
-    category: 'shape',
-    keywords: ["rectangle-vertical","rectangle","vertical","形状","形狀","Shape","모양","矩形","Rectangle","長方形","직사각형","垂直","Vertical","수직"],
-    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>rectangle-vertical</title><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>`,
-    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>rectangle-vertical</title><path d="M17 2C18.6569 2 20 3.34315 20 5V19C20 20.6569 18.6569 22 17 22H7C5.34315 22 4 20.6569 4 19V5C4 3.34315 5.34315 2 7 2H17Z" fill="currentColor"/></svg>`,
-  },
-  {
-    id: 'right-angle',
-    name: 'right-angle',
-    category: 'shape',
-    keywords: ["right-angle","right","angle","形状","形狀","Shape","모양","右","Right","오른쪽","角","Angle","角度","각도"],
-    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>right-angle</title>
-<path d="M5 6.82843C5 5.04662 7.15428 4.15428 8.41421 5.41421L19.5858 16.5858C20.8457 17.8457 19.9534 20 18.1716 20H7C5.89543 20 5 19.1046 5 18V6.82843Z" stroke="currentColor" stroke-width="1.5"/>
-
-</svg>`,
-    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>right-angle</title>
-<path d="M4 6.82835C4.00024 4.15591 7.23125 2.81765 9.12109 4.70725L20.293 15.8791C22.1824 17.769 20.8443 21 18.1719 21.0002H7C5.34321 21.0002 4.00011 19.657 4 18.0002V6.82835Z" fill="currentColor"/>
-
-</svg>`,
-  },
-  {
-    id: 'square-small',
-    name: 'square-small',
-    category: 'shape',
-    keywords: ["square-small","square","small","形状","形狀","Shape","모양","方形","Square","四角","사각형","小","Small","작은"],
-    linearSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><title>square-small</title><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>`,
-    filledSvg: `<svg viewBox="0 0 24 24" fill="currentColor"><title>square-small</title><path d="M15 6C16.6569 6 18 7.34315 18 9V15C18 16.6569 16.6569 18 15 18H9C7.34315 18 6 16.6569 6 15V9C6 7.34315 7.34315 6 9 6H15Z" fill="currentColor"/></svg>`,
   }
 ]
 

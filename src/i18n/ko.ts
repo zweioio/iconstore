@@ -213,7 +213,7 @@ export const ko = {
     },
   },
   settings: {
-    title: '아이콘 설정',
+    title: '설정',
     reset: '초기화',
     iconSize: '아이콘 크기',
     strokeWidth: '선 두께',

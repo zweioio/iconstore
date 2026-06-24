@@ -31,6 +31,7 @@ export default function IconLibraryPage() {
     iconSize,
     strokeWidth,
     iconColor,
+    showFilled,
     favoriteIds,
     selectedIconId,
     setSelectedIconId,
@@ -236,23 +237,25 @@ export default function IconLibraryPage() {
               })}
             </div>
             {/* 面型行 */}
-            <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
-              {chunk.map((icon) => {
-                const svg = getIconSvg(icon, 'filled', strokeWidth, effectiveColor)
-                return (
-                  <IconCard
-                    key={`${icon.id}-filled-${chunkIdx}`}
-                    icon={icon}
-                    svg={svg}
-                    iconSize={iconSize}
-                    isFavorite={favoriteIconIds.has(icon.id + '-filled')}
-                    isSelected={selectedIconId === icon.id}
-                    onPreview={() => handlePreview(icon.id, 'filled')}
-                    onToggleFavorite={() => handleToggleFavorite(icon.id + '-filled')}
-                  />
-                )
-              })}
-            </div>
+            {showFilled && (
+              <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
+                {chunk.map((icon) => {
+                  const svg = getIconSvg(icon, 'filled', strokeWidth, effectiveColor)
+                  return (
+                    <IconCard
+                      key={`${icon.id}-filled-${chunkIdx}`}
+                      icon={icon}
+                      svg={svg}
+                      iconSize={iconSize}
+                      isFavorite={favoriteIconIds.has(icon.id + '-filled')}
+                      isSelected={selectedIconId === icon.id}
+                      onPreview={() => handlePreview(icon.id, 'filled')}
+                      onToggleFavorite={() => handleToggleFavorite(icon.id + '-filled')}
+                    />
+                  )
+                })}
+              </div>
+            )}
           </div>
         ))}
       </div>

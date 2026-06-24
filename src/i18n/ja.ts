@@ -213,7 +213,7 @@ export const ja = {
     },
   },
   settings: {
-    title: 'アイコン設定',
+    title: '設定',
     reset: 'リセット',
     iconSize: 'アイコンサイズ',
     strokeWidth: '線の太さ',

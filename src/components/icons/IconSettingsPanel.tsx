@@ -1,4 +1,4 @@
-import { HelpCircle, Lock, Palette, RefreshCcw, Unlock } from 'lucide-react'
+import { HelpCircle, Layers, Lock, Palette, RefreshCcw, Unlock } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import {
   DEFAULT_ICON_SIZE,
@@ -190,6 +190,8 @@ export function IconSettingsPanel() {
     setStrokeWidth,
     setIconColor,
     setColorEnabled,
+    showFilled,
+    setShowFilled,
     resetIconSettings,
   } = useIconLibraryStore()
 
@@ -433,6 +435,7 @@ export function IconSettingsPanel() {
     setIconSize(DEFAULT_ICON_SIZE)
     setStrokeWidth(DEFAULT_STROKE_WIDTH)
     setIconColor(defaultColor)
+    setShowFilled(true)
   }
 
   const RATIO = DEFAULT_STROKE_WIDTH / DEFAULT_ICON_SIZE // 1.8 / 24 = 0.075
@@ -461,6 +464,24 @@ export function IconSettingsPanel() {
         <div className="mb-6 flex items-center justify-between gap-3">
           <p className="text-[16px] leading-6 text-[var(--is-ink)]">{t.settings.title}</p>
           <div className="flex items-center gap-1">
+            {/* 面性图标开关 */}
+            <div className="group relative">
+              <button
+                type="button"
+                onClick={() => setShowFilled(!showFilled)}
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition ${
+                  showFilled
+                    ? 'text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
+                    : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)]'
+                }`}
+                aria-label="面性图标"
+              >
+                <Layers size={16} />
+              </button>
+              <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-[6px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 py-1 text-[12px] leading-5 text-[var(--is-ink)] opacity-0 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-[var(--is-white)]">
+                {showFilled ? '隐藏面性图标' : '显示面性图标'}
+              </span>
+            </div>
             {/* 图标颜色开关 */}
             <div className="group relative">
               <button

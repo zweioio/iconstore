@@ -41,11 +41,13 @@ type IconLibraryStore = {
   setStrokeWidth: (value: number) => void
   setIconColor: (value: string) => void
   setColorEnabled: (value: boolean) => void
+  showFilled: boolean
   setBackground: (value: PreviewBackground) => void
   toggleFavorite: (iconId: string) => boolean
   resetIconSettings: () => void
   clearFavorites: () => void
   setSelectedIconId: (value: string | null) => void
+  setShowFilled: (value: boolean) => void
 }
 
 // 集中管理图标库页的交互状态，并持久化收藏数据到 localStorage
@@ -63,6 +65,8 @@ export const useIconLibraryStore = create<IconLibraryStore>()(
       background: 'light',
       favoriteIds: [],
       selectedIconId: null,
+      showFilled: true,
+      setShowFilled: (value) => set({ showFilled: value }),
       setKeyword: (value) => set({ keyword: value }),
       setCategory: (value) => set({ category: value }),
       setViewMode: (value) => set({ viewMode: value }),
@@ -101,6 +105,7 @@ export const useIconLibraryStore = create<IconLibraryStore>()(
         iconSize: state.iconSize,
         strokeWidth: state.strokeWidth,
         colorEnabled: state.colorEnabled,
+        showFilled: state.showFilled,
       }),
     },
   ),
