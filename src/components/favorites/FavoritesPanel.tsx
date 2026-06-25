@@ -39,7 +39,7 @@ export function FavoritesPanel({ open, onClose, onPreview, onToggleFavorite }: F
     if (favoriteItems.length === 0) return
     const zip = new JSZip()
     favoriteItems.forEach(({ icon, style }) => {
-      const svg = getIconSvg(icon, style, strokeWidth, iconColor)
+      const svg = getIconSvg(icon, style, strokeWidth, iconColor, iconSize)
       const fileName = createDownloadName(icon, style)
       zip.file('iconstoreSVG/' + fileName, svg)
     })
@@ -109,7 +109,7 @@ export function FavoritesPanel({ open, onClose, onPreview, onToggleFavorite }: F
           ) : (
             <div className="grid min-w-[1200px] grid-cols-10 gap-y-8">
               {favoriteItems.map(({ icon, style }) => {
-                const svg = getIconSvg(icon, style, strokeWidth, iconColor)
+                const svg = getIconSvg(icon, style, strokeWidth, iconColor, iconSize)
                 const favKey = icon.id + '-' + style
                 return (
                   <IconCard

@@ -8,10 +8,11 @@ export function applyStrokeWidth(svg: string, strokeWidth: number) {
 const DEFAULT_ICON_COLOR = '#000000'
 
 // 根据当前风格拿到应该显示的 SVG 内容
-export function getIconSvg(icon: IconItem, styleMode: IconStyleMode, strokeWidth: number, iconColor?: string) {
-  const svg = styleMode === 'filled' ? icon.filledSvg : applyStrokeWidth(icon.linearSvg, strokeWidth)
-  // 默认颜色 #000000 = 不替换，让 SVG 继承父级 color（自动适配深浅模式）
-  // 用户自定义颜色时再硬编码替换 currentColor
+export function getIconSvg(icon: IconItem, styleMode: IconStyleMode, strokeWidth: number, iconColor?: string, iconSize?: number) {
+  // 视觉粗细补偿：stroke-width 在 viewBox 24×24 空间定义，按实际显示尺寸缩放
+  const scale = iconSize ? iconSize / 24 : 1
+  const compensated = iconSize ? Math.round((strokeWidth / scale) * 100) / 100 : strokeWidth
+  const svg = styleMode === 'filled' ? icon.filledSvg : applyStrokeWidth(icon.linearSvg, compensated)
   if (iconColor && iconColor !== DEFAULT_ICON_COLOR) return svg.replace(/currentColor/g, iconColor)
   return svg
 }

@@ -81,7 +81,7 @@ export default function IconLibraryPage() {
   }, [favoriteIconIds, filteredIcons, viewMode])
 
   const selectedIcon = icons.find((icon) => icon.id === selectedIconId) ?? null
-  const selectedSvg = selectedIcon ? getIconSvg(selectedIcon, selectedStyle, strokeWidth, effectiveColor) : ''
+  const selectedSvg = selectedIcon ? getIconSvg(selectedIcon, selectedStyle, strokeWidth, effectiveColor, iconSize) : ''
 
   function handlePreview(iconId: string, style: 'linear' | 'filled') {
     setSelectedIconId(iconId)
@@ -135,8 +135,7 @@ export default function IconLibraryPage() {
   ]
 
   async function handleCopy(svg: string, styledName: string) {
-    // currentColor 在 Figma 中不生效，替换为实际颜色值
-    const svgForClipboard = svg
+    const svgForClipboard = svg.replace('<svg ', `<svg width="${iconSize}" height="${iconSize}" `)
       .replace(/<title>.*?<\/title>/, `<title>${styledName}</title>`)
       .replace(/currentColor/g, effectiveColor)
     try {
@@ -158,7 +157,8 @@ export default function IconLibraryPage() {
   }
 
   function handleDownload(name: string, svg: string) {
-    const svgWithColor = svg.replace(/currentColor/g, effectiveColor)
+    const sized = svg.replace('<svg ', `<svg width="${iconSize}" height="${iconSize}" `)
+    const svgWithColor = sized.replace(/currentColor/g, effectiveColor)
     const blob = new Blob([svgWithColor], { type: 'image/svg+xml;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -178,7 +178,8 @@ export default function IconLibraryPage() {
       const style = favId.slice(sepIdx + 1) as 'linear' | 'filled'
       const icon = icons.find((i) => i.id === iconId)
       if (!icon) return
-      const svg = getIconSvg(icon, style, 1.8, effectiveColor)
+      let svg = getIconSvg(icon, style, strokeWidth, effectiveColor, iconSize)
+      svg = svg.replace('<svg ', `<svg width="${iconSize}" height="${iconSize}" `)
       const fileName = `${icon.name}_${style === 'filled' ? 'fill' : 'line'}.svg`
       zip.file('iconstoreSVG/' + fileName, svg)
     })
@@ -221,7 +222,7 @@ export default function IconLibraryPage() {
             {/* 线性行 */}
             <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
               {chunk.map((icon) => {
-                const svg = getIconSvg(icon, 'linear', strokeWidth, effectiveColor)
+                const svg = getIconSvg(icon, 'linear', strokeWidth, effectiveColor, iconSize)
                 return (
                   <IconCard
                     key={`${icon.id}-linear-${chunkIdx}`}
@@ -240,7 +241,7 @@ export default function IconLibraryPage() {
             {showFilled && (
               <div className="grid min-w-[1200px] grid-cols-10" style={{ overflow: 'visible' }}>
                 {chunk.map((icon) => {
-                  const svg = getIconSvg(icon, 'filled', strokeWidth, effectiveColor)
+                  const svg = getIconSvg(icon, 'filled', strokeWidth, effectiveColor, iconSize)
                   return (
                     <IconCard
                       key={`${icon.id}-filled-${chunkIdx}`}
@@ -359,7 +360,7 @@ export default function IconLibraryPage() {
                           if (favoriteIconIds.has(icon.id + '-filled')) items.push({ icon, style: 'filled' })
                         })
                         return items.map(({ icon, style }) => {
-                          const svg = getIconSvg(icon, style, strokeWidth, effectiveColor)
+                          const svg = getIconSvg(icon, style, strokeWidth, effectiveColor, iconSize)
                           return (
                             <IconCard
                               key={icon.id + '-' + style}

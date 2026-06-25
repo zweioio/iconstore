@@ -1,10 +1,4 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_2376_1315)">
-<path d="M4 12H20M10 18L4 12L10 6" stroke="black" stroke-width="1.5" stroke-linejoin="round"/>
-</g>
-<defs>
-<clipPath id="clip0_2376_1315">
-<rect width="24" height="24" fill="white"/>
-</clipPath>
-</defs>
+<path d="M4 12H20" stroke="black" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M10 6L4.70711 11.2929C4.31658 11.6834 4.31658 12.3166 4.70711 12.7071L10 18" stroke="black" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>

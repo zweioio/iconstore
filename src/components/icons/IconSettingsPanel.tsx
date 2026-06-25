@@ -444,7 +444,7 @@ export function IconSettingsPanel() {
     setIconSize(newSize)
     if (sizeLinked) {
       const linkedStroke = Math.round(newSize * RATIO * 20) / 20
-      setStrokeWidth(Math.min(4, Math.max(0.5, linkedStroke)))
+      setStrokeWidth(Math.min(4, Math.max(1, linkedStroke)))
     }
   }
 
@@ -951,9 +951,9 @@ export function IconSettingsPanel() {
         <SliderField
           label={t.settings.strokeWidth}
           value={strokeWidth}
-          min={0.5}
+          min={1}
           max={4}
-          step={0.05}
+          step={sizeLinked ? 0.05 : 0.1}
           unit="px"
           hint={t.settings.strokeWidthHint}
           onChange={handleLinkedStrokeWidth}
