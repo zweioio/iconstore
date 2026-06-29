@@ -13,7 +13,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
+/* 排版优化 */
+h1, h2, h3, h4 { text-wrap: balance; }
+p, li, figcaption, blockquote, label { text-wrap: pretty; }
+
+:root {
   /* 图标库 Design System - 亮色模式 */
   --is-ink: #202224;
   --is-ink-soft: #60656b;
@@ -473,3 +479,53 @@ input {
   .c1-grid { grid-template-columns: 1fr; }
   .c1-title { font-size: 2.25rem; }
 }
+
+/* ===== 入场动画 ===== */
+@keyframes modal-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modal-content-enter {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes fade-slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-slide-up-sm {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ===== 下拉框入场动效 ===== */
+@keyframes dropdown-enter {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes dropdown-item-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dropdown-enter { animation: dropdown-enter 200ms ease-out both; }
+.dropdown-item:nth-child(1) { animation: dropdown-item-enter 180ms ease-out 30ms both; }
+.dropdown-item:nth-child(2) { animation: dropdown-item-enter 180ms ease-out 55ms both; }
+.dropdown-item:nth-child(3) { animation: dropdown-item-enter 180ms ease-out 80ms both; }
+.dropdown-item:nth-child(4) { animation: dropdown-item-enter 180ms ease-out 105ms both; }
+.dropdown-item:nth-child(5) { animation: dropdown-item-enter 180ms ease-out 130ms both; }
+.dropdown-item:nth-child(6) { animation: dropdown-item-enter 180ms ease-out 155ms both; }
+.dropdown-item:nth-child(7) { animation: dropdown-item-enter 180ms ease-out 180ms both; }
+.dropdown-item:nth-child(8) { animation: dropdown-item-enter 180ms ease-out 205ms both; }
+.dropdown-item:nth-child(9) { animation: dropdown-item-enter 180ms ease-out 230ms both; }
+.dropdown-item:nth-child(10) { animation: dropdown-item-enter 180ms ease-out 255ms both; }
+.dropdown-item:nth-child(11) { animation: dropdown-item-enter 180ms ease-out 280ms both; }
+.dropdown-item:nth-child(12) { animation: dropdown-item-enter 180ms ease-out 305ms both; }
+.dropdown-item:nth-child(13) { animation: dropdown-item-enter 180ms ease-out 330ms both; }
+.dropdown-item:nth-child(14) { animation: dropdown-item-enter 180ms ease-out 355ms both; }
+.dropdown-item:nth-child(15) { animation: dropdown-item-enter 180ms ease-out 380ms both; }
+.dropdown-item:nth-child(16) { animation: dropdown-item-enter 180ms ease-out 405ms both; }
+.dropdown-item:nth-child(17) { animation: dropdown-item-enter 180ms ease-out 430ms both; }
+.dropdown-item:nth-child(18) { animation: dropdown-item-enter 180ms ease-out 455ms both; }
+.dropdown-item:nth-child(19) { animation: dropdown-item-enter 180ms ease-out 480ms both; }
+.dropdown-item:nth-child(20) { animation: dropdown-item-enter 180ms ease-out 505ms both; }

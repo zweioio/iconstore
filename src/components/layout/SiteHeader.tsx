@@ -29,7 +29,7 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] bg-[var(--is-white)] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
+      className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] bg-[var(--is-white)] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)] active:scale-[0.96]"
       aria-label={dark ? '切换亮色模式' : '切换暗色模式'}
     >
       {dark ? <Sun size={16} /> : <Moon size={16} />}

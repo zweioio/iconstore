@@ -251,7 +251,7 @@ export default function IconRequestPage() {
 
               {/* 提交 */}
               <div className="pt-4">
-                <button type="submit" onClick={(e) => fireConfetti(e)} className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[14px] font-normal leading-[22px] text-[var(--is-white)]">
+                <button type="submit" onClick={(e) => fireConfetti(e)} className="inline-flex h-11 items-center gap-2 rounded-[10px] bg-[var(--is-ink)] px-6 text-[14px] font-normal leading-[22px] text-[var(--is-white)] active:scale-[0.96] transition-transform duration-150 ease-out">
                   <Send size={16} />
                   {t.requestPage.formSubmit}
                 </button>

@@ -124,11 +124,11 @@ export function IconDetailModal({
   }
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[rgba(0,0,0,0.4)]">
-      <button type="button" className="absolute inset-0" aria-label="关闭详情弹窗" onClick={onClose} />
-      <div className="relative z-10 flex h-[288px] w-[640px] gap-6 rounded-[24px] bg-[var(--is-white)] p-6">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center" style={{ animation: 'modal-enter 200ms ease-out' }}>
+      <button type="button" className="absolute inset-0 bg-[rgba(0,0,0,0.4)]" aria-label="关闭详情弹窗" onClick={onClose} />
+      <div className="relative z-10 flex h-[288px] w-[640px] gap-6 rounded-[24px] bg-[var(--is-white)] p-6" style={{ animation: 'modal-content-enter 250ms ease-out' }}>
         {/* 左侧：图标展示区域 */}
-        <div className="relative flex h-full w-[240px] shrink-0 items-center justify-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)]">
+        <div className="relative flex h-full w-[240px] shrink-0 items-center justify-center rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)]" style={{ animation: 'fade-slide-up 200ms ease-out 50ms both' }}>
           <div
             className="icon-preview flex h-[120px] w-[120px] items-center justify-center text-[var(--is-ink)]"
             dangerouslySetInnerHTML={{ __html: svg }}
@@ -163,18 +163,13 @@ export function IconDetailModal({
         </div>
 
         {/* 右侧：详情信息 */}
-        <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex min-w-0 flex-1 flex-col" style={{ animation: 'fade-slide-up 200ms ease-out 100ms both' }}>
           {/* 图标名称 + 分类 + 操作按钮 */}
           <div className="flex items-start gap-2">
             <div className="min-w-0 flex-1 space-y-1">
-              <button
-                type="button"
-                onClick={() => onCopyName(icon.name + (styleMode === 'filled' ? '_fill' : '_line'))}
-                className="block w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-[18px] font-bold leading-7 text-[var(--is-ink)]"
-                aria-label="复制图标名称"
-              >
+              <p className="block w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-[18px] font-bold leading-7 text-[var(--is-ink)]">
                 {icon.name}{styleMode === 'filled' ? '_fill' : '_line'}
-              </button>
+              </p>
               <p className="text-[14px] leading-[22px] text-[var(--is-ink)]">
                 {getIconLabel(icon.name, language)}
               </p>
@@ -184,7 +179,7 @@ export function IconDetailModal({
                 <button
                   type="button"
                   onClick={() => onCopyName(icon.name + (styleMode === 'filled' ? '_fill' : '_line'))}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)] active:scale-[0.96]"
                   aria-label="复制图标名称"
                 >
                   <Copy size={16} />
@@ -198,7 +193,7 @@ export function IconDetailModal({
                   type="button"
                   onClick={onToggleFavorite}
                   className={cn(
-                    'inline-flex h-8 w-8 items-center justify-center rounded-[8px] transition',
+                    'inline-flex h-8 w-8 items-center justify-center rounded-[8px] transition active:scale-[0.96]',
                     isFavorite
                       ? 'text-[var(--is-yellow)] hover:bg-[var(--is-surface)] hover:text-[var(--is-yellow)]'
                       : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]',
@@ -215,7 +210,7 @@ export function IconDetailModal({
           </div>
 
           {/* 关键词 */}
-          <div className="mt-4">
+          <div className="mt-4" style={{ animation: 'fade-slide-up-sm 200ms ease-out 150ms both' }}>
             <p className="mb-1 text-[12px] leading-[20px] text-[var(--is-ink-muted)]">{t.modal.keywords}</p>
             <div className="flex flex-wrap gap-2 overflow-hidden" style={{ maxHeight: '64px' }}>
               {icon.keywords.filter((kw) => {
@@ -245,11 +240,11 @@ export function IconDetailModal({
           </div>
 
           {/* 操作按钮 - 底部，间距 24px */}
-          <div className="mt-auto grid grid-cols-2 gap-3">
+          <div className="mt-auto grid grid-cols-2 gap-3" style={{ animation: 'fade-slide-up-sm 200ms ease-out 200ms both' }}>
             <button
               type="button"
               onClick={(e) => { onCopy(); fireConfetti(e) }}
-              className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] bg-[var(--is-ink)] text-[14px] leading-[22px] text-[var(--is-white)]"
+              className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] bg-[var(--is-ink)] text-[14px] leading-[22px] text-[var(--is-white)] active:scale-[0.96] transition-transform duration-150 ease-out"
             >
               <Copy size={16} />
               {t.modal.copySVG}
@@ -257,7 +252,7 @@ export function IconDetailModal({
             <button
               type="button"
               onClick={onDownload}
-              className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
+              className="inline-flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)] active:scale-[0.96]"
             >
               <Download size={16} />
               {t.modal.downloadSVG}

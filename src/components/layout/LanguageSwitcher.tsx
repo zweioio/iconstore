@@ -35,14 +35,14 @@ export function LanguageSwitcher() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] bg-[var(--is-white)] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
+        className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] bg-[var(--is-white)] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)] active:scale-[0.96]"
         aria-label="切换语言"
       >
         <Globe size={16} />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-[70] mt-2 flex w-[160px] flex-col gap-[4px] rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
+        <div className="absolute right-0 top-full z-[70] mt-2 flex w-[160px] flex-col gap-[4px] rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)] dropdown-enter">
           {languageOptions.map((opt) => (
             <button
               key={opt.value}
@@ -52,7 +52,7 @@ export function LanguageSwitcher() {
                 setOpen(false)
               }}
               className={cn(
-                'flex h-10 w-full items-center justify-between rounded-[8px] px-3 text-left transition',
+                'flex h-10 w-full items-center justify-between rounded-[8px] px-3 text-left transition dropdown-item',
                 language === opt.value
                   ? 'bg-[var(--is-surface)]'
                   : 'bg-[var(--is-white)] hover:bg-[var(--is-surface)]',

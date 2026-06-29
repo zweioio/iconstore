@@ -100,7 +100,7 @@ function SliderField({
             <div className="group relative">
               <button
                 type="button"
-                className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-faint)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)]"
+                className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-faint)] transition hover:bg-[var(--is-surface)] hover:text-[var(--is-ink)] active:scale-[0.96]"
               >
                 <HelpCircle size={16} />
               </button>
@@ -435,7 +435,7 @@ export function IconSettingsPanel() {
     setIconSize(DEFAULT_ICON_SIZE)
     setStrokeWidth(DEFAULT_STROKE_WIDTH)
     setIconColor(defaultColor)
-    setShowFilled(true)
+    setShowFilled(false)
   }
 
   const RATIO = DEFAULT_STROKE_WIDTH / DEFAULT_ICON_SIZE // 1.8 / 24 = 0.075
@@ -469,7 +469,7 @@ export function IconSettingsPanel() {
               <button
                 type="button"
                 onClick={() => setShowFilled(!showFilled)}
-                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition ${
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition active:scale-[0.96] ${
                   showFilled
                     ? 'text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
                     : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)]'
@@ -487,7 +487,7 @@ export function IconSettingsPanel() {
               <button
                 type="button"
                 onClick={() => { if (colorEnabled) setPickerOpen(false); setColorEnabled(!colorEnabled) }}
-                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition ${
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition active:scale-[0.96] ${
                   colorEnabled
                     ? 'text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
                     : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)]'
@@ -504,7 +504,7 @@ export function IconSettingsPanel() {
               <button
                 type="button"
                 onClick={() => setSizeLinked(!sizeLinked)}
-                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition ${
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-[8px] transition active:scale-[0.96] ${
                   sizeLinked
                     ? 'text-[var(--is-ink)] hover:bg-[var(--is-surface)]'
                     : 'text-[var(--is-ink-muted)] hover:bg-[var(--is-surface)]'
@@ -522,7 +522,7 @@ export function IconSettingsPanel() {
               type="button"
               onClick={handleReset}
               disabled={isDefault}
-              className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[var(--is-ink-muted)] transition hover:bg-[var(--is-surface)] disabled:cursor-not-allowed disabled:opacity-40 active:scale-[0.96]"
               aria-label={t.settings.reset}
             >
               <RefreshCcw size={16} />

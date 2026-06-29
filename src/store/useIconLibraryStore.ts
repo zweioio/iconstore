@@ -65,7 +65,7 @@ export const useIconLibraryStore = create<IconLibraryStore>()(
       background: 'light',
       favoriteIds: [],
       selectedIconId: null,
-      showFilled: true,
+      showFilled: false,
       setShowFilled: (value) => set({ showFilled: value }),
       setKeyword: (value) => set({ keyword: value }),
       setCategory: (value) => set({ category: value }),

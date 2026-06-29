@@ -332,7 +332,7 @@ export default function IconLibraryPage() {
                       <button
                         type="button"
                         onClick={handleDownloadAll}
-                        className="inline-flex h-8 items-center gap-1.5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)]"
+                        className="inline-flex h-8 items-center gap-1.5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 text-[14px] leading-[22px] text-[var(--is-ink)] transition hover:bg-[var(--is-surface)] active:scale-[0.96]"
                       >
                         <Download size={16} />
                         {t.controls.downloadAll}
@@ -340,7 +340,7 @@ export default function IconLibraryPage() {
                       <button
                         type="button"
                         onClick={() => setConfirmClear(true)}
-                        className="inline-flex h-8 items-center gap-1.5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 text-[14px] leading-[22px] text-[#d32f2f] transition hover:bg-[#fbe9e7]"
+                        className="inline-flex h-8 items-center gap-1.5 rounded-[10px] border border-[var(--is-border)] bg-[var(--is-white)] px-3 text-[14px] leading-[22px] text-[#d32f2f] transition hover:bg-[#fbe9e7] active:scale-[0.96]"
                       >
                         <Trash2 size={16} />
                         {t.controls.clearAll}

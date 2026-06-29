@@ -197,14 +197,14 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
         </button>
 
         {dropdownOpen && (
-          <div className="absolute left-0 top-full z-[60] mt-2 flex max-h-[480px] w-[200px] flex-col gap-[4px] overflow-y-auto rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)] custom-scrollbar">
+          <div className="absolute left-0 top-full z-[60] mt-2 flex max-h-[526px] w-[200px] flex-col gap-[4px] overflow-y-auto rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)] custom-scrollbar dropdown-enter">
             {categories.map((item) => (
               <button
                 key={item.value}
                 type="button"
                 onClick={() => handleSelect(item.value)}
                 className={cn(
-                  'flex w-full items-center justify-between rounded-[8px] px-3 py-3 text-left transition',
+                  'flex w-full items-center justify-between rounded-[8px] px-3 py-3 text-left transition dropdown-item',
                   category === item.value
                     ? 'bg-[var(--is-surface)]'
                     : 'bg-[var(--is-white)] hover:bg-[var(--is-surface)]',
@@ -252,7 +252,7 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
             <button
               type="button"
               onClick={() => { setInputValue(''); clearTimeout(debounceRef.current); setKeyword('') }}
-              className="inline-flex h-[24px] w-[24px] items-center justify-center rounded-[6px] bg-[var(--is-white)] text-[var(--is-ink-soft)] transition hover:text-black"
+              className="inline-flex h-[24px] w-[24px] items-center justify-center rounded-[6px] bg-[var(--is-white)] text-[var(--is-ink-soft)] transition hover:text-black active:scale-[0.96]"
               aria-label="清空搜索"
             >
               <X size={16} />
@@ -260,11 +260,11 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
           )}
         </label>
         {searchHistoryOpen && searchHistory.length > 0 && (
-          <div className="absolute left-0 top-full z-[60] mt-2 w-full rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)]">
+          <div className="absolute left-0 top-full z-[60] mt-2 w-full rounded-[12px] border border-[var(--is-border)] bg-[var(--is-white)] p-1 shadow-[0_6px_32px_rgba(0,0,0,0.05)] dropdown-enter">
             {searchHistory.map((query) => (
               <div
                 key={query}
-                className="group flex items-center justify-between rounded-[8px] px-3 py-3 transition hover:bg-[var(--is-surface)]"
+                className="group flex items-center justify-between rounded-[8px] px-3 py-3 transition hover:bg-[var(--is-surface)] dropdown-item"
               >
                 <button
                   type="button"
@@ -277,7 +277,7 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
                 <button
                   type="button"
                   onClick={() => removeSearchQuery(query)}
-                  className="invisible ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] text-[var(--is-ink-muted)] transition hover:text-[#d32f2f] hover:bg-[#fbe9e7] group-hover:visible"
+                  className="invisible ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] text-[var(--is-ink-muted)] transition hover:text-[#d32f2f] hover:bg-[#fbe9e7] group-hover:visible active:scale-[0.96]"
                   aria-label="删除搜索记录"
                 >
                   <Trash2 size={14} />
@@ -293,7 +293,7 @@ export function IconControls({ favoriteCount, favoritesOpen, onCategorySelect, o
         type="button"
         onClick={onFavoritesToggle}
         className={cn(
-          'inline-flex h-12 w-[180px] items-center justify-between rounded-[12px] px-4 text-[16px] leading-6 transition',
+          'inline-flex h-12 w-[180px] items-center justify-between rounded-[12px] px-4 text-[16px] leading-6 transition active:scale-[0.96]',
           favoritesOpen
             ? 'border border-[var(--is-border)] bg-[var(--is-white)] text-[var(--is-ink)]'
             : 'border border-transparent bg-[var(--is-surface)] text-[var(--is-ink)] hover:bg-[var(--is-surface-hover)]',

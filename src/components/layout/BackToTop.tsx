@@ -20,7 +20,7 @@ export function BackToTop() {
     <button
       type="button"
       onClick={scrollToTop}
-      className={`fixed bottom-8 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-[var(--is-border)] bg-[var(--is-white)] text-[var(--is-ink)] transition-all hover:bg-[var(--is-surface)] ${
+      className={`fixed bottom-8 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-[var(--is-border)] bg-[var(--is-white)] text-[var(--is-ink)] transition-all hover:bg-[var(--is-surface)] active:scale-[0.96] ${
         visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none'
       }`}
       style={{ right: 'calc(max(16px, (100vw - 1200px) / 2 - 64px))' }}
